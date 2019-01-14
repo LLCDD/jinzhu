@@ -1,6 +1,6 @@
 <template>
   <div class="allcontent">
-    <img src="../../../assets/img/logo.png" alt>
+    <img src="../../../assets/imgs/3.png" alt>
   </div>
 </template>
 
@@ -9,12 +9,17 @@ export default {};
 </script>
 
 <style scoped>
+.allcontent {
+  /* background: red; */
+  padding-top: 1.9rem;
+  padding-bottom: 1.4rem;
+}
 .allcontent img {
   display: block;
-  width: 1.8rem;
-  height: 1.6rem;
+  width: 2.1rem;
+  height: 2.4rem;
   margin: 0 auto;
-  margin-bottom: 1.28rem;
+  /* margin-bottom: 1.28rem; */
 }
 </style>
 

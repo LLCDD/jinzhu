@@ -12,7 +12,9 @@ export default new Vuex.Store({
     // 头部内容
     header: "鑫峰视觉",
     headerTab: false,
-    footerTab: false
+    footerTab: false,
+    ld: false,
+    fanhui:false
   },
   mutations: {
     setUser(state, payload) {
@@ -44,6 +46,14 @@ export default new Vuex.Store({
     // 底部的显示和隐藏
     footerTab(a, b) {
       a.footerTab = b
+    },
+    // 首页的铃铛
+    ld(a, b) {
+      a.ld = b
+    },
+    // 返回 
+    fanhui(a, b) {
+      a.fanhui = b
     }
   },
   actions: {

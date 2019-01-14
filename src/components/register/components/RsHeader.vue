@@ -27,7 +27,7 @@ export default {
   height: 0.88rem;
   display: flex;
   z-index: 2;
-  background: #1e853c;
+  /* background: #1e853c; */
 }
 .header span {
   margin-left: 33%;

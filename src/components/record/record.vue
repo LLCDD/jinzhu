@@ -1,0 +1,111 @@
+<template>
+  <div class="div2">
+    <div class="div3">
+      <header>
+        <img @click="tap()" class="fanhui" src="../../../public/image/return.png">资产记录
+      </header>
+      <p class="p">我的钱包 ( 元 )</p>
+      <p class="p1">{{ msg }}</p>
+    </div>
+    <div class="record">
+      <p>
+        <router-link to="chongzhi" tag="span">充值记录</router-link>
+      </p>
+      <p>
+        <router-link to="zhuangzhang" tag="span">提现记录</router-link>
+      </p>
+      <p>
+        <router-link to="tixian" tag="span">支付记录</router-link>
+      </p>
+      <p>
+        <router-link to="zhifu" tag="span">收取记录</router-link>
+      </p>
+    </div>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      msg: "9.99"
+    };
+  },
+  methods: {
+    tap() {
+      this.$router.push("/personal");
+    }
+  }
+};
+</script>
+<style scoped>
+.div2 {
+  /* padding-top: 0.88rem; */
+  min-height: 100%;
+  background: #f5f5f5;
+}
+.div3 {
+  /* overflow: hidden; */
+  background: url("../../assets/imgs/heady.png") no-repeat left;
+  background-size: cover;
+  position: relative;
+  height: 2.4rem;
+}
+header {
+  height: 0.88rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  /* background: red; */
+  text-align: center;
+  line-height: 0.88rem;
+  font-size: 0.34rem;
+  color: #fff;
+  /* background: red; */
+}
+.p {
+  padding-top: 1.18rem;
+  padding-left: 0.3rem;
+  color: #fff;
+  font-size: 0.24rem;
+}
+.p1 {
+  padding-top: 0.3rem;
+  padding-left: 0.3rem;
+  font-size: 0.38rem;
+  color: #fff;
+  font-weight: 700;
+}
+.record {
+  width: 100%;
+  background: #fff;
+  height: 0.9rem;
+  line-height: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+.record > p {
+  display: inline-block;
+  width: 25%;
+  height: 0.8rem;
+  text-align: center;
+  color: #b6b6b6;
+}
+
+.record > p > span {
+  display: inline-block;
+  height: 98%;
+}
+.fanhui {
+  position: absolute;
+  left: 0.3rem;
+  width: 0.25rem;
+  height: 0.4rem;
+  top: 24%;
+  z-index: 99;
+}
+.router-link-active {
+  color: #f1941d;
+  border-bottom: 2px solid #f1941d;
+}
+</style>

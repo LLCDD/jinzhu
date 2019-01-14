@@ -1,84 +1,93 @@
 <template>
   <div class="personal">
+    <img @click="qrcode" class="qrcode" src="../../assets/imgs/qrcode.png" alt>
     <div class="header">
-      <div>
-        <img :src="src" alt>
-      </div>
-      <p>{{ nickname }}</p>
-    </div>
-    <div class="dynamic">
-      <div class="first">
-        <img src="../../assets/img/icon2.png" alt>
-        <div>动态收益
-          <br>
-          <span>{{ static }}</span>
+      <div class="warp">
+        <div class="photo">
+          <img :src="src" alt>
+        </div>
+        <div class="name">
+          <p>{{ msg }}</p>
+          <p>ID:{{ nickname }}</p>
+        </div>
+        <div class="geren" @click="gern">
+          个人资料&nbsp;&nbsp;&nbsp;
+          <img src="../../assets/imgs/return.png" alt>
         </div>
       </div>
-      <div class="two">
-        <img src="../../assets/img/icon1.png" alt>
-        <div>静态收益
-          <br>
-          <span>{{ dynamic }}</span>
+    </div>
+    <div class="_warp1">
+      <div>
+        <p>我的钱包 ( 元 )</p>
+        <div>
+          <span class="money">{{ money }}</span>
+          <span class="caoz" @click="zijin()">
+            资金记录
+            <img src="../../assets/imgs/oragin.png" alt>
+          </span>
+        </div>
+        <div class="ftdiv">
+          <button @click="tixian()">提现</button>
+          <button class="chongzhi" @click="chongzhi()">充值</button>
         </div>
       </div>
     </div>
     <div class="data">
       <div class="dw">
-        <router-link tag="p" to="/data">个人资料</router-link>
-        <img class="dw1" src="../../assets/img/gr.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
-      </div>
-      <div class="dw">
-        <router-link tag="p" to="/team">我的团队</router-link>
-        <img class="dw1" src="../../assets/img/td.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
+        <router-link tag="p" to="/Sign">签到</router-link>
+        <img class="dw1" src="../../assets/imgs/task.png" alt>
+        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
     </div>
     <div class="data1">
       <div class="dw">
-        <router-link tag="p" to="/card">绑定银行卡</router-link>
-        <img class="dw1" src="../../assets/img/bank.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
+        <router-link tag="p" to="/cardy">我的推荐</router-link>
+        <img class="dw1" src="../../assets/imgs/select.png" alt>
+        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
       <div class="dw">
-        <router-link tag="p" to="/advertising">广告合作商家</router-link>
-        <img class="dw1" src="../../assets/img/gg.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
+        <router-link tag="p" to="/advertising">我的银行卡</router-link>
+        <img class="dw1" src="../../assets/imgs/headlines.png" alt>
+        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
       <div class="dw">
-        <router-link tag="p" to="/record">提现记录</router-link>
-        <img class="dw1" src="../../assets/img/tx.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
+        <router-link tag="p" to="/zhifubao">我的支付宝</router-link>
+        <img class="dw1" src="../../assets/imgs/ali.png" alt>
+        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
     </div>
     <div class="data2">
       <div class="dw">
-        <router-link tag="p" to="/service">客服中心</router-link>
-        <img class="dw1" src="../../assets/img/kf.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
+        <router-link tag="p" to="/problem">推广海报</router-link>
+        <img class="dw1" src="../../assets/imgs/picture.png" alt>
+        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
-      <div class="dw">
-        <router-link tag="p" to="/problem">问题反馈</router-link>
-        <img class="dw1" src="../../assets/img/wt.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
-      </div>
-      <div class="dw">
+      <div class="dw dy">
         <router-link tag="p" to="/Set">设置</router-link>
-        <img class="dw1" src="../../assets/img/sz.png" alt>
-        <img class="dw2" src="../../assets/img/jinruyou.png" alt>
+        <img class="dw1" src="../../assets/imgs/setup.png" alt>
+        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
     </div>
-    <button>安全退出</button>
+    <van-popup v-model="show" class="hi">
+      <div class="hi">
+        <p>二维码</p>
+        <div>
+          <img :src="src" alt>
+        </div>
+      </div>
+    </van-popup>
+    <!-- <button class="button">安全退出</button> -->
   </div>
 </template>
 <script>
+import { Popup } from "vant";
 export default {
   data() {
     return {
-      msg: "个人中心",
-      nickname: "18342342343",
-      dynamic: "0.00",
-      static: "0.00",
+      msg: "",
+      show: false,
+      nickname: "",
+      money: "",
       src:
         "http://biyouxi.baodekeji.com/uploads/head_img/20181211/5c0f572527f8f.jpeg"
     };
@@ -86,39 +95,173 @@ export default {
   mounted() {
     this.$store.commit("headerTab", false);
     this.$store.commit("footerTab", true);
+    this.http
+      .post("/api/my_center")
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res);
+          this.msg = res.data.name;
+          this.nickname = res.data.id;
+          this.money = res.data.wallet;
+        } else if (res.code == 200) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
+  },
+  methods: {
+    // 个人中心
+    gern() {
+      this.$router.push("/data");
+    },
+    // 二维码
+    qrcode() {
+      console.log("二维码");
+      this.show = true;
+    },
+    // 资金记录
+    zijin() {
+      this.$router.push("/record");
+    },
+    // 提现
+    tixian() {
+      this.$router.push("/withdrawal");
+    },
+    chongzhi() {
+      this.$router.push("/topup");
+    }
   }
 };
 </script>
 <style scoped="">
 .personal {
   min-height: 100%;
-  background: #f5f5f5;
+  background: #f2f2f2;
+  /* padding-left: 0.3rem; */
+  /* padding-right: 0.3rem; */
+}
+.qrcode {
+  position: absolute;
+  height: 0.42rem;
+  width: 0.42rem;
+  right: 0.3rem;
+  top: 0.3rem;
+  z-index: 99;
 }
 .header {
-  height: 3.04rem;
+  height: 4.9rem;
   width: 100%;
-  background: #1e853c;
-  text-align: center;
+  background: url("../../assets/imgs/ger.png") no-repeat top;
+  background-size: cover;
   padding-top: 0.44rem;
 }
-.header > div {
-  height: 1.8rem;
-  width: 1.8rem;
-  border-radius: 50%;
-  background: red;
-  overflow: hidden;
+.money {
+  font-size: 0.4rem;
+  font-weight: 900;
+  color: #f1941d;
+}
+._warp1 {
+  width: 100%;
+  /* background: red; */
+  height: 3rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  margin-top: -2.4rem;
+  margin-bottom: 0.3rem;
+}
+.caoz {
+  float: right;
+  color: #f1941d;
+  font-size: 0.24rem;
+}
+.caoz > img {
+  height: 0.24rem;
+  margin-left: 0.1rem;
+  margin-bottom: 0.05rem;
+}
+._warp1 > div {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 0.2rem;
+  box-shadow: 1px 1px 4px #ccc;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+._warp1 > div > p {
+  padding-top: 0.3rem;
+}
+._warp1 > div > div {
+  height: 1rem;
+  border-bottom: 2px solid #d1d1d1;
+  line-height: 1rem;
+}
+.warp {
+  height: 1.5rem;
+  /* background: red; */
+  padding-left: 0.5rem;
+  width: 100%;
   position: relative;
-  margin: 0 auto;
-  border: 0.1rem solid #62aa77;
 }
-.header > div > img {
+.photo {
+  height: 1.5rem;
+  width: 1.5rem;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  display: inline-block;
+  overflow: hidden;
+}
+.photo > img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+.geren {
   position: absolute;
-  left: 0;
-  top: 0;
-}
-.header > p {
+  right: 0.3rem;
+  bottom: 0.2rem;
   color: #fff;
-  margin-top: 0.18rem;
+}
+.geren > img {
+  height: 0.26rem;
+  position: absolute;
+  right: 0;
+  top: 0.02rem;
+  padding-left: 0.1rem;
+}
+.name {
+  display: inline-block;
+  position: relative;
+  bottom: 0.2rem;
+}
+
+.name > p {
+  padding-bottom: 0.2rem;
+  padding-left: 0.2rem;
+  font-size: 0.3rem;
+  color: #fff;
+}
+.ftdiv {
+  margin-top: 0.46rem;
+}
+.ftdiv > button {
+  height: 0.6rem;
+  line-height: 0.6rem;
+  width: 46%;
+  border-radius: 0.5rem;
+  background: #f1941d;
+  color: #fff;
+  margin-bottom: 1.3rem;
+}
+.chongzhi {
+  float: right !important;
+  background: #ff5858 !important;
+}
+._warp {
+  height: 1.8rem;
+  background: red;
 }
 .dynamic {
   height: 2.2rem;
@@ -211,7 +354,7 @@ export default {
   border-bottom: 2px solid #f5f5f5;
 }
 .data2 {
-  margin-top: 0.2rem;
+  /* margin-top: 0.2rem; */
   background: #fff;
 }
 .data2 > div {
@@ -228,7 +371,7 @@ export default {
   padding-left: 0.9rem;
   border-bottom: 2px solid #f5f5f5;
 }
-button {
+.button {
   margin-top: 0.4rem;
   margin-bottom: 1.4rem;
   height: 0.8rem;
@@ -245,13 +388,35 @@ button {
 .dw1 {
   position: absolute;
   left: 0.34rem;
-  top: 0.28rem;
-  height: 0.28rem;
+  top: 0.24rem;
+  height: 0.36rem;
 }
 .dw2 {
-  height: 0.38rem;
+  height: 0.3rem;
   position: absolute;
-  right: 0.08rem;
-  top: 0.14rem;
+  right: 0.3rem;
+  top: 0.26rem;
+}
+.dy {
+  margin-bottom: 1rem;
+}
+.hi {
+  width: 5rem;
+  height: 5.8rem;
+  background: #fff;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  text-align: center;
+}
+.hi > p {
+  height: 0.8rem;
+  line-height: 0.8rem;
+  text-align: center;
+  background: #f1941d;
+  color: #fff;
+}
+.hi > div > img {
+  width: 60%;
+  margin-top: 1rem;
 }
 </style>

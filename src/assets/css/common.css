@@ -75,7 +75,7 @@ body {
 }
 
 .app-content {
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   /* overflow-y: auto; */
   z-index: 1;
   /*position: absolute;*/

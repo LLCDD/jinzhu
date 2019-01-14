@@ -16,16 +16,20 @@ export default {
   },
   created() {
     this.$store.state.headerStatus = false;
-  }
+    this.$store.commit("headerTab", false);
+    this.$store.commit("footerTab", false);
+  },
+  mounted() {}
 };
 </script>
 
 <style scoped>
 .div {
-  background: #ffffff;
+  background: url("../../assets/imgs/background.png") no-repeat bottom;
+  background-size: cover;
   margin: 0 auto;
   min-height: 100%;
-  padding-top: 3.23rem;
+  /* padding-top: 3.23rem; */
   overflow-y: auto;
 }
 </style>

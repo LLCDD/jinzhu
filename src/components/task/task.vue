@@ -1,68 +1,58 @@
 <template>
-  <div class="div">
-    <mt-swipe :auto="4000" style="width:100%;height:3.78rem">
-      <mt-swipe-item style="background:red">1</mt-swipe-item>
-      <mt-swipe-item style="background:pink">2</mt-swipe-item>
-      <mt-swipe-item style="background:#1e853c">3</mt-swipe-item>
-      <mt-swipe-item style="background:pink">4</mt-swipe-item>
-    </mt-swipe>
-    <div class="task">
-      <router-link tag="span" to="/Taskhall">
-        <img src="../../assets/img/task3.png" alt>
-        <br>
-        <span>任务大厅</span>
-      </router-link>
-      <router-link tag="span" to="/Submitatask">
-        <img src="../../assets/img/task2.png" alt>
-        <br>
-        <span>提交任务</span>
-      </router-link>
-      <router-link tag="span" to="/Taskrecord">
-        <img src="../../assets/img/task1.png" alt>
-        <br>
-        <span>任务记录</span>
-      </router-link>
+  <div class="divp">
+    <div class="ranking">
+      <p>
+        <router-link to="commission" tag="span">佣金排行</router-link>
+      </p>
+      <p>
+        <router-link to="profit" tag="span">盈利排行</router-link>
+      </p>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      msg: ""
+      msg: "发现"
     };
   },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", true);
-    this.$store.commit("header", "任务中心");
+    this.$store.commit("ld", false);
+    this.$store.commit("header", "发现");
+    this.$store.commit("fanhui", false);
   }
 };
 </script>
 <style scoped>
-.div {
-  padding-top: 0.88rem;
+.divp {
   min-height: 100%;
-  background: #f5f5f5;
+  background: #ffffff;
+  padding-top: 0.88rem;
 }
-.task {
-  width: 100%;
-  height: 2.52rem;
-  background: #fff;
-  margin-top: 0.2rem;
-}
-.task > span {
-  width: 33.3%;
-  float: left;
-  text-align: center;
-}
-.task > span > img {
-  margin-top: 0.42rem;
-  height: 1.2rem;
-  width: 1.2rem;
-}
-.task > span > span {
-  margin-top: 0.26rem;
+/* .ranking {
+  padding-top: 0.88rem; 
+} */
+.ranking > p {
+  width: 50%;
+  background: #ffffff;
+  color: #999;
+  /* float: left; */
   display: inline-block;
+  text-align: center;
+  height: 0.9rem;
+}
+.ranking > p > span {
+  display: inline-block;
+  height: 0.9rem;
+  line-height: 0.9rem;
+  font-size: 0.3rem;
+}
+.router-link-active {
+  color: #f1941d;
+  border-bottom: 2px solid #f1941d;
 }
 </style>

@@ -16,11 +16,14 @@
         <div class="foot" @click="register">
              立即注册
   </div>-->
-  <div class="regiset">
-    <div class="put">
+  <div class="regiset1">
+    <div class="baozhud">
+      <img class="baozhu1" src="../../../assets/imgs/3.png" alt>
+    </div>
+    <!-- <div class="put">
       <span>呢称</span>
       <input type="text" placeholder="请输入昵称" v-model="username">
-    </div>
+    </div>-->
     <div class="put">
       <span>手机号</span>
       <input type="text" placeholder="请输入手机号" v-model="phone">
@@ -45,7 +48,10 @@
       <span>邀请码</span>
       <input type="text" placeholder="请输入邀请码" v-model="recommend">
     </div>
-    <button @click="register">立即注册</button>
+    <button @click="register">确定注册</button>
+    <p class="xz">
+      <span @click="xz()">立即下载App</span>
+    </p>
   </div>
 </template>
 
@@ -54,7 +60,7 @@ export default {
   name: "marketfoot",
   data() {
     return {
-      username: "",
+      // username: "",
       phone: "",
       password: "",
       password_confirmation: "",
@@ -100,7 +106,7 @@ export default {
     async register() {
       if (
         !this.phone ||
-        !this.username ||
+        // !this.username ||
         !this.password ||
         !this.password_confirmation ||
         !this.phone_code ||
@@ -113,18 +119,45 @@ export default {
       try {
         // await等待一个异步返回的结果 如果没有await 会报user is undefined 获取不到
         let res = await this.http.post("/api/register", {
-          username: this.username,
+          // username: this.username,
           phone: this.phone,
           password: this.password,
-          password_confirmation: this.password_confirmation,
+          repassword: this.password_confirmation,
           phone_code: this.phone_code,
           recommend: this.recommend
         });
-        console.log(res);
         this.$toasted.success("注册成功").goAway(1500);
         this.$router.replace({ name: "login" });
       } catch (error) {
         this.$toasted.error(error.message, { icon: "error" }).goAway(2000);
+      }
+    },
+    // 下载app
+    xz() {
+      let ua = navigator.userAgent.toLowerCase();
+      //android终端
+      let isAndroid = ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1; //ios终端
+      let isiOS = !!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+      if (isWeixinBrowser()) {
+        // this.$router.push({
+        //   path: "/product"
+        // });
+        console.log(isWeixinBrowser());
+      } else {
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+          //ios
+          this.ShowPop = !this.ShowPop;
+          this.ShowDark = !this.ShowDark;
+          console.log("ios");
+        } else if (/(Android)/i.test(navigator.userAgent)) {
+          //android
+          // window.location = "http://www.xyfan.top/app.apk";
+          console.log("安卓");
+        }
+      }
+
+      function isWeixinBrowser() {
+        return /micromessenger/.test(ua) ? true : false;
       }
     }
   }
@@ -132,42 +165,60 @@ export default {
 </script>
 
 <style scoped>
-.regiset {
+.regiset1 {
   min-height: 100%;
-  background: #f5f5f5;
+  /* background: #f5f5f5; */
+}
+.baozhud {
+  /* background: red; */
+  padding: 0.4rem 0;
+  /* padding-top: 1rem; */
+  /* margin: 0 auto; */
+}
+.baozhu1 {
+  display: block;
+  height: 1.24rem;
+  width: 1.04rem;
+  margin: 0 auto;
 }
 .put {
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
   height: 0.8rem;
-  background: #fff;
+  /* background: #fff; */
   /* padding: 0.28rem; */
   line-height: 0.8rem;
-  padding: 0 0.28rem;
+  /* padding: 0 0.28rem; */
   /* background: red; */
-  border-bottom: 1px solid #f5f5f5;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin-bottom: 0.2rem;
 }
 .put > input {
   border: 0;
+  background: none;
+  /* color: #fff; */
 }
 .put > span {
   display: inline-block;
   width: 1.8rem;
-  color: #1e853c;
+  color: #fff;
+  padding-left: 0.2rem;
 }
 .code {
   width: 36%;
 }
 .p {
   float: right;
-  background: #fff;
+  /* background: #fff; */
   width: 30%;
   text-align: center;
   height: 0.6rem;
   line-height: 0.6rem;
   margin-top: 0.12rem;
-  color: #1e853c;
+  color: #fff;
   border-radius: 4px;
-  border: 1px solid #1e853c;
+  /* border: 1px solid #1e853c; */
 }
 button {
   width: 84.5%;
@@ -175,11 +226,17 @@ button {
   margin-left: 7.75%;
   height: 0.8rem;
   margin-top: 0.4rem;
-  background: #1e853c;
-  color: #fff;
+  background: #fff;
+  color: #f1941d;
   font-size: 0.28rem;
   border-radius: 0.4rem;
+}
+.xz {
   margin-bottom: 1rem;
+  text-align: center;
+  margin-top: 0.2rem;
+  font-size: 0.3rem;
+  color: #fff;
 }
 </style>
 

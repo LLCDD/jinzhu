@@ -15,9 +15,16 @@ export default {
   },
   created: function() {
     this.$store.state.headerStatus = false;
+    this.$store.commit("headerTab", false);
+    this.$store.commit("footerTab", false);
   }
 };
 </script>
 
 <style  scoped>
+.all {
+  min-height: 100%;
+  background: url("../../assets/imgs/background.png") no-repeat left;
+  background-size: cover;
+}
 </style>
