@@ -40,18 +40,26 @@
       </div>
     </div>
     <div class="bottom">
-      <button>一键发包</button>
-      <button>余额</button>
+      <button @click="fabao()">一键发包</button>
+      <button @click="xainshi()">余额</button>
     </div>
+    <van-popup v-model="show" class="hiy">
+      <div class="hiy">
+        <p>余额</p>
+        <div>账户余额 ：{{money}}</div>
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
+import { Popup } from "vant";
 export default {
   data() {
     return {
       msg: "恭喜发财 , 大吉大利",
       msg1: "20-6",
-      money: "34"
+      money: "34",
+      show: false
     };
   },
   mounted() {
@@ -61,7 +69,14 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
   },
-  methods: {}
+  methods: {
+    fabao() {
+      this.$router.push("/saihongb");
+    },
+    xainshi() {
+      this.show = true;
+    }
+  }
 };
 </script>
 <style scoped>
@@ -71,6 +86,27 @@ export default {
   padding: 0 0.3rem;
   padding-top: 0.88rem;
   text-align: center;
+}
+
+.hiy {
+  width: 5rem;
+  height: 2.4rem;
+  background: #fff;
+  border-radius: 0.2rem;
+}
+.hiy > p {
+  height: 0.8rem;
+  background: #f1941d;
+  font-size: 0.3rem;
+  line-height: 0.8rem;
+  color: #fff;
+}
+.hiy > div {
+  height: 1.6rem;
+  line-height: 1.6rem;
+  text-align: center;
+  color: #f1941d;
+  font-size: 0.3rem;
 }
 .spanv {
   display: inline-block;

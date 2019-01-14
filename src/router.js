@@ -252,6 +252,16 @@ let router = new Router({
         requiresAuth: false
       }
     },
+    //  塞红包  saihongb
+    {
+      path: '/saihongb',
+      name: 'saihongb',
+      component: () =>
+        import(/* webpackChunkName: "register" */ './components/saihongb/saihongb.vue'),
+      meta: {
+        requiresAuth: false
+      }
+    },
 
     {
       path: '/zhifupassworld',
