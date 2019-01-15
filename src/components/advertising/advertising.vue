@@ -3,15 +3,15 @@
     <div v-if="bool">
       <p>
         <span>银行名称</span>
-        <span style="color:#999">中国银行</span>
+        <span style="color:#999">{{list.bank_name}}</span>
       </p>
       <p>
         <span>银行卡号</span>
-        <span style="color:#999">2342342342343</span>
+        <span style="color:#999">{{ list.bank_num }}</span>
       </p>
       <p>
         <span>持卡人姓名</span>
-        <span style="color:#999">中国银行</span>
+        <span style="color:#999">{{ list.user_name }}</span>
       </p>
     </div>
     <button class="buttonty" v-if="bool" @click="xiugia()">修改</button>
@@ -45,12 +45,11 @@ export default {
       .post("/api/list_bank")
       .then(res => {
         if (res.code == 200) {
-          console.log(res.data.data[0]);
-          this.list = res.data.data[0];
-          this.id = res.data.data[0].id;
           Toast.clear();
-          if (this.list.bank_name) {
+          if (res.data != {}) {
             this.bool = true;
+            this.list = res.data.data[0];
+            this.id = res.data.data[0].id;
           } else {
             this.bool = false;
           }

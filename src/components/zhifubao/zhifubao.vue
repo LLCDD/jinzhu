@@ -3,11 +3,11 @@
     <div v-if="bool">
       <p>
         <span>支付宝账号</span>
-        <span style="color:#999">中国银行</span>
+        <span style="color:#999">{{name}}</span>
       </p>
       <p>
         <span>支付宝昵称</span>
-        <span style="color:#999">2342342342343</span>
+        <span style="color:#999">{{zhna}}</span>
       </p>
     </div>
     <button class="buttonty" v-if="bool" @click="xiugia()">修改</button>
@@ -15,14 +15,23 @@
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
       msg: 23423,
+      name: "",
       list: {},
       bool: false,
+      zhna: "",
       id: ""
     };
+  },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
   },
   mounted() {
     this.$store.commit("headerTab", true);
@@ -34,25 +43,30 @@ export default {
       .post("/api/list_bao")
       .then(res => {
         if (res.code == 200) {
+          Toast.clear();
           console.log(res);
-          this.id = res.data.data[0].id;
-          if (res.messsage == "未添支付宝账号") {
-            this.bool = false;
-          } else {
+          if (res.data != {}) {
             this.bool = true;
+            this.id = res.data.data[0].id;
+            this.name = res.data.data[0].real_name;
+            this.zhna = res.data.data[0].bao_num;
+          } else {
+            this.bool = false;
           }
         } else if (res.code == 400) {
+          Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
+        Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
-    if (this.list.length > 0) {
-      this.bool = true;
-    } else {
-      this.bool = false;
-    }
+    // if (this.list.length > 0) {
+    //   this.bool = true;
+    // } else {
+    //   this.bool = false;
+    // }
   },
   methods: {
     //   修改银行卡

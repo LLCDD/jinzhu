@@ -7,16 +7,25 @@
       </span>
       <span>直推{{num}}人 间推{{num}}人</span>
     </p>
+    <p class="p" v-if="bool">暂时没有更多数据了</p>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
       msg: "3345345",
       list: [1, 2, 3],
-      num: 1
+      num: 1,
+      bool: false
     };
+  },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
   },
   mounted() {
     this.$store.commit("headerTab", true);
@@ -24,6 +33,27 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("header", "一级推荐");
     this.$store.commit("fanhui", true);
+    this.$store.commit("tuijian", true);
+    this.http
+      .post("/api/my_recommend")
+      .then(res => {
+        if (res.code == 200) {
+          Toast.clear();
+          this.list = res.data;
+          if (res.data != {}) {
+            this.bool = true;
+          } else {
+            this.bool = false;
+          }
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   }
 };
 </script>
@@ -51,5 +81,8 @@ p > span > img {
   width: 0.5rem;
   border-radius: 50%;
   margin-right: 0.2rem;
+}
+.p {
+  color: #999;
 }
 </style>

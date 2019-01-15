@@ -58,7 +58,7 @@
     </div>
     <div class="data2">
       <div class="dw">
-        <router-link tag="p" to="/problem">推广海报</router-link>
+        <router-link tag="p" to="/Promotionposter">推广海报</router-link>
         <img class="dw1" src="../../assets/imgs/picture.png" alt>
         <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
@@ -76,11 +76,12 @@
         </div>
       </div>
     </van-popup>
-    <!-- <button class="button">安全退出</button> -->
+    <button class="button" @click="tui()">安全退出</button>
   </div>
 </template>
 <script>
 import { Popup } from "vant";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -92,7 +93,14 @@ export default {
         "http://biyouxi.baodekeji.com/uploads/head_img/20181211/5c0f572527f8f.jpeg"
     };
   },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
+  },
   mounted() {
+    this.$store.commit("tuijian", false);
     this.$store.commit("headerTab", false);
     this.$store.commit("footerTab", true);
     this.http
@@ -103,7 +111,22 @@ export default {
           this.msg = res.data.name;
           this.nickname = res.data.id;
           this.money = res.data.wallet;
-        } else if (res.code == 200) {
+          Toast.clear();
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
+    this.http
+      .post("/api/my_qrcode")
+      .then(res => {
+        if (res.code == 200) {
+          this.src = res.data.my_qrcode;
+        } else if (res.code == 400) {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
@@ -131,6 +154,11 @@ export default {
     },
     chongzhi() {
       this.$router.push("/topup");
+    },
+    // 退出
+    tui() {
+      localStorage.clear();
+      this.$router.replace({ name: "login" });
     }
   }
 };
@@ -372,12 +400,12 @@ export default {
   border-bottom: 2px solid #f5f5f5;
 }
 .button {
-  margin-top: 0.4rem;
+  /* margin-top: 0.4rem; */
   margin-bottom: 1.4rem;
   height: 0.8rem;
   width: 92%;
   margin-left: 4%;
-  background: #1e853c;
+  background: #f1941d;
   font-size: 0.3rem;
   color: #fff;
   border-radius: 6px;
@@ -398,7 +426,7 @@ export default {
   top: 0.26rem;
 }
 .dy {
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
 }
 .hi {
   width: 5rem;

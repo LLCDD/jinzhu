@@ -21,17 +21,17 @@
       <span>支付宝充值</span>
       <span style="color:#999999"></span>
     </div>
-    <div @click="bool1()" class="card" :class="{ 'classy' : state == 2 }">
+    <div @click="bool1()" class="card2" :class="{ 'classy' : state == 2 }">
       <img src="../../assets/imgs/yingh.png" alt>
       <span>快捷充值</span>
       <span style="color:#999999"></span>
     </div>
-    <div @click="bool2()" class="card" :class="{ 'classy' : state ==3 }">
+    <div @click="bool2()" class="card2" :class="{ 'classy' : state ==3 }">
       <img src="../../assets/imgs/weix.png" alt>
       <span>微信充值</span>
       <span style="color:#999999"></span>
     </div>
-    <div @click="bool3()" class="card" :class="{ 'classy' : state ==4 }">
+    <div @click="bool3()" class="card2" :class="{ 'classy' : state ==4 }">
       <img src="../../assets/imgs/person1.png" alt>
       <span>人工充值</span>
       <span style="color:#999999"></span>
@@ -157,7 +157,7 @@ export default {
 .money > .border {
   border: 2px solid #f1941d;
 }
-.card {
+.card2 {
   width: 100%;
   position: relative;
   height: 0.9rem;
@@ -171,7 +171,7 @@ export default {
   margin-top: 0.2rem;
   font-size: 0.3rem;
 }
-.card > img {
+.card2 > img {
   height: 54%;
   position: absolute;
   left: 0.3rem;

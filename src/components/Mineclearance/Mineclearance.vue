@@ -3,7 +3,7 @@
     <div class="warpo">
       <span class="spanv">14.18</span>
     </div>
-    <div class="hongbao">
+    <div class="hongbao" @click="xiqing()">
       <img class="touxian" src="../../assets/imgs/my.png" alt>
       <p class="pf">123232132</p>
       <div class="bao">
@@ -18,7 +18,7 @@
     <div class="hongbao">
       <img class="touxian" src="../../assets/imgs/my.png" alt>
       <p class="pf">123232132</p>
-      <div class="bao">
+      <div class="bao" @click="xiqing()">
         <p>{{ msg }}</p>
         <br>
         <p>{{ msg1}}</p>
@@ -30,7 +30,7 @@
         <p>恭喜{{ msg }}中奖 , 奖励 ({{ msg1 }}) + {{money}}</p>
       </div>
     </div>
-    <div class="hongbao1">
+    <div class="hongbao1" @click="qinglei()">
       <img class="touxian1" src="../../assets/imgs/my.png" alt>
       <p class="pf1">123232132</p>
       <div class="bao1">
@@ -43,10 +43,23 @@
       <button @click="fabao()">一键发包</button>
       <button @click="xainshi()">余额</button>
     </div>
+    <!-- 余额 -->
     <van-popup v-model="show" class="hiy">
       <div class="hiy">
         <p>余额</p>
         <div>账户余额 ：{{money}}</div>
+      </div>
+    </van-popup>
+    <!-- 中红包 -->
+    <van-popup v-model="show1" class="qiang">
+      <div>
+        <img src="../../assets/imgs/qiang.png" alt>
+      </div>
+    </van-popup>
+    <!-- 中雷 -->
+    <van-popup v-model="show2" class="qiang1">
+      <div>
+        <img src="../../assets/imgs/qinglei.png" alt>
       </div>
     </van-popup>
   </div>
@@ -59,7 +72,10 @@ export default {
       msg: "恭喜发财 , 大吉大利",
       msg1: "20-6",
       money: "34",
-      show: false
+      show: false,
+      show1: false,
+      show2: false,
+      timer: null
     };
   },
   mounted() {
@@ -75,6 +91,28 @@ export default {
     },
     xainshi() {
       this.show = true;
+    },
+    // 抢红包
+    xiqing() {
+      clearInterval(this.timer);
+      this.show1 = true;
+      var _this = this;
+      this.timer = setInterval(() => {
+        _this.show1 = false;
+        this.$router.push("/redenvelope");
+        clearInterval(this.timer);
+      }, 400);
+    },
+    // 抢雷
+    qinglei() {
+      clearInterval(this.timer);
+      this.show2 = true;
+      var _this = this;
+      this.timer = setInterval(() => {
+        _this.show2 = false;
+        this.$router.push("/redenvelope");
+        clearInterval(this.timer);
+      }, 400);
     }
   }
 };
@@ -86,6 +124,7 @@ export default {
   padding: 0 0.3rem;
   padding-top: 0.88rem;
   text-align: center;
+  padding-bottom: 1.4rem;
 }
 
 .hiy {
@@ -252,5 +291,25 @@ export default {
   background: #ff5858;
   color: #fff;
   border-radius: 0.4rem;
+}
+.qiang {
+  width: 100%;
+  height: 70%;
+  background: none;
+}
+.qiang > div > img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.qiang1 {
+  width: 85%;
+  height: 54%;
+  background: none;
+}
+.qiang1 > div > img {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 </style>

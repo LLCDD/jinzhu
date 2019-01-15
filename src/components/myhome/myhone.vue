@@ -30,7 +30,8 @@ export default {
   methods: {
     //   客服
     kefu() {
-      console.log("客服聊天");
+      // Customerservice
+      this.$router.push("/Customerservice");
     },
     // 代理
     daili() {
@@ -65,11 +66,11 @@ export default {
 }
 .faxain1 {
   background: url("../../assets/imgs/daili.png") no-repeat left;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 .faxain2 {
   background: url("../../assets/imgs/fuli.png") no-repeat left;
-  background-size: cover;
+  background-size: 100% 100%;
   position: relative;
   margin-bottom: 1rem;
 }
@@ -104,7 +105,7 @@ export default {
 }
 .red {
   background: url("../../assets/imgs/three.png") no-repeat left;
-  background-size: cover;
+  background-size: 100% 100%;
   height: 0.64rem;
   width: 1.8rem;
   border-radius: 0.16rem;

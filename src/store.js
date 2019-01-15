@@ -14,7 +14,8 @@ export default new Vuex.Store({
     headerTab: false,
     footerTab: false,
     ld: false,
-    fanhui:false
+    fanhui: false,
+    tuijian: false
   },
   mutations: {
     setUser(state, payload) {
@@ -54,6 +55,10 @@ export default new Vuex.Store({
     // 返回 
     fanhui(a, b) {
       a.fanhui = b
+    },
+    // 推荐
+    tuijian(a, b) {
+      a.tuijian = b
     }
   },
   actions: {

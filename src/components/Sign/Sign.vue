@@ -17,11 +17,11 @@
       <div class="py1">
         <div class="dao">
           <van-steps active-color="#f1941d" :active="data.datas.sign_day-1">
-            <van-step>今天</van-step>
-            <van-step>01.10</van-step>
-            <van-step>01.10</van-step>
-            <van-step>01.10</van-step>
-            <van-step class="step">0111</van-step>
+            <van-step>{{data.data[4].md}}</van-step>
+            <van-step>{{data.data[3].md}}</van-step>
+            <van-step>{{data.data[2].md}}</van-step>
+            <van-step>{{data.data[1].md}}</van-step>
+            <van-step>{{data.data[0].md}}</van-step>
           </van-steps>
         </div>
       </div>
@@ -57,7 +57,7 @@ export default {
       .then(res => {
         if (res.code == 200) {
           console.log(res.data);
-          this.$taosted.success(res.message).goAway(1000);
+          this.$toasted.success(res.message).goAway(1000);
         } else if (res.code == 400) {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
@@ -70,16 +70,12 @@ export default {
       .post("/api/sign_list")
       .then(res => {
         if (res.code == 200) {
-          console.log(res);
+          // console.log(res);
           this.data = res.data;
-          if (res.code == 200) {
-            Toast.clear();
-            this.data = res.data;
-            // console.log(res.data.data);
-          } else if ((res, code == 400)) {
-            Toast.clear();
-            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-          }
+          Toast.clear();
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
@@ -115,7 +111,6 @@ export default {
 .divh >>> .van-step--horizontal.van-step--process .van-icon {
   font-size: 0.36rem;
 }
-
 .divh >>> .van-step .van-step__circle {
   background: #f8c98e;
 }

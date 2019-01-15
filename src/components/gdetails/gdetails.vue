@@ -30,7 +30,7 @@ export default {
         if (res.code == 200) {
           Toast.clear();
           //   console.log(res);
-          this.msg = res.data[1].content;
+          this.msg = res.data.data.content;
         } else if (res.code == 400) {
           Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);

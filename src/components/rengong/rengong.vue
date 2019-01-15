@@ -7,12 +7,13 @@
           <!-- <br> -->
           <span class="daili1">扫描二维码联系</span>
         </p>
-        <img class="img" src="../../assets/imgs/3.png" alt>
+        <img class="img" :src="item.my_qrcode" alt>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -20,12 +21,34 @@ export default {
       list: [1, 23, 43]
     };
   },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
+  },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
     this.$store.commit("ld", false);
     this.$store.commit("header", "人工充值");
     this.$store.commit("fanhui", true);
+    this.http
+      .post("/api/agent_qrcode")
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res);
+          Toast.clear();
+          this.list = res.data.data;
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+      });
   }
 };
 </script>

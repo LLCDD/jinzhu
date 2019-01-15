@@ -107,6 +107,18 @@ export default {
         .post("/api/send_code", { phone: this.phone })
         .then(res => {
           if (res.code == 200) {
+            var count = 60;
+            var _this = this;
+            this.bool = false;
+            var tiemr = setInterval(function() {
+              _this.count = --count;
+              // console.log();
+              if (count <= 0) {
+                clearInterval(tiemr);
+                count = 60;
+                _this.bool = true;
+              }
+            }, 1000);
             this.$toasted.success(res.message).goAway(1000);
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
@@ -115,18 +127,6 @@ export default {
         .catch(res => {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         });
-      var count = 60;
-      var _this = this;
-      this.bool = false;
-      var tiemr = setInterval(function() {
-        _this.count = --count;
-        // console.log();
-        if (count <= 0) {
-          clearInterval(tiemr);
-          count = 60;
-          _this.bool = true;
-        }
-      }, 1000);
     }
   }
 };
@@ -155,6 +155,7 @@ span {
 }
 input {
   color: #999;
+  height: 80%;
 }
 .buttonty {
   width: 84%;

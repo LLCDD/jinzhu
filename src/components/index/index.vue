@@ -16,13 +16,13 @@
       :loop="true"
     >
       <el-carousel-item class="card" style="background:red">
-        <h3>1</h3>
+        <img src="../../assets/imgs/001.png" alt>
       </el-carousel-item>
       <el-carousel-item class="card" style="background:pink">
-        <h3>2</h3>
+        <img src="../../assets/imgs/002.png" alt>
       </el-carousel-item>
       <el-carousel-item class="card" style="background:yellow">
-        <h3>3</h3>
+        <img src="../../assets/imgs/003.png" alt>
       </el-carousel-item>
     </el-carousel>
     <div class="redy"></div>
@@ -33,18 +33,18 @@
         <p>234234</p>
         <p>23423432</p>
       </div>-->
-      <van-swipe class="nr1" :autoplay="4000" vertical :show-indicators="false ">
+      <van-swipe class="nr1" :touchable="false" :autoplay="1000" vertical :show-indicators="false ">
         <van-swipe-item>
-          <p class="mar">234234</p>
-          <p class="mar">23423432</p>
+          <p class="mar">第一个世界啊撒旦解放</p>
+          <p class="mar">啊撒旦解放那段艰难氨基酸的</p>
         </van-swipe-item>
         <van-swipe-item>
-          <p class="mar">234234</p>
-          <p class="mar">23423432</p>
+          <p class="mar">埃里克森的那份阿斯蒂芬</p>
+          <p class="mar">爱上帝就发世间的烦恼士大夫撒地方</p>
         </van-swipe-item>
         <van-swipe-item>
-          <p class="mar">234234</p>
-          <p class="mar">23423432</p>
+          <p class="mar">爱上的看法呢阿斯蒂芬那时的</p>
+          <p class="mar">数字和自富含发到付爱的打法的阿斯蒂</p>
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -202,6 +202,10 @@ export default {
 .card {
   border-radius: 0.1rem;
 }
+.card > img {
+  height: 100%;
+  width: 100%;
+}
 .el-carousel__arrow {
   display: none !important;
 }
@@ -221,10 +225,10 @@ export default {
 }
 .event1 {
   background: url("../../assets/imgs/saolei.png") no-repeat left;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 .event2 {
   background: url("../../assets/imgs/long.png") no-repeat left;
-  background-size: cover;
+  background-size: 100% 100%;
 }
 </style>

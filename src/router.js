@@ -262,7 +262,36 @@ let router = new Router({
         requiresAuth: false
       }
     },
-
+    // redenvelope  红包详情请
+    {
+      path: '/redenvelope',
+      name: 'redenvelope',
+      component: () =>
+        import(/* webpackChunkName: "register" */ './components/redenvelope/redenvelope.vue'),
+      meta: {
+        requiresAuth: false
+      }
+    },
+    // 客服 Customerservice
+    {
+      path: '/Customerservice',
+      name: 'Customerservice',
+      component: () =>
+        import(/* webpackChunkName: "register" */ './components/Customerservice/Customerservice.vue'),
+      meta: {
+        requiresAuth: false
+      }
+    },
+    // 红包记录  envelopetorecord
+    {
+      path: '/envelopetorecord',
+      name: 'envelopetorecord',
+      component: () =>
+        import(/* webpackChunkName: "register" */ './components/envelopetorecord/envelopetorecord.vue'),
+      meta: {
+        requiresAuth: false
+      }
+    },
     {
       path: '/zhifupassworld',
       name: 'zhifupassworld',
@@ -363,6 +392,16 @@ let router = new Router({
         requiresAuth: false
       }
     },
+    // Promotionposter 
+    {
+      path: '/Promotionposter',
+      name: 'Promotionposter',
+      component: () =>
+        import(/* webpackChunkName: "register" */ './components/Promotionposter/Promotionposter'),
+      meta: {
+        requiresAuth: false
+      }
+    },
     // zhifubao
     {
       path: '/zhifubao',
@@ -451,6 +490,7 @@ let router = new Router({
             requiresAuth: false
           }
         },
+
         {
           path: 'tixian',
           name: 'tixian',
