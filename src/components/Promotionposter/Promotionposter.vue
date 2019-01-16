@@ -8,11 +8,11 @@
       :loop="true"
       arrow="never"
     >
-      <el-carousel-item class="cardy cardn" style="background:red">
+      <el-carousel-item class="cardn" style="background:red">
         <img src="../../assets/imgs/001.png" alt>
         <div class="div"></div>
       </el-carousel-item>
-      <el-carousel-item class="cardy cardp" style="background:pink">
+      <el-carousel-item class="cardp" style="background:pink">
         <img src="../../assets/imgs/002.png" alt>
         <div class="div"></div>
       </el-carousel-item>
@@ -35,6 +35,7 @@ export default {
     this.$store.commit("header", "推广海报");
     this.$store.commit("fanhui", true);
     this.$store.commit("footerTab", false);
+    this.$store.commit("ld", false);
   }
 };
 </script>
@@ -68,7 +69,33 @@ export default {
   height: 100%;
   width: 100%;
 }
+.cardn > img {
+  height: 100%;
+  width: 100%;
+}
+.cardp > img {
+  height: 100%;
+  width: 100%;
+}
+.cardn > .div {
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  background: yellow;
+  z-index: 9999;
+  top: 6%;
+  left: 56%;
+}
 .cardy > .div {
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  background: yellow;
+  z-index: 9999;
+  top: 6%;
+  left: 56%;
+}
+.cardp > .div {
   height: 2rem;
   width: 2rem;
   position: absolute;

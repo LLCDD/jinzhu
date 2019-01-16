@@ -19,7 +19,11 @@ export default {
     this.$store.commit("headerTab", false);
     this.$store.commit("footerTab", false);
   },
-  mounted() {}
+  mounted() {
+    if (localStorage.getItem("token")) {
+      this.$router.replace({ name: "index" });
+    }
+  }
 };
 </script>
 
