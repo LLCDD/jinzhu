@@ -1,6 +1,6 @@
 <template>
   <div class="divk">
-    <p v-for="(item,index) in list" :key="index">
+    <p v-for="(item,index) in list" :key="index" v-if="!bool">
       <span>
         <img src="../../assets/imgs/person1.png" alt>
         <span>343423423</span>
@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       msg: "3345345",
-      list: [1, 2, 3],
+      list: [1],
       num: 1,
       bool: false
     };
@@ -34,16 +34,37 @@ export default {
     this.$store.commit("header", "一级推荐");
     this.$store.commit("fanhui", true);
     this.$store.commit("tuijian", true);
+    // this.http
+    //   .post("/api/my_recommend")
+    //   .then(res => {
+    //     if (res.code == 200) {
+    //       Toast.clear();
+    //       this.list = res.data;
+    //       if (res.data != {}) {
+    //         this.bool = true;
+    //       } else {
+    //         this.bool = false;
+    //       }
+    //     } else if (res.code == 400) {
+    //       Toast.clear();
+    //       this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+    //     }
+    //   })
+    //   .catch(res => {
+    //     Toast.clear();
+    //     this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+    //   });
     this.http
-      .post("/api/my_recommend")
+      .post("/api/first_recommend")
       .then(res => {
         if (res.code == 200) {
           Toast.clear();
-          this.list = res.data;
-          if (res.data != {}) {
+          // console.log(res);
+          if (res.message == "您没有推荐过任何人") {
             this.bool = true;
           } else {
             this.bool = false;
+            this.list = res.data;
           }
         } else if (res.code == 400) {
           Toast.clear();

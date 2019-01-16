@@ -30,12 +30,13 @@ export default {
   },
   methods: {
     gai() {
-      console.log("确定添加");
+      // console.log("确定添加");
       this.http
         .post("/api/add_bao", { real_name: this.name, bao_num: this.num })
         .then(res => {
           if (res.code == 200) {
             console.log(res);
+            this.$router.replace({ name: "zhifubao" });
             this.$toasted.success(res.message).goAway(1000);
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);

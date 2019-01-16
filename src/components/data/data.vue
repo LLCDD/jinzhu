@@ -2,19 +2,19 @@
   <div class="div">
     <div>
       <span>昵称</span>
-      <span class="name">{{ msg.data.name }}</span>
+      <span class="name">{{ msg }}</span>
     </div>
     <div>
       <span>真实姓名</span>
-      <span class="name">{{ msg.data.real_name }}</span>
+      <span class="name">{{ msg1 }}</span>
     </div>
     <div>
       <span>性别</span>
-      <span class="name">{{ msg.data.sex }}</span>
+      <span class="name">{{ msg2 }}</span>
     </div>
     <div>
       <span>手机号</span>
-      <span>{{ msg.data.phone }}</span>
+      <span>{{ msg3 }}</span>
     </div>
     <button class="buttonq" @click="xiuigai()">修改</button>
   </div>
@@ -24,7 +24,10 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      msg: "个人资料"
+      msg: "",
+      msg1: "",
+      msg2: "",
+      msg3: ""
     };
   },
   beforeCreate() {
@@ -45,7 +48,28 @@ export default {
         if (res.code == 200) {
           Toast.clear();
           console.log(res);
-          this.msg = res.data;
+          if (res.data.data.name == null) {
+            this.msg = "暂无昵称";
+          } else {
+            this.msg = res.data.data.name;
+          }
+          if (res.data.data.real_name == null) {
+            this.msg1 = "暂无填写信息";
+          } else {
+            this.msg1 = res.data.data.real_name;
+          }
+          if (res.data.data.sex == null) {
+            this.msg2 = "暂无填写信息";
+          } else {
+            this.msg2 = res.data.data.sex;
+          }
+          if (res.data.data.phone == null) {
+            this.msg3 = "暂无填写信息";
+          } else {
+            this.msg3 = res.data.data.phone;
+          }
+
+          // this.msg = res.data;
         } else if (res.code == 400) {
           Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
@@ -58,7 +82,8 @@ export default {
   },
   methods: {
     xiuigai() {
-      this.$router.replace({ name: "gaidata" });
+      // this.$router.replace({ name: "gaidata" });
+      this.$router.push("/gaidata");
     }
   }
 };

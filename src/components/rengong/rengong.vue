@@ -10,6 +10,7 @@
         <img class="img" :src="item.my_qrcode" alt>
       </div>
     </div>
+    <div v-if="bool" class="dailishang">暂无代理商</div>
   </div>
 </template>
 <script>
@@ -18,7 +19,8 @@ export default {
   data() {
     return {
       msg: "345",
-      list: [1, 23, 43]
+      list: [],
+      bool: false
     };
   },
   beforeCreate() {
@@ -39,7 +41,12 @@ export default {
         if (res.code == 200) {
           console.log(res);
           Toast.clear();
-          this.list = res.data.data;
+          if (res.message == "暂无代理商") {
+            this.bool = true;
+          } else {
+            this.bool = false;
+            this.list = res.data.data;
+          }
         } else if (res.code == 400) {
           Toast.clear();
           this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
@@ -88,5 +95,13 @@ export default {
 .p {
   display: inline-block;
   width: 2rem;
+}
+.dailishang {
+  height: 1rem;
+  background: #fff;
+  text-align: center;
+  line-height: 1rem;
+  font-size: 0.3rem;
+  color: #999;
 }
 </style>

@@ -41,7 +41,7 @@
     </div>
     <div class="data1">
       <div class="dw">
-        <router-link tag="p" to="/cardy">我的推荐</router-link>
+        <router-link tag="p" to="/myrecommendation">我的推荐</router-link>
         <img class="dw1" src="../../assets/imgs/select.png" alt>
         <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>

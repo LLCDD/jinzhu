@@ -3,19 +3,20 @@
     <el-carousel
       :autoplay="true"
       indicator-position="none"
-      :interval="3000"
+      :interval="1000"
       type="card"
       :loop="true"
+      arrow="never"
     >
-      <el-carousel-item class="card1" style="background:red">
+      <el-carousel-item class="cardy cardn" style="background:red">
         <img src="../../assets/imgs/001.png" alt>
         <div class="div"></div>
       </el-carousel-item>
-      <el-carousel-item class="card1" style="background:pink">
+      <el-carousel-item class="cardy cardp" style="background:pink">
         <img src="../../assets/imgs/002.png" alt>
         <div class="div"></div>
       </el-carousel-item>
-      <el-carousel-item class="card1" style="background:yellow">
+      <el-carousel-item class="cardy" style="background:yellow">
         <img src="../../assets/imgs/003.png" alt>
         <div class="div"></div>
       </el-carousel-item>
@@ -63,18 +64,26 @@ export default {
 /* .card {
   position: relative;
 } */
-.card1 > img {
+.cardy > img {
   height: 100%;
   width: 100%;
 }
-.card1 > .div {
-  height: 1rem;
-  width: 1rem;
+.cardy > .div {
+  height: 2rem;
+  width: 2rem;
   position: absolute;
   background: yellow;
   z-index: 9999;
-  top: 0;
-  left: 1rem;
+  top: 6%;
+  left: 56%;
+}
+.cardp > .div {
+  left: 35%;
+  top: 55%;
+}
+.cardn > .div {
+  left: 33%;
+  top: 70%;
 }
 @media screen and (max-height: 568px) {
   .Promotionposter >>> .el-carousel__container {

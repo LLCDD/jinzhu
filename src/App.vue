@@ -13,7 +13,7 @@
           <img @click="topy()" class="baozhu" src="../public/image/return.png" alt>
         </span>
         {{ this.$store.state.header }}
-        <span v-if="this.$store.state.tuijian" @click="tuijian" class="tuijian">推荐列表</span>
+        <!-- <span v-if="this.$store.state.tuijian" @click="tuijian" class="tuijian">推荐列表</span> -->
       </header>
       <!--搜索框 只在“微信”和“通讯录”页面下显示-->
       <!--四个门面页 “微信” “通讯录” “发现” “我”-->

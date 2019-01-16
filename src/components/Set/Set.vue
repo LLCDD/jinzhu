@@ -30,11 +30,11 @@ export default {
   },
   methods: {
     password() {
-      this.$router.replace({ name: "gaipassword" });
+      this.$router.push("/gaipassword");
     },
     // 修改支付密码
     password1() {
-      this.$router.replace({ name: "zhifupassworld" });
+      this.$router.push("/zhifupassworld");
     }
   }
 };

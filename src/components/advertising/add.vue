@@ -45,7 +45,7 @@ export default {
           if (res.code == 200) {
             console.log(res);
             this.$toasted.success(res.message).goAway(1000);
-            this.$router.replace({ name: "personal" });
+            this.$router.replace({ name: "advertising" });
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }

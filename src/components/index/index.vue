@@ -33,7 +33,7 @@
         <p>234234</p>
         <p>23423432</p>
       </div>-->
-      <van-swipe class="nr1" :touchable="false" :autoplay="1000" vertical :show-indicators="false ">
+      <van-swipe class="nr1" :touchable="false" :autoplay="500" vertical :show-indicators="false ">
         <van-swipe-item>
           <p class="mar">第一个世界啊撒旦解放</p>
           <p class="mar">啊撒旦解放那段艰难氨基酸的</p>

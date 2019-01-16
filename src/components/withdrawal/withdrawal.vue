@@ -12,7 +12,7 @@
       <span>提现到支付宝</span>
       <span style="color:#999999">{{ bao }}</span>
     </div>
-    <div @click="bool1()" class="card" :class="{ 'classy' : !class1 }">
+    <div @click="bool1()" class="cardt" :class="{ 'classy' : !class1 }">
       <img src="../../assets/imgs/yingh.png" alt>
       <span>提现到银联卡</span>
       <span style="color:#999999">{{ ka }}</span>
@@ -100,7 +100,7 @@ export default {
   left: 0.3rem;
   top: 23%;
 }
-.card {
+.cardt {
   width: 100%;
   position: relative;
   height: 0.9rem;
@@ -114,7 +114,7 @@ export default {
   margin-top: 0.2rem;
   font-size: 0.3rem;
 }
-.card > img {
+.cardt > img {
   height: 54%;
   position: absolute;
   left: 0.3rem;

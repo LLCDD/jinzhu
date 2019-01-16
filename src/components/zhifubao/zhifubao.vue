@@ -45,13 +45,13 @@ export default {
         if (res.code == 200) {
           Toast.clear();
           console.log(res);
-          if (res.data != {}) {
+          if (res.message == "未添支付宝账号") {
+            this.bool = false;
+          } else {
             this.bool = true;
             this.id = res.data.data[0].id;
             this.name = res.data.data[0].real_name;
             this.zhna = res.data.data[0].bao_num;
-          } else {
-            this.bool = false;
           }
         } else if (res.code == 400) {
           Toast.clear();

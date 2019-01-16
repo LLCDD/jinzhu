@@ -402,6 +402,16 @@ let router = new Router({
         requiresAuth: false
       }
     },
+    // 我的推荐
+    {
+      path: '/myrecommendation',
+      name: 'myrecommendation',
+      component: () =>
+        import(/* webpackChunkName: "register" */ './components/myrecommendation/myrecommendation'),
+      meta: {
+        requiresAuth: false
+      }
+    },
     // zhifubao
     {
       path: '/zhifubao',

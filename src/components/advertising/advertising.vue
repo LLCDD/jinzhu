@@ -46,12 +46,12 @@ export default {
       .then(res => {
         if (res.code == 200) {
           Toast.clear();
-          if (res.data != {}) {
+          if (res.message == "未添加银行卡") {
+            this.bool = false;
+          } else {
             this.bool = true;
             this.list = res.data.data[0];
             this.id = res.data.data[0].id;
-          } else {
-            this.bool = false;
           }
         } else if (res.code == 400) {
           Toast.clear();

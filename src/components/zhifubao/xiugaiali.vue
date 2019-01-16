@@ -60,6 +60,7 @@ export default {
         })
         .then(res => {
           if (res.code == 200) {
+            this.$router.replace({ name: "zhifubao" });
             this.$toasted.success(res.message).goAway(1000);
             this.$router.replace({ name: "zhifubao" });
           } else if (res.code == 400) {
