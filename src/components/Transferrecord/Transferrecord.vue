@@ -34,7 +34,9 @@ export default {
   },
   mounted() {
     this.$store.commit("footerTab", false);
-    this.$store.commit("headerTab", false);
+    this.$store.commit("headerTab", true);
+    this.$store.commit("fanhui", true);
+    this.$store.commit("header", "转账记录");
     if (this.list.length > 0) {
       this.bool = true;
     }

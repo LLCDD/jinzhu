@@ -23,7 +23,7 @@ export default {
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", true);
-    this.$store.commit("header", "发现");
+    this.$store.commit("header", "功能");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", false);
   },

@@ -3,9 +3,9 @@
     <p v-for="(item,index) in list" :key="index" v-if="!bool">
       <span>
         <img src="../../assets/imgs/person1.png" alt>
-        <span>343423423</span>
+        <span>{{ item.phone }}</span>
       </span>
-      <span>直推{{num}}人 间推{{num}}人</span>
+      <span>直推{{item.zhitui}}人 间推{{item.jiantui}}人</span>
     </p>
     <p class="p" v-if="bool">暂时没有更多数据了</p>
   </div>
@@ -15,9 +15,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      msg: "3345345",
-      list: [1],
-      num: 1,
+      list: [],
       bool: false
     };
   },
@@ -59,12 +57,12 @@ export default {
       .then(res => {
         if (res.code == 200) {
           Toast.clear();
-          // console.log(res);
+          console.log(res);
           if (res.message == "您没有推荐过任何人") {
             this.bool = true;
           } else {
             this.bool = false;
-            this.list = res.data;
+            this.list = res.data.data;
           }
         } else if (res.code == 400) {
           Toast.clear();

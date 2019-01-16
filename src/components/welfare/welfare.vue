@@ -12,12 +12,12 @@
       当天12点结算达到要求直接返到余额里
     </p>
     <div class="zirout">
-      <router-link tag="p" to="envelope">
+      <router-link to="envelope" replace tag="p">
         <span>发包记录</span>
         <br>
         <strong>总计 ( {{ msg1 }} )</strong>
       </router-link>
-      <router-link tag="p" to="nvelope">
+      <router-link to="nvelope" replace tag="p">
         <span>抢包记录</span>
         <br>
         <strong>总计 ( {{ msg2 }} )</strong>
@@ -40,7 +40,9 @@ export default {
   },
   mounted() {
     this.$store.commit("footerTab", false);
-    this.$store.commit("headerTab", false);
+    this.$store.commit("headerTab", true);
+    this.$store.commit("header", "玩家福利");
+    this.$store.commit("fanhui", true);
     if (this.list.length > 0) {
       this.bool = true;
     }

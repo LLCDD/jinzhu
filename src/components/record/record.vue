@@ -9,16 +9,16 @@
     </div>
     <div class="record">
       <p>
-        <router-link to="chongzhi" tag="span">充值记录</router-link>
+        <router-link to="chongzhi" replace tag="span">充值记录</router-link>
       </p>
       <p>
-        <router-link to="zhuangzhang" tag="span">提现记录</router-link>
+        <router-link to="zhuangzhang" replace tag="span">提现记录</router-link>
       </p>
       <p>
-        <router-link to="tixian" tag="span">支付记录</router-link>
+        <router-link to="tixian" replace tag="span">支付记录</router-link>
       </p>
       <p>
-        <router-link to="zhifu" tag="span">收取记录</router-link>
+        <router-link to="zhifu" replace tag="span">收取记录</router-link>
       </p>
     </div>
     <router-view></router-view>
@@ -36,6 +36,12 @@ export default {
     tap() {
       this.$router.push("/personal");
     }
+  },
+  mounted() {
+    this.$store.commit("headerTab", true);
+    this.$store.commit("header", "资产记录");
+    this.$store.commit("footerTab", false);
+    this.$store.commit("fanhui", true);
   }
 };
 </script>

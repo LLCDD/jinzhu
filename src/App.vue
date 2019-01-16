@@ -5,6 +5,7 @@
       <!-- <header class="app-header" :class="{'header-hide':!$store.state.headerStatus}">
         <wx-header :pageName="pageName"></wx-header>
       </header>-->
+      <!-- <div id="header1" v-if="this.$store.state.headerTab"> -->
       <header id="header" v-if="this.$store.state.headerTab">
         <span v-if="this.$store.state.ld">
           <img @click="ldy()" class="ld" src="./assets/imgs/ld.png" alt>
@@ -12,9 +13,11 @@
         <span v-if="this.$store.state.fanhui">
           <img @click="topy()" class="baozhu" src="../public/image/return.png" alt>
         </span>
-        {{ this.$store.state.header }}
+        <!-- <span class="sizeii">{{ this.$store.state.header }}</span> -->
         <!-- <span v-if="this.$store.state.tuijian" @click="tuijian" class="tuijian">推荐列表</span> -->
+        {{ this.$store.state.header }}
       </header>
+      <!-- </div> -->
       <!--搜索框 只在“微信”和“通讯录”页面下显示-->
       <!--四个门面页 “微信” “通讯录” “发现” “我”-->
       <section class="app-content">
@@ -111,7 +114,9 @@ $material-icons-font-path: "~material-icons/iconfont/";
   // background: url("./assets/imgs/background.png") no-repeat top;
 }
 #header {
+  // margin-top: 0.44rem;
   height: 0.88rem;
+  // padding-top: 0.44rem;
   width: 100%;
   background: url("./assets/imgs/background.png") no-repeat left;
   background-size: cover;
@@ -124,6 +129,19 @@ $material-icons-font-path: "~material-icons/iconfont/";
   color: #fff;
   z-index: 9999;
 }
+// #header {
+//   height: 0.88rem;
+//   position: absolute;
+//   text-align: center;
+//   bottom: 0;
+//   width: 100%;
+// }
+// .sizeii {
+//   position: absolute;
+//   background: red;
+//   left: 40%;
+//   // width:
+// }
 .ld {
   height: 0.34rem;
   width: 0.34rem;
