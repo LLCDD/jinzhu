@@ -50,7 +50,12 @@
     </div>
 
     <!-- 循环 -->
-    <div v-for="(item,index) in num" :key="index" class="hongbao" @click="xiqing(item.data.id)">
+    <div
+      v-for="(item,index) in num"
+      :key="index"
+      class="hongbao"
+      @click="xiqing(item.data.id,item.data.game_name)"
+    >
       <img class="touxian" src="../../assets/imgs/my.png" alt>
       <p class="pf">{{ item.data.id }}</p>
 
@@ -142,13 +147,28 @@ export default {
       this.show = true;
     },
     // 抢红包
-    xiqing(id) {
+    xiqing(id, name) {
+      console.log(id, name);
+      var _this = this;
+      _this.http
+        .post("/api/rob_package", { game_name: 1212 })
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+            _this.$router.push("/redenvelope/" + id);
+          } else if (res.code == 400) {
+            _this.$toasted.error(res.messsage, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          _this.$toasted.error(res.messsage, { icon: "error" }).goAway(1000);
+        });
       clearInterval(this.timer);
       this.show1 = true;
-      var _this = this;
+
       this.timer = setInterval(() => {
         _this.show1 = false;
-        this.$router.push("/redenvelope/" + id);
+
         clearInterval(this.timer);
       }, 400);
     },
@@ -195,8 +215,8 @@ export default {
       //连接建立之后执行send方法发送数据
       let actions = {
         type: "joinRoom",
-        // lastMsgId: localStorage.getItem("num"),
-        lastMsgId: 247,
+        lastMsgId: localStorage.getItem("num"),
+        // lastMsgId: 247,
         roomId: "1"
       };
       this.websocketsend(JSON.stringify(actions));
@@ -209,7 +229,7 @@ export default {
     websocketonmessage(e) {
       //数据接收
       const redata = JSON.parse(e.data);
-      // console.log(redata);
+      console.log(redata);
       var _this = this;
 
       _this.num.push(redata);
