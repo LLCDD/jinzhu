@@ -131,12 +131,15 @@ export default {
   display: block;
 }
 .divh >>> .van-step--horizontal:first-child .van-step__title {
-  margin-left: -5px;
+  margin-left: -8px;
 }
 .divh >>> .van-steps--horizontal .van-steps__items.van-steps__items--alone {
   padding-top: 0;
   height: 100%;
   padding-left: 8px;
+}
+.divh >>> .van-step__title {
+  /* margin-left: -8px; */
 }
 .divh >>> .van-step--horizontal .van-step__line {
   top: 110%;

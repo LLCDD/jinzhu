@@ -16,13 +16,25 @@ export default {
   data() {
     return {
       msg: "23",
-      list: [1, 2, 3, 4]
+      list: []
     };
   },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("header", "红包记录");
     this.$store.commit("fanhui", true);
+    this.http
+      .post("/api/bertoncini")
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res);
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   }
 };
 </script>

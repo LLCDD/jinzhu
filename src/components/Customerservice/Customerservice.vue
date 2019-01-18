@@ -1,7 +1,7 @@
 <template>
   <div class="Customerservice">
     <div id="data-list-content" class="cneter">
-      <div>
+      <!--  <div>
         <span class="spany">10:16</span>
       </div>
       <div class="touxiang">
@@ -14,15 +14,14 @@
       <div class="touxiang">
         <img src="../../assets/imgs/xiaolei.png" alt>
         <div>是念佛给暗色的btuituitui困难的烦恼的拉萨的奶粉阿拉山口带你飞</div>
-      </div>
-
+      </div>-->
       <!--  -->
-      <div class="liaotian" v-for="(item,index) in list.data" :key="index">
+      <div class="liaotian" v-for="(item,index) in list.data1" :key="index">
         <div>
-          <span class="spany">{{ item.updated_at }}</span>
+          <span class="spany">{{ item.created_at }}</span>
         </div>
         <br>
-        <div class="touxiang1">
+        <div :class="item.class">
           <img src="../../assets/imgs/xiaolei.png" alt>
           <div>{{ item.u_content }}</div>
         </div>
@@ -41,7 +40,8 @@ export default {
     return {
       msg: "345",
       text1: "",
-      list: ""
+      list: "",
+      timer: null
     };
   },
   mounted() {
@@ -49,19 +49,7 @@ export default {
     this.$store.commit("fanhui", true);
     this.$store.commit("headerTab", true);
     this.scrollToBottom();
-    this.http
-      .post("/api/chatroom_list")
-      .then(res => {
-        if (res.code == 200) {
-          this.list = res.data;
-          console.log(res.data);
-        } else if (res.code == 400) {
-          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-        }
-      })
-      .catch(res => {
-        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-      });
+    this.sendy();
   },
   methods: {
     send() {
@@ -94,7 +82,28 @@ export default {
         .catch(res => {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         });
+      var _this = this;
+      this.timer = setInterval(function() {
+        _this.sendy();
+      }, 4000);
     },
+    // 每次的更改
+    sendy() {
+      this.http
+        .post("/api/chatroom_list")
+        .then(res => {
+          if (res.code == 200) {
+            this.list = res.data;
+            console.log(res.data);
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+    },
+    // 滚动条的事件
     scrollToBottom() {
       this.$nextTick(() => {
         var div = document.getElementsByClassName("Customerservice")[0];
@@ -105,6 +114,9 @@ export default {
   },
   updated() {
     this.scrollToBottom();
+  },
+  destroyed() {
+    clearInterval(this.timer);
   }
 };
 </script>

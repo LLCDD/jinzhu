@@ -1,6 +1,6 @@
 <template>
   <div class="clearance">
-    <div class="qu" @click="stores">
+    <!-- <div class="qu" @click="stores">
       <p>新手1区</p>
       <span>10-50 赔率1.6赔</span>
     </div>
@@ -15,15 +15,32 @@
     <div class="qu" @click="stores">
       <p>王者区</p>
       <span>100-500 赔率1.6赔</span>
+    </div>-->
+    <div
+      class="qu"
+      v-for="(item,index) in list"
+      :key="index"
+      @click="stores(item.id,item.packet_num)"
+    >
+      <p>{{ item.type }}</p>
+      <span>{{ item.red_packet }} 赔率{{ item.odds }}赔</span>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      msg: "45345"
+      msg: "45345",
+      list: []
     };
+  },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
   },
   mounted() {
     this.$store.commit("headerTab", true);
@@ -31,9 +48,27 @@ export default {
     this.$store.commit("header", "红包扫雷");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
+    this.http
+      .post("/api/room_list", { game_id: "1" })
+      .then(res => {
+        if (res.code == 200) {
+          Toast.clear();
+          console.log(res.data.data);
+          this.list = res.data.data;
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   },
   methods: {
-    stores() {
+    stores(id, num) {
+      console.log(id, num);
+      localStorage.setItem("geshu", num);
       this.$router.push("/Mineclearance");
     }
   }

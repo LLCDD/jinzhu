@@ -9,39 +9,63 @@
       <div class="first">
         <img src="../../assets/imgs/setup.png" alt>
       </div>
-      <p>{{ msg }}</p>
-      <p class="mar">{{ money }}</p>
+      <p>{{ list.user }}</p>
+      <p class="mar">{{ list.money }}</p>
       <div class="zong">{{ ge }}个红包共{{ money }}元</div>
       <div class="jil">
-        <div v-for="(item,index) in list" :key="index">
+        <div v-for="(item,index) in list.data" :key="index">
           <div>
             <img class="xqt" src="../../assets/imgs/setup.png" alt>
             <p class="name">
-              {{ name }}
+              {{ item.phone }}
               <br>
-              <span>{{ name }}</span>
+              <span>{{ item.created_at }}</span>
             </p>
           </div>
-          <img class="xqtl" src="../../assets/imgs/xiaolei.png" alt>
-          <div class="line">{{ money }}元</div>
+          <img v-if="item.is_spot == 1" class="xqtl" src="../../assets/imgs/xiaolei.png" alt>
+          <div class="line">{{ item.money }}元</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
-      msg: "15866666666",
       money: "100.00",
-      ge: "5",
+      ge: localStorage.getItem("geshu"),
       name: "12321-12323-23",
-      list: [1, 2, 4, 5]
+      list: []
     };
+  },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中...",
+      duration: 30000
+    });
   },
   mounted() {
     this.$store.commit("headerTab", false);
+    console.log(this.$route.params.id);
+    this.http
+      .post("/api/cured", { push_id: this.$route.params.id })
+      .then(res => {
+        if (res.code == 200) {
+          Toast.clear();
+          console.log(res.data.user);
+          this.list = res.data;
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   },
   methods: {
     fanhui() {

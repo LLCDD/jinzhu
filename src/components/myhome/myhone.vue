@@ -71,7 +71,7 @@ export default {
 }
 .faxain {
   background: url("../../assets/imgs/kefu.png") no-repeat left;
-  background-size: cover;
+  background-size: 100% 100%;
   position: relative;
 }
 .faxain1 {

@@ -9,7 +9,7 @@ console.log(config)
 // 创建axios实例
 const http = axios.create({
   baseURL: config.api_base,
-  timeout: 15000,
+  timeout: 30000,
   transformRequest: [
     function (data, headers) {
       data = data || {}

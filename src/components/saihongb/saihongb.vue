@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       money: "",
-      ge: "7",
+      ge: "3",
       dian: ""
     };
   },
@@ -43,6 +43,7 @@ export default {
     this.$store.commit("header", "发红包");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
+    this.ge = localStorage.getItem("geshu");
   },
   methods: {
     saibao() {

@@ -3,7 +3,7 @@
     <div class="warpo">
       <span class="spanv">14.18</span>
     </div>
-    <div class="hongbao" @click="xiqing()">
+    <!-- <div class="hongbao" @click="xiqing()">
       <img class="touxian" src="../../assets/imgs/my.png" alt>
       <p class="pf">123232132</p>
       <div class="bao">
@@ -38,20 +38,7 @@
         <br>
         <p>{{ msg1}}</p>
       </div>
-    </div>
-
-    <div class="hongbao" @click="xiqing()">
-      <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">123232132</p>
-      <div class="bao">
-        <p>{{ msg }}</p>
-        <br>
-        <p>{{ msg1}}</p>
-      </div>
-    </div>
-    <div class="warpo">
-      <span class="spanv">14.18</span>
-    </div>
+    </div>-->
     <div class="hongbao">
       <img class="touxian" src="../../assets/imgs/my.png" alt>
       <p class="pf">123232132</p>
@@ -61,6 +48,21 @@
         <p>{{ msg1}}</p>
       </div>
     </div>
+
+    <!-- 循环 -->
+    <div v-for="(item,index) in num" :key="index" class="hongbao" @click="xiqing(item.data.id)">
+      <img class="touxian" src="../../assets/imgs/my.png" alt>
+      <p class="pf">{{ item.data.id }}</p>
+
+      <div class="bao">
+        <p>{{ msg }}</p>
+        <br>
+        <p>{{ msg1}}</p>
+      </div>
+    </div>
+    <!-- <div class="warpo">
+      <span class="spanv">14.18</span>
+    </div>-->
     <div class="warpu">
       <div>
         <img src="../../assets/imgs/tbb.png" alt>
@@ -102,7 +104,7 @@
   </div>
 </template>
 <script>
-import { Popup } from "vant";
+import { Popup, Toast } from "vant";
 export default {
   data() {
     return {
@@ -112,9 +114,16 @@ export default {
       show: false,
       show1: false,
       show2: false,
-      timer: null
+      timer: null,
+      websock: null,
+      num: [],
+      count: 0
     };
   },
+  created() {
+    this.initWebSocket();
+  },
+
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
@@ -122,6 +131,8 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
     this.scrollToBottom();
+    // console.log()
+    Toast.clear();
   },
   methods: {
     fabao() {
@@ -131,13 +142,13 @@ export default {
       this.show = true;
     },
     // 抢红包
-    xiqing() {
+    xiqing(id) {
       clearInterval(this.timer);
       this.show1 = true;
       var _this = this;
       this.timer = setInterval(() => {
         _this.show1 = false;
-        this.$router.push("/redenvelope");
+        this.$router.push("/redenvelope/" + id);
         clearInterval(this.timer);
       }, 400);
     },
@@ -156,13 +167,77 @@ export default {
     // 滚动条
     scrollToBottom: function() {
       this.$nextTick(() => {
+        var _this = this;
         var div = document.getElementsByClassName("Mineclearance")[0];
-        div.scrollTop = div.scrollHeight;
+        this.timer1 = setInterval(function() {
+          if (_this.count <= div.scrollHeight) {
+            div.scrollTop = _this.count += 64;
+          } else {
+            this.count = div.scrollHeight;
+          }
+        }, 50);
+        // console.log();
+        // div.scrollTop = ;
       });
+    },
+    // ------------webscoket
+    initWebSocket() {
+      //初始化weosocket
+      const wsuri = "ws://min.frqrjg.top/ws";
+      this.websock = new WebSocket(wsuri);
+      this.websock.onmessage = this.websocketonmessage;
+      this.websock.onopen = this.websocketonopen;
+      this.websock.onerror = this.websocketonerror;
+      this.websock.onclose = this.websocketclose;
+      //				console.log("连接成功")
+    },
+    websocketonopen() {
+      //连接建立之后执行send方法发送数据
+      let actions = {
+        type: "joinRoom",
+        // lastMsgId: localStorage.getItem("num"),
+        lastMsgId: 247,
+        roomId: "1"
+      };
+      this.websocketsend(JSON.stringify(actions));
+      //				console.log()
+    },
+    websocketonerror() {
+      //连接建立失败重连
+      this.initWebSocket();
+    },
+    websocketonmessage(e) {
+      //数据接收
+      const redata = JSON.parse(e.data);
+      // console.log(redata);
+      var _this = this;
+
+      _this.num.push(redata);
+
+      // this.num.push(redata);
+      // console.log(this.num);
+    },
+    websocketsend(Data) {
+      //数据发送
+      this.websock.send(Data);
+      console.log(Data);
+      console.log("发送成功----");
+    },
+    websocketclose(e) {
+      //关闭
+      console.log("断开连接", e);
     }
   },
   updated() {
-    this.scrollToBottom();
+    // this.scrollToBottom();
+    // console.log(this.num[this.num.length - 1]);
+    if (this.num.length > 0) {
+      localStorage.setItem("num", this.num[this.num.length - 1].data.id);
+    }
+  },
+  destroyed() {
+    // console.log(this.num);
+    this.websock.close(); //离开路由之后断开websocket连接
   }
 };
 </script>
@@ -175,7 +250,7 @@ export default {
   padding-top: 0.88rem;
   text-align: center;
   padding-bottom: 1.4rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .hiy {

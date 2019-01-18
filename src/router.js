@@ -264,7 +264,7 @@ let router = new Router({
     },
     // redenvelope  红包详情请
     {
-      path: '/redenvelope',
+      path: '/redenvelope/:id',
       name: 'redenvelope',
       component: () =>
         import(/* webpackChunkName: "register" */ './components/redenvelope/redenvelope.vue'),
@@ -412,6 +412,7 @@ let router = new Router({
         requiresAuth: false
       }
     },
+    // redenvelope
     // zhifubao
     {
       path: '/zhifubao',

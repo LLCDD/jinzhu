@@ -15,15 +15,20 @@
       height="3.78rem"
       :loop="true"
     >
-      <el-carousel-item class="card" style="background:red">
-        <img src="../../assets/imgs/001.png" alt>
+      <el-carousel-item
+        v-for="(item,index) in list"
+        :key="index"
+        class="card"
+        style="background:red"
+      >
+        <img :src="url +'/'+item" alt>
       </el-carousel-item>
-      <el-carousel-item class="card" style="background:pink">
+      <!-- <el-carousel-item class="card" style="background:pink">
         <img src="../../assets/imgs/002.png" alt>
       </el-carousel-item>
       <el-carousel-item class="card" style="background:yellow">
         <img src="../../assets/imgs/003.png" alt>
-      </el-carousel-item>
+      </el-carousel-item>-->
     </el-carousel>
     <div class="redy"></div>
     <div class="nr">
@@ -66,7 +71,9 @@ import { NoticeBar } from "vant";
 export default {
   data() {
     return {
-      msg: "首页"
+      msg: "首页",
+      list: "",
+      url: localStorage.getItem("url")
     };
   },
   mounted() {
@@ -75,6 +82,26 @@ export default {
     this.$store.commit("header", "金猪");
     this.$store.commit("ld", true);
     this.$store.commit("fanhui", false);
+    if (localStorage.getItem("num")) {
+    } else {
+      localStorage.setItem("num", 0);
+    }
+    this.http
+      .post("/api/banner")
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res);
+          localStorage.setItem("url", res.data.url);
+          localStorage.setItem("imgy", JSON.stringify(res.data.data));
+          this.list = res.data.data;
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
+    this.list = JSON.parse(localStorage.getItem("imgy"));
   },
   methods: {
     // 游戏规则
