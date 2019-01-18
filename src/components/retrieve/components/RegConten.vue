@@ -165,7 +165,7 @@ export default {
 .put > input {
   border: 0;
   background: none;
-  /* color: #fff; */
+  color: #fff;
 }
 .put > span {
   display: inline-block;

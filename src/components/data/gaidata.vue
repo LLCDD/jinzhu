@@ -10,7 +10,7 @@
     </div>
     <div class="sty" style="position: relative;">
       <span class="first">性别</span>
-      <van-radio-group v-model="radio" style="display:inline-block;height:0.9rem">
+      <van-radio-group v-model="radio" style="display:inline-block;height:0.9rem;margin-left:-5%">
         <van-radio checked-color="#f1941d" style="display:inline;" name="1">男</van-radio>
         <van-radio checked-color="#f1941d" style="display:inline" name="2">女</van-radio>
       </van-radio-group>
@@ -88,6 +88,9 @@ export default {
   display: inline-block;
   width: 22%;
   height: 100%;
+}
+.div1 > div > input {
+  height: 80%;
 }
 .name {
   color: #999999;
