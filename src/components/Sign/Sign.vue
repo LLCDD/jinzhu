@@ -6,22 +6,23 @@
         <span @click="instructions()">规则说明</span>
       </header>
       <p class="p">累积领取金额 ( 元 )</p>
-      <p class="p1">{{ data.datas.allmoney }}</p>
+      <p class="p1">{{ data.money }}</p>
     </div>
     <div class="divq">
       <p class="py">
         <span>已连续签到</span>
         <br>
-        <span class="spy">{{ data.datas.sign_day }} 天</span>
+        <span class="spy">{{ data.sing_day }} 天</span>
       </p>
       <div class="py1">
         <div class="dao">
-          <van-steps active-color="#f1941d" :active="data.datas.sign_day-1">
-            <van-step>{{data.data[4].md}}</van-step>
-            <van-step>{{data.data[3].md}}</van-step>
-            <van-step>{{data.data[2].md}}</van-step>
-            <van-step>{{data.data[1].md}}</van-step>
-            <van-step>{{data.data[0].md}}</van-step>
+          <!--  -->
+          <van-steps active-color="#f1941d" :active="data.sing_day-1">
+            <van-step v-for="(item,index) in data.sign" :key="index">{{ item }}</van-step>
+            <!-- <van-step></van-step>
+            <van-step></van-step>
+            <van-step></van-step>
+            <van-step></van-step>-->
           </van-steps>
         </div>
       </div>

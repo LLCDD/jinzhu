@@ -42,11 +42,13 @@ http.interceptors.response.use(
     let msg = data.message || ''
     if (data.code == 401) {
       // 账号禁用
+      localStorage.clear()
       Vue.toasted.error(data.message, { icon: 'error' }).goAway(2000)
       router.replace({ name: 'login' })
       return Promise.reject(new Error(msg))
     } else if (data.code == 403) {
       // 登录失效 需重新登录
+      localStorage.clear()
       Vue.toasted.error('登录失效 需重新登录', { icon: 'error' }).goAway(2000)
       router.replace({ name: 'login' })
       return Promise.reject(new Error(msg))

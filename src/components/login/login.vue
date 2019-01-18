@@ -1,5 +1,5 @@
 <template>
-  <div class="div">
+  <div class="divyyyy">
     <lg-header></lg-header>
     <!-- <img class="img" src="../../assets/img/logo.png" alt> -->
     <lc-conent></lc-conent>
@@ -28,12 +28,12 @@ export default {
 </script>
 
 <style scoped>
-.div {
+.divyyyy {
   background: url("../../assets/imgs/background.png") no-repeat bottom;
-  background-size: cover;
+  background-size: 100% 100%;
   margin: 0 auto;
   min-height: 100%;
   /* padding-top: 3.23rem; */
-  overflow-y: auto;
+  /* overflow-y: auto; */
 }
 </style>

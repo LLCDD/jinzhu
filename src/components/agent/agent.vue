@@ -6,19 +6,19 @@
         <span @click="zhuan()" class="zhuan">转账记录</span>
       </header>
       <p class="p">我的余额 ( 元 )</p>
-      <p class="p1">{{ msg }}</p>
+      <p class="p1">{{ money1 }}</p>
     </div>
     <div class="vip">
       <span>会员账号</span>
-      <input type="text" placeholder="输入会员账号">
+      <input type="text" v-model="vip" placeholder="输入会员账号">
     </div>
     <div class="vip">
       <span>充值金额</span>
-      <input type="text" placeholder="输入充值金额">
+      <input type="text" v-model="money" placeholder="输入充值金额">
     </div>
     <div class="vip">
       <span>支付密码</span>
-      <input type="text" placeholder="输入支付密码">
+      <input type="text" v-model="passworld" placeholder="输入支付密码">
     </div>
     <button class="buty" @click="top()">确认转账</button>
   </div>
@@ -28,7 +28,10 @@
 export default {
   data() {
     return {
-      msg: "9.99"
+      money: "",
+      vip: "",
+      passworld: "",
+      money1: "222"
     };
   },
   mounted() {
@@ -42,6 +45,22 @@ export default {
     // 转账
     top() {
       console.log("转账");
+      this.http
+        .post("/api/pay_order", {
+          phone: this.vip,
+          money: this.money,
+          pay_password: this.passworld
+        })
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     },
     // 转账记录
     zhuan() {

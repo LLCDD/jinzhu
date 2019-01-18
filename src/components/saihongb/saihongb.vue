@@ -5,7 +5,7 @@
         <span>请输入红包总金额</span>
       </p>
       <p>
-        <input type="text" placeholder="0.00" v-model="money">
+        <input dir="rtl" type="text" placeholder="0.00" v-model="money">
         <span>元</span>
       </p>
     </div>
@@ -14,7 +14,7 @@
         <span>红包个数</span>
       </p>
       <p>
-        <span>{{ ge }}元</span>
+        <span>{{ ge }}个</span>
       </p>
     </div>
     <div>
@@ -22,7 +22,7 @@
         <span>雷点数</span>
       </p>
       <p>
-        <input style="width:2rem" type="text" placeholder="填写雷点数" v-model="dian">
+        <input dir="rtl" style="width:2rem" type="text" placeholder="填写雷点数" v-model="dian">
       </p>
     </div>
     <button class="saibu" @click="saibao">塞进红包</button>
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       money: "",
-      ge: "",
+      ge: "7",
       dian: ""
     };
   },
@@ -46,7 +46,25 @@ export default {
   },
   methods: {
     saibao() {
-      console.log("赛宝");
+      this.http
+        .post("/api/hair_package", {
+          game_type: 1,
+          room_id: 1,
+          money: this.money,
+          spot: this.dian
+        })
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+            this.$toasted.success(res.message).goAway(1000);
+            this.$router.replace({ name: "Mineclearance" });
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     }
   }
 };
@@ -75,6 +93,7 @@ export default {
   /* background: red; */
   width: 1rem;
   color: #999;
+  margin-right: 0.3rem;
 }
 .saibu {
   height: 0.9rem;

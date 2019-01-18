@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content1">
     <!-- <input type="text" placeholder="请输入账号" v-model="phone">
     <input type="password" placeholder="请输入密码" v-model="password">-->
     <div class="landing">
@@ -11,7 +11,7 @@
       <input type="password" placeholder="请输入密码" v-model="password">
     </div>
     <div class="login" @click="login">登录</div>
-    <div class="problem">
+    <div class="problemlll">
       <router-link tag="span" to="/register">立即注册</router-link>
       <router-link tag="span" to="/retrieve">忘记密码？</router-link>
     </div>
@@ -58,19 +58,19 @@ export default {
 </script>
 
 <style scoped>
-.content {
+.content1 {
   width: 100%;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
-.landing {
+.content1 > .landing {
   width: 100%;
   height: 0.9rem;
   border: 1px solid #fff;
   border-radius: 5px;
   margin-bottom: 0.2rem;
 }
-.landing > span {
+.content1 > .landing > span {
   line-height: 0.9rem;
   color: #fff;
   font-weight: 500;
@@ -79,7 +79,7 @@ export default {
   font-size: 0.28rem;
   padding-left: 0.3rem;
 }
-.landing > input {
+.content1 > .landing > input {
   background: none;
   color: #fff;
 }
@@ -95,13 +95,13 @@ export default {
   color: #f1941d;
   margin-bottom: 0.2rem;
 }
-.problem {
+.problemlll {
   width: 100%;
   height: 0.44rem;
   display: flex;
   justify-content: space-between;
 }
-.problem span {
+.problemlll span {
   width: 1.2rem;
   height: 0.44rem;
   line-height: 0.44rem;

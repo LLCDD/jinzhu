@@ -35,8 +35,18 @@ export default {
     },
     // 代理
     daili() {
-      // console.log("代理");
-      this.$router.push("/agent");
+      this.http
+        .post("/api/agent_wallet")
+        .then(res => {
+          if (res.code == 200) {
+            this.$router.push("/agent");
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     },
     // 更多期待
     genduo() {

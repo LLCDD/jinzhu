@@ -1,5 +1,5 @@
 <template>
-  <div class="allcontent">
+  <div class="allcontent11">
     <img src="../../../assets/imgs/3.png" alt>
   </div>
 </template>
@@ -9,12 +9,12 @@ export default {};
 </script>
 
 <style scoped>
-.allcontent {
+.allcontent11 {
   /* background: red; */
   padding-top: 1.9rem;
   padding-bottom: 1.4rem;
 }
-.allcontent img {
+.allcontent11 > img {
   display: block;
   width: 2.1rem;
   height: 2.4rem;

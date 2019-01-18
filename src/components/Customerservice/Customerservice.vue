@@ -1,46 +1,31 @@
 <template>
   <div class="Customerservice">
-    <div class="cneter">
+    <div id="data-list-content" class="cneter">
       <div>
         <span class="spany">10:16</span>
       </div>
       <div class="touxiang">
         <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr2">是念佛给暗色的困tuituituitui粉tui阿拉山口带你飞</div>
+        <div>是念佛给暗色的困tuituituitui粉tui阿拉山口带你飞</div>
       </div>
       <div>
         <span class="spany">10:16</span>
       </div>
       <div class="touxiang">
         <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr2">是念佛给暗色的btuituitui困难的烦恼的拉萨的奶粉阿拉山口带你飞</div>
+        <div>是念佛给暗色的btuituitui困难的烦恼的拉萨的奶粉阿拉山口带你飞</div>
       </div>
-      <div>
-        <span class="spany">10:16</span>
-      </div>
-      <div class="touxiang1">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr1">是念佛给暗色的btuituitui困难的烦恼的拉萨的奶粉阿拉山口带你飞</div>
-      </div>
-      <div class="touxiang1">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr1">是念佛给暗色的btuituitui困难的烦恼的拉萨的奶粉阿拉山口带你飞</div>
-      </div>
-      <div class="touxiang1">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr1">是念佛给暗色的btuituitui困难的烦恼的拉萨的奶粉阿拉山口带你飞</div>
-      </div>
-      <div class="touxiang">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr2">是念佛给暗色的困tuituituitui粉tui阿拉山口带你飞</div>
-      </div>
-      <div class="touxiang">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr2">是念佛给暗色的困tuituituitui粉tui阿拉山口带你飞</div>
-      </div>
-      <div class="touxiang">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div class="nr2">是念佛给暗色的困tuituituitui粉tui阿拉山口带你飞</div>
+
+      <!--  -->
+      <div class="liaotian" v-for="(item,index) in list.data" :key="index">
+        <div>
+          <span class="spany">{{ item.updated_at }}</span>
+        </div>
+        <br>
+        <div class="touxiang1">
+          <img src="../../assets/imgs/xiaolei.png" alt>
+          <div>{{ item.u_content }}</div>
+        </div>
       </div>
     </div>
     <!--  -->
@@ -55,13 +40,28 @@ export default {
   data() {
     return {
       msg: "345",
-      text1: ""
+      text1: "",
+      list: ""
     };
   },
   mounted() {
     this.$store.commit("header", "客服中心");
     this.$store.commit("fanhui", true);
     this.$store.commit("headerTab", true);
+    this.scrollToBottom();
+    this.http
+      .post("/api/chatroom_list")
+      .then(res => {
+        if (res.code == 200) {
+          this.list = res.data;
+          console.log(res.data);
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   },
   methods: {
     send() {
@@ -70,6 +70,23 @@ export default {
         .then(res => {
           if (res.code == 200) {
             this.text1 = "";
+            this.http
+              .post("/api/chatroom_list")
+              .then(res => {
+                if (res.code == 200) {
+                  this.list = res.data;
+                  console.log(res.data);
+                } else if (res.code == 400) {
+                  this.$toasted
+                    .error(res.message, { icon: "error" })
+                    .goAway(1000);
+                }
+              })
+              .catch(res => {
+                this.$toasted
+                  .error(res.message, { icon: "error" })
+                  .goAway(1000);
+              });
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }
@@ -77,16 +94,28 @@ export default {
         .catch(res => {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         });
+    },
+    scrollToBottom() {
+      this.$nextTick(() => {
+        var div = document.getElementsByClassName("Customerservice")[0];
+        // console.log();
+        div.scrollTop = div.scrollHeight;
+      });
     }
+  },
+  updated() {
+    this.scrollToBottom();
   }
 };
 </script>
 <style scoped>
 .Customerservice {
   padding-top: 0.88rem;
-  min-height: 100%;
+  /* min-height: 100%; */
+  height: 100%;
   background: #f5f5f5;
   padding-bottom: 1.3rem;
+  overflow: auto;
 }
 .Customerservice > footer {
   position: fixed;
@@ -115,21 +144,27 @@ export default {
   background: #f1941d;
   color: #fff;
 }
-.cneter {
+.Customerservice > .cneter {
   min-height: 100%;
   text-align: center;
   padding: 0 0.3rem;
   overflow: hidden;
 }
+.liaotian {
+  float: right;
+  width: 100%;
+}
 .spany {
   display: inline-block;
   background: #ccc;
-  width: 1.3rem;
+  min-width: 1.3rem;
   height: 0.3rem;
   text-align: center;
   color: #fff;
   border-radius: 0.4rem;
+  /* margin: 0 auto; */
   margin: 0.3rem 0;
+  /* margin-bottom: 1rem; */
 }
 .touxiang {
   /* background: red; */
@@ -153,7 +188,7 @@ export default {
   border-radius: 50%;
   float: left;
 }
-.nr2 {
+.touxiang > div {
   background: pink;
   display: inline-block;
   float: left;
@@ -161,7 +196,7 @@ export default {
   font-size: 0.3rem;
   color: #fff;
   background: #ff5858;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   margin-left: 0.2rem;
   max-width: 60%;
 }
@@ -171,7 +206,7 @@ export default {
   border-radius: 50%;
   float: right;
 }
-.nr1 {
+.touxiang1 > div {
   background: pink;
   display: inline-block;
   float: right;
@@ -179,7 +214,7 @@ export default {
   font-size: 0.3rem;
   color: #fff;
   background: #f1941d;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   margin-right: 0.2rem;
   max-width: 60%;
 }

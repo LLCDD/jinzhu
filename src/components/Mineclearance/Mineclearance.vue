@@ -12,6 +12,43 @@
         <p>{{ msg1}}</p>
       </div>
     </div>
+    <div class="hongbao" @click="xiqing()">
+      <img class="touxian" src="../../assets/imgs/my.png" alt>
+      <p class="pf">123232132</p>
+      <div class="bao">
+        <p>{{ msg }}</p>
+        <br>
+        <p>{{ msg1}}</p>
+      </div>
+    </div>
+    <div class="hongbao" @click="xiqing()">
+      <img class="touxian" src="../../assets/imgs/my.png" alt>
+      <p class="pf">123232132</p>
+      <div class="bao">
+        <p>{{ msg }}</p>
+        <br>
+        <p>{{ msg1}}</p>
+      </div>
+    </div>
+    <div class="hongbao" @click="xiqing()">
+      <img class="touxian" src="../../assets/imgs/my.png" alt>
+      <p class="pf">123232132</p>
+      <div class="bao">
+        <p>{{ msg }}</p>
+        <br>
+        <p>{{ msg1}}</p>
+      </div>
+    </div>
+
+    <div class="hongbao" @click="xiqing()">
+      <img class="touxian" src="../../assets/imgs/my.png" alt>
+      <p class="pf">123232132</p>
+      <div class="bao">
+        <p>{{ msg }}</p>
+        <br>
+        <p>{{ msg1}}</p>
+      </div>
+    </div>
     <div class="warpo">
       <span class="spanv">14.18</span>
     </div>
@@ -84,6 +121,7 @@ export default {
     this.$store.commit("header", "红包扫雷");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
+    this.scrollToBottom();
   },
   methods: {
     fabao() {
@@ -113,18 +151,31 @@ export default {
         this.$router.push("/redenvelope");
         clearInterval(this.timer);
       }, 400);
+    },
+
+    // 滚动条
+    scrollToBottom: function() {
+      this.$nextTick(() => {
+        var div = document.getElementsByClassName("Mineclearance")[0];
+        div.scrollTop = div.scrollHeight;
+      });
     }
+  },
+  updated() {
+    this.scrollToBottom();
   }
 };
 </script>
 <style scoped>
 .Mineclearance {
-  min-height: 100%;
+  /* min-height: 100%; */
+  height: 100%;
   background: #f5f5f5;
   padding: 0 0.3rem;
   padding-top: 0.88rem;
   text-align: center;
   padding-bottom: 1.4rem;
+  overflow: scroll;
 }
 
 .hiy {
@@ -162,10 +213,12 @@ export default {
   width: 100%;
   height: 0.9rem;
   line-height: 0.9rem;
+  margin-top: 0.2rem;
 }
 .hongbao {
   width: 60%;
   height: 1.6rem;
+  margin-top: 0.3rem;
 }
 .touxian {
   background: red;

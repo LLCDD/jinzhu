@@ -50,9 +50,13 @@ Vue.mixin({
   }
 })
 console.log(process.env.NODE_ENV)
-
 function plusReady() {
+
   checkUpdate()
+  window.plus.navigator.setStatusBarStyle('light');
+  // 
+  window.plus.navigator.setStatusBarBackground('#f1941d');
+
   // 设置一个全局plusready状态
   store.state.isplusReady = true
   store.state.storageEngine = plus.storage
@@ -69,8 +73,11 @@ function plusReady() {
   plus.key.addEventListener('backbutton', function () {
     // 如果是首页则执行退出操作
     if (
-      router.currentRoute.path === '/home' ||
-      router.currentRoute.path === '/my-center'
+      router.currentRoute.path === '/index' ||
+      router.currentRoute.path === '/task' ||
+      router.currentRoute.path === '/myhone' ||
+      router.currentRoute.path === '/personal' ||
+      router.currentRoute.path === '/login'
     ) {
       time = null
       if (now) {
