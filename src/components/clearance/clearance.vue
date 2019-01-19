@@ -1,21 +1,5 @@
 <template>
   <div class="clearance">
-    <!-- <div class="qu" @click="stores">
-      <p>新手1区</p>
-      <span>10-50 赔率1.6赔</span>
-    </div>
-    <div class="qu" @click="stores">
-      <p>新手2区</p>
-      <span>10-50 赔率1.6赔</span>
-    </div>
-    <div class="qu" @click="stores">
-      <p>休闲区</p>
-      <span>50-100 赔率1.6赔</span>
-    </div>
-    <div class="qu" @click="stores">
-      <p>王者区</p>
-      <span>100-500 赔率1.6赔</span>
-    </div>-->
     <div
       class="qu"
       v-for="(item,index) in list"

@@ -60,7 +60,7 @@ export default {
             console.log(res);
             this.$toasted.success(res.message).goAway(1000);
             // this.$router.replace({ name: "Mineclearance" });
-            this.$router.push(
+            this.$router.replace(
               "/Mineclearance/" + localStorage.getItem("avatar")
             );
           } else if (res.code == 400) {

@@ -50,6 +50,7 @@ export default {
   mounted() {
     this.$store.commit("headerTab", false);
     console.log(this.$route.params.id);
+    this.$store.commit("fanhui3", true);
     this.http
       .post("/api/cured", { push_id: this.$route.params.id })
       .then(res => {
@@ -74,7 +75,7 @@ export default {
     // 红包记录
     jilv() {
       console.log("记录");
-      this.$router.push("/envelopetorecord");
+      this.$router.replace("/envelopetorecord");
     }
   }
 };
