@@ -244,7 +244,7 @@ let router = new Router({
     },
     // 红包扫雷  Mineclearance
     {
-      path: '/Mineclearance',
+      path: '/Mineclearance/:biaoshi',
       name: 'Mineclearance',
       component: () =>
         import(/* webpackChunkName: "register" */ './components/Mineclearance/Mineclearance.vue'),

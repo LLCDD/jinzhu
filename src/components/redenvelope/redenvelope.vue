@@ -11,7 +11,7 @@
       </div>
       <p>{{ list.user }}</p>
       <p class="mar">{{ list.money }}</p>
-      <div class="zong">{{ ge }}个红包共{{ money }}元</div>
+      <div class="zong">{{ ge }}个红包共{{ list.money }}元</div>
       <div class="jil">
         <div v-for="(item,index) in list.data" :key="index">
           <div>

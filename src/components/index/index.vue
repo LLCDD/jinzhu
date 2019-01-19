@@ -4,7 +4,7 @@
       class="text"
       style="background:#ffffff"
       :speed="20"
-      text="足协杯战线连续第2年上演广州德比战，上赛季半决赛上恒大以两回合5-3的总比分淘汰富力。"
+      :text="conetent"
       left-icon="volume-o"
     />
     <el-carousel
@@ -15,12 +15,7 @@
       height="3.78rem"
       :loop="true"
     >
-      <el-carousel-item
-        v-for="(item,index) in list"
-        :key="index"
-        class="card"
-        style="background:red"
-      >
+      <el-carousel-item v-for="(item,index) in list" :key="index" class="card">
         <img :src="url +'/'+item" alt>
       </el-carousel-item>
       <!-- <el-carousel-item class="card" style="background:pink">
@@ -73,7 +68,8 @@ export default {
     return {
       msg: "首页",
       list: "",
-      url: localStorage.getItem("url")
+      url: "http://192.168.0.111/upload",
+      conetent: ""
     };
   },
   mounted() {
@@ -82,10 +78,7 @@ export default {
     this.$store.commit("header", "金猪");
     this.$store.commit("ld", true);
     this.$store.commit("fanhui", false);
-    if (localStorage.getItem("num")) {
-    } else {
-      localStorage.setItem("num", 0);
-    }
+
     this.http
       .post("/api/banner")
       .then(res => {
@@ -94,6 +87,8 @@ export default {
           localStorage.setItem("url", res.data.url);
           localStorage.setItem("imgy", JSON.stringify(res.data.data));
           this.list = res.data.data;
+          this.url = res.data.url;
+          this.conetent = res.data.notice;
         } else if (res.code == 400) {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
@@ -102,6 +97,7 @@ export default {
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
     this.list = JSON.parse(localStorage.getItem("imgy"));
+    this.url = JSON.parse(localStorage.getItem("url"));
   },
   methods: {
     // 游戏规则

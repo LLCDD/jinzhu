@@ -39,7 +39,7 @@
         <p>{{ msg1}}</p>
       </div>
     </div>-->
-    <div class="hongbao">
+    <!-- <div class="hongbao">
       <img class="touxian" src="../../assets/imgs/my.png" alt>
       <p class="pf">123232132</p>
       <div class="bao" @click="xiqing()">
@@ -47,17 +47,16 @@
         <br>
         <p>{{ msg1}}</p>
       </div>
-    </div>
-
+    </div>-->
     <!-- 循环 -->
     <div
       v-for="(item,index) in num"
       :key="index"
       class="hongbao"
-      @click="xiqing(item.data.id,item.data.game_name)"
+      @click="xiqing(item.id,item.game_name)"
     >
       <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">{{ item.data.id }}</p>
+      <p class="pf">{{ item.id }}</p>
 
       <div class="bao">
         <p>{{ msg }}</p>
@@ -106,6 +105,9 @@
         <img src="../../assets/imgs/qinglei.png" alt>
       </div>
     </van-popup>
+    <audio id="music">
+      <source src="../../assets/music/music2.mp3">
+    </audio>
   </div>
 </template>
 <script>
@@ -114,10 +116,12 @@ export default {
   data() {
     return {
       msg: "恭喜发财 , 大吉大利",
-      msg1: "20-6",
+      msg1: localStorage.getItem("guize"),
       money: "34",
       show: false,
+      // 红包
       show1: false,
+      // 雷
       show2: false,
       timer: null,
       websock: null,
@@ -136,8 +140,14 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
     this.scrollToBottom();
+    localStorage.setItem("panduan", 0);
     // console.log()
     Toast.clear();
+    console.log(this.$route.params.biaoshi);
+    if (localStorage.getItem("num" + this.$route.params.biaoshi)) {
+    } else {
+      localStorage.setItem("num" + this.$route.params.biaoshi, 0);
+    }
   },
   methods: {
     fabao() {
@@ -148,29 +158,51 @@ export default {
     },
     // 抢红包
     xiqing(id, name) {
-      console.log(id, name);
-      var _this = this;
-      _this.http
-        .post("/api/rob_package", { game_name: 1212 })
-        .then(res => {
-          if (res.code == 200) {
-            console.log(res);
-            _this.$router.push("/redenvelope/" + id);
-          } else if (res.code == 400) {
+      if (localStorage.getItem("panduan") == 0) {
+        localStorage.setItem("panduan", 1);
+        console.log(id, name);
+        var _this = this;
+        _this.http
+          .post("/api/rob_package", { game_name: 1212 })
+          .then(res => {
+            if (res.code == 200) {
+              // this.$toasted.success(res.message).goAway(1000);
+              if (res.data.code == 2) {
+                this.$toasted.error("您的余额不足").goAway(1000);
+              } else if (res.data.code == 1) {
+                if (res.data.is_spot == 0) {
+                  this.show1 = true;
+                  this.show2 = false;
+                  this.timer = setInterval(() => {
+                    _this.show1 = false;
+                    _this.$router.push("/redenvelope/" + id);
+                    clearInterval(this.timer);
+                  }, 500);
+                } else {
+                  this.show1 = false;
+                  this.show2 = true;
+                  this.timer = setInterval(() => {
+                    _this.show2 = false;
+                    _this.$router.push("/redenvelope/" + id);
+                    clearInterval(this.timer);
+                  }, 500);
+                }
+              } else {
+                this.$toasted.error("手慢无").goAway(1000);
+                this.$router.push("/redenvelope/" + id);
+              }
+              console.log(res);
+            } else if (res.code == 400) {
+              _this.$toasted
+                .error(res.messsage, { icon: "error" })
+                .goAway(1000);
+            }
+          })
+          .catch(res => {
             _this.$toasted.error(res.messsage, { icon: "error" }).goAway(1000);
-          }
-        })
-        .catch(res => {
-          _this.$toasted.error(res.messsage, { icon: "error" }).goAway(1000);
-        });
-      clearInterval(this.timer);
-      this.show1 = true;
-
-      this.timer = setInterval(() => {
-        _this.show1 = false;
-
+          });
         clearInterval(this.timer);
-      }, 400);
+      }
     },
     // 抢雷
     qinglei() {
@@ -183,7 +215,6 @@ export default {
         clearInterval(this.timer);
       }, 400);
     },
-
     // 滚动条
     scrollToBottom: function() {
       this.$nextTick(() => {
@@ -192,7 +223,10 @@ export default {
         this.timer1 = setInterval(function() {
           if (_this.count <= div.scrollHeight) {
             div.scrollTop = _this.count += 64;
+            // document.getElementById("music").currentTime = 0;
+            document.getElementById("music").play();
           } else {
+            // document.getElementById("music").currentTime = 0;
             this.count = div.scrollHeight;
           }
         }, 50);
@@ -215,8 +249,8 @@ export default {
       //连接建立之后执行send方法发送数据
       let actions = {
         type: "joinRoom",
-        lastMsgId: localStorage.getItem("num"),
-        // lastMsgId: 247,
+        lastMsgId: localStorage.getItem("num" + this.$route.params.biaoshi),
+        // lastMsgId: 0,
         roomId: "1"
       };
       this.websocketsend(JSON.stringify(actions));
@@ -228,14 +262,19 @@ export default {
     },
     websocketonmessage(e) {
       //数据接收
-      const redata = JSON.parse(e.data);
-      console.log(redata);
-      var _this = this;
 
-      _this.num.push(redata);
-
-      // this.num.push(redata);
-      // console.log(this.num);
+      console.log(e);
+      var arr = JSON.parse(e.data);
+      console.log(arr);
+      if (arr.data) {
+        var ceshi = arr.data;
+        var arr1 = JSON.parse(ceshi);
+        this.num = arr1;
+      } else {
+        document.getElementById("music").currentTime = 0;
+        document.getElementById("music").play();
+        this.num.push(arr);
+      }
     },
     websocketsend(Data) {
       //数据发送
@@ -252,8 +291,12 @@ export default {
     // this.scrollToBottom();
     // console.log(this.num[this.num.length - 1]);
     if (this.num.length > 0) {
-      localStorage.setItem("num", this.num[this.num.length - 1].data.id);
+      localStorage.setItem(
+        "num" + this.$route.params.biaoshi,
+        this.num[this.num.length - 1].id
+      );
     }
+    // this.websocketonmessage();
   },
   destroyed() {
     // console.log(this.num);

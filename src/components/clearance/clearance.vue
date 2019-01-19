@@ -20,11 +20,16 @@
       class="qu"
       v-for="(item,index) in list"
       :key="index"
-      @click="stores(item.id,item.packet_num)"
+      @click="stores(item.id,item.packet_num,item.red_packet)"
     >
       <p>{{ item.type }}</p>
       <span>{{ item.red_packet }} 赔率{{ item.odds }}赔</span>
     </div>
+    <!-- <audio id="music">
+      <source src="../../assets/music/music.mp3">
+    </audio>-->
+    <!-- <button @click="dianji()">点击</button>
+    <button @click="dianji1()">点击1</button>-->
   </div>
 </template>
 <script>
@@ -53,6 +58,7 @@ export default {
       .then(res => {
         if (res.code == 200) {
           Toast.clear();
+          console.log(res);
           console.log(res.data.data);
           this.list = res.data.data;
         } else if (res.code == 400) {
@@ -66,10 +72,20 @@ export default {
       });
   },
   methods: {
-    stores(id, num) {
-      console.log(id, num);
+    stores(id, num, pei) {
+      console.log(id, num, pei);
       localStorage.setItem("geshu", num);
-      this.$router.push("/Mineclearance");
+      localStorage.setItem("guize", pei);
+      this.$router.push("/Mineclearance/" + id);
+    },
+    // --------测试
+    dianji() {
+      var music = document.getElementById("music");
+      music.play(); // 播放
+    },
+    dianji1() {
+      var music = document.getElementById("music");
+      music.currentTime = 0;
     }
   }
 };

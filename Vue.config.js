@@ -12,5 +12,6 @@ module.exports = {
                 changeOrigin: true
             }
         } // 设置代理
-    }
+    },
+
 }
