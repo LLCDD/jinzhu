@@ -4,9 +4,9 @@
       <div v-for="(item,index) in list " :key="index">
         <div>
           <p style="padding-top:0.22rem;font-size:0.34rem">抢到红包</p>
-          <p style="color:#999999;padding-top:0.1rem">2013--12-123</p>
+          <p style="color:#999999;padding-top:0.1rem">{{ item.created_at }}</p>
         </div>
-        <div style="color:#cf3c36;line-height:1rem">+19.04元</div>
+        <div style="color:#cf3c36;line-height:1rem">{{ item.money }} 元</div>
       </div>
     </div>
   </div>
@@ -28,6 +28,7 @@ export default {
       .then(res => {
         if (res.code == 200) {
           console.log(res);
+          this.list = res.data.data;
         } else if (res.code == 400) {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }

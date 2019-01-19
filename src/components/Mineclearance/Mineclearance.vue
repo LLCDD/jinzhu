@@ -1,67 +1,24 @@
 <template>
   <div class="Mineclearance">
+    <!-- 循环 -->
     <div class="warpo">
       <span class="spanv">14.18</span>
     </div>
-    <!-- <div class="hongbao" @click="xiqing()">
-      <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">123232132</p>
-      <div class="bao">
-        <p>{{ msg }}</p>
-        <br>
-        <p>{{ msg1}}</p>
-      </div>
-    </div>
-    <div class="hongbao" @click="xiqing()">
-      <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">123232132</p>
-      <div class="bao">
-        <p>{{ msg }}</p>
-        <br>
-        <p>{{ msg1}}</p>
-      </div>
-    </div>
-    <div class="hongbao" @click="xiqing()">
-      <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">123232132</p>
-      <div class="bao">
-        <p>{{ msg }}</p>
-        <br>
-        <p>{{ msg1}}</p>
-      </div>
-    </div>
-    <div class="hongbao" @click="xiqing()">
-      <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">123232132</p>
-      <div class="bao">
-        <p>{{ msg }}</p>
-        <br>
-        <p>{{ msg1}}</p>
-      </div>
-    </div>-->
-    <!-- <div class="hongbao">
-      <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">123232132</p>
-      <div class="bao" @click="xiqing()">
-        <p>{{ msg }}</p>
-        <br>
-        <p>{{ msg1}}</p>
-      </div>
-    </div>-->
-    <!-- 循环 -->
     <div
       v-for="(item,index) in num"
       :key="index"
       class="hongbao"
       @click="xiqing(item.id,item.game_name)"
     >
-      <img class="touxian" src="../../assets/imgs/my.png" alt>
-      <p class="pf">{{ item.id }}</p>
-
-      <div class="bao">
-        <p>{{ msg }}</p>
-        <br>
-        <p>{{ msg1}}</p>
+      <div class="saihongbaoy" :class="{'hongbao1':item.uid == uid1 }">
+        <img src="../../assets/imgs/my.png" alt>
+        <p>{{ item.phone }}</p>
+        <!-- {{ item.uid }} -->
+        <div>
+          <p>{{ msg }}</p>
+          <br>
+          <p>{{ msg1}}</p>
+        </div>
       </div>
     </div>
     <!-- <div class="warpo">
@@ -73,7 +30,7 @@
         <p>恭喜{{ msg }}中奖 , 奖励 ({{ msg1 }}) + {{money}}</p>
       </div>
     </div>
-    <div class="hongbao1" @click="qinglei()">
+    <!-- <div class="hongbao1" @click="qinglei()">
       <img class="touxian1" src="../../assets/imgs/my.png" alt>
       <p class="pf1">123232132</p>
       <div class="bao1">
@@ -81,7 +38,7 @@
         <br>
         <p>{{ msg1}}</p>
       </div>
-    </div>
+    </div>-->
     <div class="bottom">
       <button @click="fabao()">一键发包</button>
       <button @click="xainshi()">余额</button>
@@ -119,6 +76,7 @@ export default {
       msg1: localStorage.getItem("guize"),
       money: "34",
       show: false,
+      uid1: localStorage.getItem("uid"),
       // 红包
       show1: false,
       // 雷
@@ -138,7 +96,9 @@ export default {
     this.$store.commit("footerTab", false);
     this.$store.commit("header", "红包扫雷");
     this.$store.commit("ld", false);
-    this.$store.commit("fanhui", true);
+    this.$store.commit("fanhui", false);
+    this.$store.commit("fanhui3", true);
+
     this.scrollToBottom();
     localStorage.setItem("panduan", 0);
     // console.log()
@@ -148,6 +108,7 @@ export default {
     } else {
       localStorage.setItem("num" + this.$route.params.biaoshi, 0);
     }
+    localStorage.setItem("avatar", this.$route.params.biaoshi);
   },
   methods: {
     fabao() {
@@ -155,6 +116,19 @@ export default {
     },
     xainshi() {
       this.show = true;
+      this.http
+        .post("/api/my_center")
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+            this.money = res.data.wallet;
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     },
     // 抢红包
     xiqing(id, name) {
@@ -163,7 +137,7 @@ export default {
         console.log(id, name);
         var _this = this;
         _this.http
-          .post("/api/rob_package", { game_name: 1212 })
+          .post("/api/rob_package", { game_name: name })
           .then(res => {
             if (res.code == 200) {
               // this.$toasted.success(res.message).goAway(1000);
@@ -205,16 +179,16 @@ export default {
       }
     },
     // 抢雷
-    qinglei() {
-      clearInterval(this.timer);
-      this.show2 = true;
-      var _this = this;
-      this.timer = setInterval(() => {
-        _this.show2 = false;
-        this.$router.push("/redenvelope");
-        clearInterval(this.timer);
-      }, 400);
-    },
+    // qinglei() {
+    //   clearInterval(this.timer);
+    //   this.show2 = true;
+    //   var _this = this;
+    //   this.timer = setInterval(() => {
+    //     _this.show2 = false;
+    //     this.$router.push("/redenvelope");
+    //     clearInterval(this.timer);
+    //   }, 400);
+    // },
     // 滚动条
     scrollToBottom: function() {
       this.$nextTick(() => {
@@ -251,7 +225,8 @@ export default {
         type: "joinRoom",
         lastMsgId: localStorage.getItem("num" + this.$route.params.biaoshi),
         // lastMsgId: 0,
-        roomId: "1"
+        roomId: this.$route.params.biaoshi,
+        token: localStorage.getItem("token")
       };
       this.websocketsend(JSON.stringify(actions));
       //				console.log()
@@ -353,42 +328,42 @@ export default {
   line-height: 0.9rem;
   margin-top: 0.2rem;
 }
-.hongbao {
+.saihongbaoy {
   width: 60%;
   height: 1.6rem;
   margin-top: 0.3rem;
+  float: left;
 }
-.touxian {
+.saihongbaoy > img {
   background: red;
   float: left;
   height: 0.6rem;
   width: 0.6rem;
   border-radius: 50%;
 }
-.pf {
+.saihongbaoy > p {
   float: left;
   margin-left: 0.2rem;
   color: #999999;
   padding-bottom: 0.2rem;
 }
-.bao {
+.saihongbaoy > div {
   width: 80%;
   height: 80%;
   background: url("../../assets/imgs/png.png") no-repeat;
   background-size: cover;
   float: right;
   border-radius: 0.1rem;
-}
-.bao {
   padding-top: 0.1rem;
   color: #fff;
 }
-.bao > :first-child {
+
+.saihongbaoy > div > :first-child {
   font-size: 0.24rem;
   float: left;
   margin-left: 25%;
 }
-.bao > :last-child {
+.saihongbaoy > div > :last-child {
   font-size: 0.2rem;
   float: left;
   margin-left: 25%;
@@ -396,9 +371,10 @@ export default {
 .warpu {
   height: 0.3rem;
   width: 100%;
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
   text-align: center;
   margin-bottom: 0.3rem;
+  float: left;
 }
 .warpu > div {
   width: 80%;
@@ -422,21 +398,22 @@ export default {
   /* background: red; */
   height: 1.6rem;
   float: right;
+  margin-top: 0.3rem;
 }
-.touxian1 {
+.hongbao1 > img {
   /* background: red; */
   float: right;
   height: 0.6rem;
   width: 0.6rem;
   border-radius: 50%;
 }
-.pf1 {
+.hongbao1 > p {
   float: right;
   margin-right: 0.2rem;
   color: #999999;
   padding-bottom: 0.2rem;
 }
-.bao1 {
+.hongbao1 > div {
   width: 80%;
   height: 80%;
   background: url("../../assets/imgs/png.png") no-repeat;
@@ -446,12 +423,12 @@ export default {
   padding-top: 0.1rem;
   color: #fff;
 }
-.bao1 > :first-child {
+.hongbao1 > div > :first-child {
   font-size: 0.24rem;
   float: left;
   margin-left: 25%;
 }
-.bao1 > :last-child {
+.hongbao1 > div > :last-child {
   font-size: 0.2rem;
   float: left;
   margin-left: 25%;

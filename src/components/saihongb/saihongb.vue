@@ -5,7 +5,7 @@
         <span>请输入红包总金额</span>
       </p>
       <p>
-        <input dir="rtl" type="text" placeholder="0.00" v-model="money">
+        <input type="text" placeholder="0.00" v-model="money">
         <span>元</span>
       </p>
     </div>
@@ -22,7 +22,7 @@
         <span>雷点数</span>
       </p>
       <p>
-        <input dir="rtl" style="width:2rem" type="text" placeholder="填写雷点数" v-model="dian">
+        <input style="width:0.5rem" type="text" placeholder="填写雷点数" v-model="dian">
       </p>
     </div>
     <button class="saibu" @click="saibao">塞进红包</button>
@@ -43,6 +43,7 @@ export default {
     this.$store.commit("header", "发红包");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
+    this.$store.commit("fanhui3", false);
     this.ge = localStorage.getItem("geshu");
   },
   methods: {
@@ -50,7 +51,7 @@ export default {
       this.http
         .post("/api/hair_package", {
           game_type: 1,
-          room_id: 1,
+          room_id: localStorage.getItem("avatar"),
           money: this.money,
           spot: this.dian
         })
@@ -58,7 +59,10 @@ export default {
           if (res.code == 200) {
             console.log(res);
             this.$toasted.success(res.message).goAway(1000);
-            this.$router.replace({ name: "Mineclearance" });
+            // this.$router.replace({ name: "Mineclearance" });
+            this.$router.push(
+              "/Mineclearance/" + localStorage.getItem("avatar")
+            );
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }

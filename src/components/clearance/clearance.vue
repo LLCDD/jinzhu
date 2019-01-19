@@ -53,6 +53,7 @@ export default {
     this.$store.commit("header", "红包扫雷");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
+    this.$store.commit("fanhui3", false);
     this.http
       .post("/api/room_list", { game_id: "1" })
       .then(res => {

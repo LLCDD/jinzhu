@@ -7,7 +7,7 @@ module.exports = {
         https: false,
         proxy: {
             '/api': {
-                target: 'http://192.168.0.111',
+                target: 'http://min.frqrjg.top',
                 ws: true,
                 changeOrigin: true
             }

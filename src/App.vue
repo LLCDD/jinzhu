@@ -13,6 +13,9 @@
         <span v-if="this.$store.state.fanhui">
           <img @click="topy()" class="baozhu" src="../public/image/return.png" alt>
         </span>
+        <span v-if="this.$store.state.fanhui3">
+          <img @click="topy1()" class="baozhu" src="../public/image/return.png" alt>
+        </span>
         <!-- <span class="sizeii">{{ this.$store.state.header }}</span> -->
         <!-- <span v-if="this.$store.state.tuijian" @click="tuijian" class="tuijian">推荐列表</span> -->
         {{ this.$store.state.header }}
@@ -65,6 +68,11 @@ export default {
     },
     tuijian() {
       console.log("tuijina");
+    },
+    topy1() {
+      console.log("3");
+
+      this.$router.replace("/clearance");
     }
   },
   watch: {

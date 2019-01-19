@@ -40,10 +40,12 @@ export default {
           password: this.password
         });
         if (res.code == 200) {
+          console.log(res);
           // this.$store.commit("loginbanner", res.data.banners);
           // this.$store.dispatch("login", res.data.user);
           localStorage.setItem("token", res.data.token);
           this.$toasted.success("登录成功").goAway(1500);
+          localStorage.setItem("uid", res.data.uid);
           // this.$router.replace({ name: "index" });
           this.$router.push("/index");
         } else {
