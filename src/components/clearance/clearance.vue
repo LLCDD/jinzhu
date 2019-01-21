@@ -80,7 +80,7 @@ export default {
   min-height: 100%;
   background: #f5f5f5;
   padding: 0 0.3rem;
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
 }
 .clearance > div {
   width: 100%;

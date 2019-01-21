@@ -80,11 +80,12 @@ export default {
   background: url("../../assets/imgs/heady.png") no-repeat left;
   background-size: cover;
   position: relative;
-  height: 2.4rem;
+  height: 2.88rem;
   margin-bottom: 0.3rem;
 }
 header {
   height: 0.88rem;
+  padding-top: 0.44rem;
   width: 100%;
   position: fixed;
   top: 0;
@@ -101,13 +102,13 @@ header {
   font-size: 0.3rem;
 }
 .p {
-  padding-top: 1.18rem;
+  padding-top: 1.58rem;
   padding-left: 0.3rem;
   color: #fff;
   font-size: 0.24rem;
 }
 .p1 {
-  padding-top: 0.3rem;
+  padding-top: 0.4rem;
   padding-left: 0.3rem;
   font-size: 0.38rem;
   color: #fff;
@@ -137,7 +138,7 @@ header {
   left: 0.3rem;
   width: 0.25rem;
   height: 0.4rem;
-  top: 24%;
+  bottom: -0.2rem;
   z-index: 99;
 }
 .vip {

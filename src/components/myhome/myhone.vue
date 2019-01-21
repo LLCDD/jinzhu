@@ -61,7 +61,7 @@ export default {
   min-height: 100%;
   background: #fff;
   padding: 0 0.3rem;
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
 }
 .divl > div {
   height: 3rem;

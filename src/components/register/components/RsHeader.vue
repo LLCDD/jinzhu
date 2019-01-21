@@ -24,9 +24,10 @@ export default {
 <style scoped>
 .header {
   width: 100%;
-  height: 0.88rem;
+  height: 1.32rem;
   display: flex;
   z-index: 2;
+  /* background: red; */
   /* background: #1e853c; */
 }
 .header span {
@@ -34,11 +35,12 @@ export default {
   margin-top: 0.27rem;
   font-size: 0.3rem;
   color: azure;
+  padding-top: 0.44rem;
 }
 .header img {
   width: 0.25rem;
   height: 0.4rem;
-  margin: 0.26rem 0 0 0.3rem;
+  margin: 0.7rem 0 0 0.3rem;
   z-index: 9;
 }
 .header .search {

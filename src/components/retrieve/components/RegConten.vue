@@ -68,37 +68,73 @@ export default {
       inentify: true,
       timer: false,
       count: 60,
-      time: ""
+      time: "",
+      // 倒计时
+      daojishi: null,
+      pandu: 0
     };
   },
   methods: {
     // 一个简单的定时器 点击的时候 计入倒计时 如果倒计时等于1的时候显示点击按钮清除定时器
-    async send() {
-      if (!this.phone) {
-        this.$toasted.error("请输入手机号", { icon: "error" }).goAway(2000);
-        return;
+    // async send() {
+    //   clearInterval(this.time);
+    //   if (!this.phone) {
+    //     this.$toasted.error("请输入手机号", { icon: "error" }).goAway(2000);
+    //     return;
+    //   }
+    //   try {
+    //     clearInterval(this.time);
+    //     // await等待一个异步返回的结果 如果没有await 会报user is undefined 获取不到
+    //     let res = await this.http.post("/api/send_code", {
+    //       phone: this.phone
+    //     });
+    //     console.log(res);
+    //     this.$toasted.success("发送成功").goAway(1500);
+    //   } catch (error) {
+    //     this.$toasted.error(error.message, { icon: "error" }).goAway(2000);
+    //   }
+    //   (this.inentify = !this.inentify),
+    //     (this.timer = true),
+    //     (this.time = setInterval(() => {
+    //       this.count -= 1;
+    //       if (this.count == 0) {
+    //         clearInterval(this.time);
+    //         this.inentify = !this.inentify;
+    //         this.timer = false;
+    //         this.count = 60;
+    //       }
+    //     }, 1000));
+    // },
+    send() {
+      var count = 60;
+      var _this = this;
+      clearInterval(this.daojishi);
+      if (this.pandu == 0) {
+        this.pandu = 1;
+        this.http
+          .post("/api/send_code", { phone: this.phone })
+          .then(res => {
+            if (res.code == 200) {
+              this.inentify = false;
+              this.timer = true;
+              this.daojishi = setInterval(() => {
+                count--;
+                this.count = count;
+                if (count <= 0) {
+                  clearInterval(this.daojishi);
+                  this.inentify = true;
+                  this.timer = false;
+                  this.pandu = 0;
+                }
+              }, 1000);
+            } else if (res.code == 400) {
+              this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+            }
+          })
+          .catch(res => {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          });
       }
-      try {
-        // await等待一个异步返回的结果 如果没有await 会报user is undefined 获取不到
-        let res = await this.http.post("/api/send_code", {
-          phone: this.phone
-        });
-        console.log(res);
-        this.$toasted.success("发送成功").goAway(1500);
-      } catch (error) {
-        this.$toasted.error(error.message, { icon: "error" }).goAway(2000);
-      }
-      (this.inentify = !this.inentify),
-        (this.timer = true),
-        (this.time = setInterval(() => {
-          this.count -= 1;
-          if (this.count == 0) {
-            clearInterval(this.time);
-            this.inentify = !this.inentify;
-            this.timer = false;
-            this.count = 60;
-          }
-        }, 1000));
     },
     async register() {
       if (
@@ -124,7 +160,7 @@ export default {
           //   recommend: this.recommend
         });
         console.log(res);
-        this.$toasted.success("修改成功").goAway(1500);
+        this.$toasted.success("注册成功").goAway(1500);
         this.$router.replace({ name: "login" });
       } catch (error) {
         this.$toasted.error(error.message, { icon: "error" }).goAway(2000);

@@ -1,29 +1,9 @@
 <template>
-  <!-- <div class="entry">
-           <input type="text" placeholder="请输入手机号" v-model="phone">
-           <input type="text" placeholder="请输入昵称" v-model="username">
-           <p>
-             <input type="text" placeholder="输入手机验证码" v-model="phone_code">
-             <span v-show="inentify" @click="send">发送验证码</span>
-             <span v-show="timer">{{count}}s</span>
-           </p>
-           <input type="password" placeholder="请输入密码" v-model="password">
-           <input type="password" placeholder="请再次输入密码" v-model="password_confirmation">
-           <input type="password" placeholder="输入支付密码" v-model="security">
-           <input type="password" placeholder="请再次输入支付密码" v-model="security_confirmation">
-           <input type="text" placeholder="邀请码:888888" v-model="recommend">
-        </div>
-        <div class="foot" @click="register">
-             立即注册
-  </div>-->
   <div class="regiset1">
     <div class="baozhud">
       <img class="baozhu1" src="../../../assets/imgs/3.png" alt>
     </div>
-    <!-- <div class="put">
-      <span>呢称</span>
-      <input type="text" placeholder="请输入昵称" v-model="username">
-    </div>-->
+
     <div class="put">
       <span>手机号</span>
       <input type="text" placeholder="请输入手机号" v-model="phone">
@@ -77,11 +57,13 @@ export default {
   methods: {
     // 一个简单的定时器 点击的时候 计入倒计时 如果倒计时等于1的时候显示点击按钮清除定时器
     async send() {
+      clearInterval(this.time);
       if (!this.phone) {
         this.$toasted.error("请输入手机号", { icon: "error" }).goAway(2000);
         return;
       }
       try {
+        clearInterval(this.time);
         // await等待一个异步返回的结果 如果没有await 会报user is undefined 获取不到
         let res = await this.http.post("/api/send_code", {
           phone: this.phone
@@ -99,6 +81,7 @@ export default {
             clearInterval(this.time);
             this.inentify = !this.inentify;
             this.timer = false;
+            // this.timer = true;
             this.count = 60;
           }
         }, 1000));

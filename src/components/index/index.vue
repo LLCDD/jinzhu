@@ -18,21 +18,12 @@
       <el-carousel-item v-for="(item,index) in list" :key="index" class="card">
         <img :src="url +'/'+item" alt>
       </el-carousel-item>
-      <!-- <el-carousel-item class="card" style="background:pink">
-        <img src="../../assets/imgs/002.png" alt>
-      </el-carousel-item>
-      <el-carousel-item class="card" style="background:yellow">
-        <img src="../../assets/imgs/003.png" alt>
-      </el-carousel-item>-->
     </el-carousel>
     <div class="redy"></div>
     <div class="nr">
       <!-- <span class="xie"></span> -->
       <img class="xie" src="../../assets/imgs/xi.png" alt>
-      <!-- <div class="nr1">
-        <p>234234</p>
-        <p>23423432</p>
-      </div>-->
+
       <van-swipe class="nr1" :touchable="false" :autoplay="500" vertical :show-indicators="false ">
         <van-swipe-item>
           <p class="mar">第一个世界啊撒旦解放</p>
@@ -96,8 +87,8 @@ export default {
       .catch(res => {
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
-    this.list = JSON.parse(localStorage.getItem("imgy"));
-    this.url = JSON.parse(localStorage.getItem("url"));
+    // this.list = JSON.parse(localStorage.getItem("imgy"));
+    // this.url = JSON.parse(localStorage.getItem("url"));
   },
   methods: {
     // 游戏规则
@@ -124,7 +115,7 @@ export default {
 .div0 {
   min-height: 100%;
   background: #f5f5f5;
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
 }
 .nr {
   width: 100%;
@@ -163,10 +154,12 @@ export default {
 .event {
   margin-top: 0.2rem;
   width: 100%;
-  min-height: 3.22rem;
+  /* min-height: 3.22rem; */
+  height: 100%;
   background: #fff;
-  margin-bottom: 1rem;
+
   padding-top: 0.3rem;
+  position: relative;
 }
 .event > span {
   display: inline-block;
@@ -253,5 +246,6 @@ export default {
 .event2 {
   background: url("../../assets/imgs/long.png") no-repeat left;
   background-size: 100% 100%;
+  margin-bottom: 2rem;
 }
 </style>

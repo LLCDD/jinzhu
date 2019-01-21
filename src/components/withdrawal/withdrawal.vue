@@ -38,6 +38,11 @@ export default {
     this.$store.commit("header", "提现");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
+    this.http.post("/api/tixian_page").then(res => {
+      if (res.code == 200) {
+        console.log(res);
+      }
+    });
   },
   methods: {
     bool() {
@@ -53,7 +58,7 @@ export default {
 .div5 {
   min-height: 100%;
   padding: 0 0.3rem;
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
   background: #f5f5f5;
 }
 .tixiany {

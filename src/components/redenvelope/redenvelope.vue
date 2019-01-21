@@ -88,6 +88,7 @@ export default {
 }
 .redenvelope > header {
   height: 0.88rem;
+  padding-top: 0.44rem;
   width: 100%;
   background: #cf3c36;
   text-align: center;
@@ -103,7 +104,7 @@ export default {
   height: 0.35rem;
   position: absolute;
   left: 0.3rem;
-  top: 28%;
+  bottom: -0.2rem;
 }
 .redenvelope > header > span {
   font-size: 0.3rem;

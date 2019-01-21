@@ -31,7 +31,7 @@ export default {
 .divp {
   min-height: 100%;
   background: #ffffff;
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
 }
 /* .ranking {
   padding-top: 0.88rem; 

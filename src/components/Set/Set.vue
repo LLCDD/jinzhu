@@ -41,7 +41,7 @@ export default {
 </script>
 <style scoped>
 .set {
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
   min-height: 100%;
   background: #f5f5f5;
 }

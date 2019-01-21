@@ -38,7 +38,7 @@ export default {
 <style scoped>
 .solitaire {
   padding: 0 0.3rem;
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
   min-height: 100%;
   background: #f5f5f5;
 }

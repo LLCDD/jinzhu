@@ -1,21 +1,6 @@
 <template>
   <div class="Customerservice">
     <div id="data-list-content" class="cneter">
-      <!--  <div>
-        <span class="spany">10:16</span>
-      </div>
-      <div class="touxiang">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div>是念佛给暗色的困tuituituitui粉tui阿拉山口带你飞</div>
-      </div>
-      <div>
-        <span class="spany">10:16</span>
-      </div>
-      <div class="touxiang">
-        <img src="../../assets/imgs/xiaolei.png" alt>
-        <div>是念佛给暗色的btuituitui困难的烦恼的拉萨的奶粉阿拉山口带你飞</div>
-      </div>-->
-      <!--  -->
       <div class="liaotian" v-for="(item,index) in list.data1" :key="index">
         <div>
           <span class="spany">{{ item.created_at }}</span>
@@ -29,6 +14,7 @@
     </div>
     <!--  -->
     <footer>
+      <img src="../../assets/imgs/translation.png" alt>
       <input type="text" placeholder="说点什么" v-model="text1">
       <button @click="send()">发送</button>
     </footer>
@@ -122,7 +108,7 @@ export default {
 </script>
 <style scoped>
 .Customerservice {
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
   /* min-height: 100%; */
   height: 100%;
   background: #f5f5f5;
@@ -140,21 +126,30 @@ export default {
   padding: 0 0.3rem;
 }
 .Customerservice > footer > input {
-  height: 0.6rem;
-  width: 70%;
-  margin-top: 0.2rem;
-  border-radius: 0.4rem;
+  height: 0.8rem;
+  width: 64%;
+  margin-top: 0.1rem;
+  border-radius: 0.1rem;
   padding-left: 0.1rem;
   background: #cccccc;
+  float: left;
+}
+.Customerservice > footer > img {
+  float: left;
+  height: 0.5rem;
+  width: 0.4rem;
+  margin-top: 0.3rem;
+  margin-right: 0.2rem;
 }
 .Customerservice > footer > button {
   width: 20%;
-  height: 0.6rem;
-  margin-top: 0.2rem;
-  border-radius: 0.4rem;
+  height: 0.8rem;
+  margin-top: 0.1rem;
+  border-radius: 0.1rem;
   margin-left: 6%;
   background: #f1941d;
   color: #fff;
+  float: left;
 }
 .Customerservice > .cneter {
   min-height: 100%;

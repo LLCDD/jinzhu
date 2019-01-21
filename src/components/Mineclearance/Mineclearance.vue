@@ -1,9 +1,9 @@
 <template>
   <div class="Mineclearance">
     <!-- 循环 -->
-    <div class="warpo">
+    <!-- <div class="warpo">
       <span class="spanv">14.18</span>
-    </div>
+    </div>-->
     <div
       v-for="(item,index) in num"
       :key="index"
@@ -24,12 +24,12 @@
     <!-- <div class="warpo">
       <span class="spanv">14.18</span>
     </div>-->
-    <div class="warpu">
+    <!-- <div class="warpu">
       <div>
         <img src="../../assets/imgs/tbb.png" alt>
         <p>恭喜{{ msg }}中奖 , 奖励 ({{ msg1 }}) + {{money}}</p>
       </div>
-    </div>
+    </div>-->
     <!-- <div class="hongbao1" @click="qinglei()">
       <img class="touxian1" src="../../assets/imgs/my.png" alt>
       <p class="pf1">123232132</p>
@@ -142,6 +142,7 @@ export default {
             if (res.code == 200) {
               // this.$toasted.success(res.message).goAway(1000);
               if (res.data.code == 2) {
+                localStorage.setItem("panduan", 0);
                 this.$toasted.error("您的余额不足").goAway(1000);
               } else if (res.data.code == 1) {
                 if (res.data.is_spot == 0) {
@@ -223,8 +224,8 @@ export default {
       //连接建立之后执行send方法发送数据
       let actions = {
         type: "joinRoom",
-        lastMsgId: localStorage.getItem("num" + this.$route.params.biaoshi),
-        // lastMsgId: 0,
+        // lastMsgId: localStorage.getItem("num" + this.$route.params.biaoshi),
+        lastMsgId: 0,
         roomId: this.$route.params.biaoshi,
         token: localStorage.getItem("token")
       };
@@ -350,7 +351,7 @@ export default {
 .saihongbaoy > div {
   width: 80%;
   height: 80%;
-  background: url("../../assets/imgs/png.png") no-repeat;
+  background: url("../../assets/imgs/7.png") no-repeat;
   background-size: cover;
   float: right;
   border-radius: 0.1rem;
@@ -416,7 +417,7 @@ export default {
 .hongbao1 > div {
   width: 80%;
   height: 80%;
-  background: url("../../assets/imgs/png.png") no-repeat;
+  background: url("../../assets/imgs/7.png") no-repeat;
   background-size: cover;
   float: left;
   border-radius: 0.1rem;
@@ -447,22 +448,22 @@ export default {
   background: #f1941d;
   color: #fff;
   float: left;
-  height: 0.6rem;
-  margin-top: 0.2rem;
-  border-radius: 0.4rem;
+  height: 0.8rem;
+  margin-top: 0.1rem;
+  border-radius: 0.1rem;
 }
 .bottom > :last-child {
   float: right;
-  margin-top: 0.2rem;
-  height: 0.6rem;
+  margin-top: 0.1rem;
+  height: 0.8rem;
   width: 25%;
   background: #ff5858;
   color: #fff;
-  border-radius: 0.4rem;
+  border-radius: 0.1rem;
 }
 .qiang {
   width: 100%;
-  height: 70%;
+  height: 74%;
   background: none;
 }
 .qiang > div > img {

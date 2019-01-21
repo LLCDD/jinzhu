@@ -166,18 +166,19 @@ export default {
   background: url("../../assets/imgs/heady.png") no-repeat left;
   background-size: cover;
   position: relative;
-  height: 2.4rem;
+  height: 2.88rem;
 }
 header {
-  height: 0.88rem;
+  height: 1.32rem;
   width: 100%;
   position: fixed;
-  top: 0;
+  top: 0.44rem;
   /* background: red; */
   text-align: center;
   line-height: 0.88rem;
   font-size: 0.34rem;
   color: #fff;
+
   /* background: red; */
 }
 header > span {
@@ -187,7 +188,7 @@ header > span {
   z-index: 99;
 }
 .p {
-  padding-top: 1.18rem;
+  padding-top: 1.6rem;
   padding-left: 0.3rem;
   text-align: center;
   color: #fff;

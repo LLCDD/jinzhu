@@ -118,13 +118,14 @@ $material-icons-font-path: "~material-icons/iconfont/";
 /*weui 样式库 非常适合高仿微信*/
 @import "assets/css/lib/weui.min.css";
 .app-content {
-  min-height: 100%;
+  // min-height: 100%;
   // background: url("./assets/imgs/background.png") no-repeat top;
 }
 #header {
   // margin-top: 0.44rem;
-  height: 0.88rem;
-  // padding-top: 0.44rem;
+  // height: 0.88rem;
+  height: 1.32rem;
+  padding-top: 0.44rem;
   width: 100%;
   background: url("./assets/imgs/background.png") no-repeat left;
   background-size: cover;
@@ -155,14 +156,14 @@ $material-icons-font-path: "~material-icons/iconfont/";
   width: 0.34rem;
   position: absolute;
   left: 0.3rem;
-  top: 32%;
+  bottom: 0.26rem;
 }
 .baozhu {
   width: 0.25rem;
   height: 0.4rem;
   // margin: 0.26rem 0 0 0.3rem;
   position: absolute;
-  top: 0.26rem;
+  bottom: 0.26rem;
   left: 0.3rem;
   z-index: 9;
 }

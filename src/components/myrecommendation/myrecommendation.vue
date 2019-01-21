@@ -101,17 +101,17 @@ export default {
   background: url("../../assets/imgs/heady.png") no-repeat left;
   background-size: cover;
   position: relative;
-  height: 2.4rem;
+  height: 2.88rem;
   margin-bottom: 0.3rem;
   position: fixed;
   width: 100%;
   top: 0;
 }
 header {
-  height: 0.88rem;
+  height: 1.32rem;
   width: 100%;
   position: fixed;
-  top: 0;
+  top: 0.44rem;
   /* background: red; */
   text-align: center;
   line-height: 0.88rem;
@@ -125,7 +125,7 @@ header {
   font-size: 0.3rem;
 }
 .hey {
-  padding-top: 1.18rem;
+  padding-top: 1.6rem;
   display: flex;
   justify-content: space-between;
 }

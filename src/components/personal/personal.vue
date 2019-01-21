@@ -175,15 +175,15 @@ export default {
   height: 0.42rem;
   width: 0.42rem;
   right: 0.3rem;
-  top: 0.3rem;
+  top: 0.74rem;
   z-index: 99;
 }
 .header {
-  height: 4.9rem;
+  height: 5.3rem;
   width: 100%;
   background: url("../../assets/imgs/ger.png") no-repeat top;
   background-size: cover;
-  padding-top: 0.44rem;
+  padding-top: 0.88rem;
 }
 .money {
   font-size: 0.4rem;

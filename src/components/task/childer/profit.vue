@@ -29,8 +29,8 @@
     <div class="table1">
       <div class="table" v-for="(item,index) in list" :key="index">
         <span class="tabl1" style="color:#f1941d">
-          <span v-if="index <= 5">0</span>
-          {{index + 4}}
+          <!-- <span v-if="index <= 5">0</span> -->
+          {{index + 1}}
         </span>
         <span class="tabl2">{{ item.phone }}</span>
         <span class="tabl3">
@@ -70,7 +70,7 @@ export default {
   width: 100%;
   background: red;
   margin-top: 0.1rem;
-  float: left;
+  /* float: left; */
   background: url(".../../../../../assets/imgs/gern.png") no-repeat bottom;
   background-size: cover;
   position: relative;
@@ -138,13 +138,16 @@ export default {
   padding-top: 0.1rem;
 }
 .table1 {
-  min-height: 100%;
+  height: 100%;
+  /* margin-bottom: 1rem; */
+  /* float: left; */
+}
+.table1 > :last-child {
   margin-bottom: 1rem;
-  float: left;
 }
 .table {
   width: 100%;
-  float: left;
+  /* float: left; */
   border-bottom: 2px solid #f5f5f5;
   height: 0.8rem;
   line-height: 0.9rem;

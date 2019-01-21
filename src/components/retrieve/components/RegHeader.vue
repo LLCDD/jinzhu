@@ -24,7 +24,8 @@ export default {
 <style scoped>
 .header {
   width: 100%;
-  height: 0.88rem;
+  height: 1.32rem;
+  padding-top: 0.44rem;
   display: flex;
   z-index: 2;
   /* background: #1e853c; */

@@ -22,7 +22,7 @@
         <span>雷点数</span>
       </p>
       <p>
-        <input style="width:0.5rem" type="text" placeholder="填写雷点数" v-model="dian">
+        <input style="width:2rem" type="text" placeholder="填写雷点数" v-model="dian">
       </p>
     </div>
     <button class="saibu" @click="saibao">塞进红包</button>
@@ -80,7 +80,7 @@ export default {
   min-height: 100%;
   padding: 0 0.3rem;
   background: #f5f5f5;
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
 }
 .saihongb > div {
   display: flex;

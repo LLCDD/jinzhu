@@ -106,7 +106,7 @@ export default {
 .divup {
   min-height: 100%;
   padding: 0 0.3rem;
-  padding-top: 0.88rem;
+  padding-top: 1.6rem;
   background: #f5f5f5;
 }
 .pg {
