@@ -16,6 +16,9 @@
         <span v-if="this.$store.state.fanhui3">
           <img @click="topy1()" class="baozhu" src="../public/image/return.png" alt>
         </span>
+        <span v-if="this.$store.state.fanhuiin">
+          <img @click="ldyopp()" class="baozhu" src="../public/image/return.png" alt>
+        </span>
         <!-- <span class="sizeii">{{ this.$store.state.header }}</span> -->
         <!-- <span v-if="this.$store.state.tuijian" @click="tuijian" class="tuijian">推荐列表</span> -->
         {{ this.$store.state.header }}
@@ -73,6 +76,9 @@ export default {
       console.log("3");
 
       this.$router.replace("/clearance");
+    },
+    ldyopp() {
+      this.$router.push("/index");
     }
   },
   watch: {

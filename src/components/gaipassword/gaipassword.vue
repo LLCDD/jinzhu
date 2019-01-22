@@ -3,11 +3,11 @@
     <div>
       <p>
         <span>新密码</span>
-        <input type="text" placeholder="请输入新密码" v-model="passworld">
+        <input type="password" placeholder="请输入新密码" v-model="passworld">
       </p>
       <p>
         <span>重复新密码</span>
-        <input type="text" placeholder="请再次输入新密码" v-model="passworld1">
+        <input type="password" placeholder="请再次输入新密码" v-model="passworld1">
       </p>
 
       <p>

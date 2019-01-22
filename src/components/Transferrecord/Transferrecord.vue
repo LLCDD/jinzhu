@@ -67,7 +67,7 @@ export default {
   background: url("../../assets/imgs/heady.png") no-repeat left;
   background-size: cover;
   position: relative;
-  height: 2.4rem;
+  height: 2.84rem;
   margin-bottom: 0.3rem;
 }
 header {
@@ -88,7 +88,7 @@ header {
   font-size: 0.3rem;
 }
 .p {
-  padding-top: 1.18rem;
+  padding-top: 1.7rem;
   padding-left: 0.3rem;
   color: #fff;
   font-size: 0.24rem;

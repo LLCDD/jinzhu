@@ -69,7 +69,7 @@ export default {
     this.$store.commit("header", "金猪");
     this.$store.commit("ld", true);
     this.$store.commit("fanhui", false);
-
+    this.$store.commit("fanhuiin", false);
     this.http
       .post("/api/banner")
       .then(res => {

@@ -103,6 +103,7 @@ export default {
     this.$store.commit("tuijian", false);
     this.$store.commit("headerTab", false);
     this.$store.commit("footerTab", true);
+    this.$store.commit("ld", false);
     this.http
       .post("/api/my_center")
       .then(res => {

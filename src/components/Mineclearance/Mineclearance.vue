@@ -98,7 +98,7 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", false);
     this.$store.commit("fanhui3", true);
-
+    this.$store.commit("fanhuiin", false);
     this.scrollToBottom();
     localStorage.setItem("panduan", 0);
     // console.log()
@@ -140,7 +140,7 @@ export default {
           .post("/api/rob_package", { game_name: name })
           .then(res => {
             if (res.code == 200) {
-              // this.$toasted.success(res.message).goAway(1000);
+              this.$toasted.success(res.message).goAway(1000);
               if (res.data.code == 2) {
                 localStorage.setItem("panduan", 0);
                 this.$toasted.error("您的余额不足").goAway(1000);
@@ -166,6 +166,15 @@ export default {
                 this.$toasted.error("手慢无").goAway(1000);
                 this.$router.push("/redenvelope/" + id);
               }
+              // if (res.data.code == 2) {
+              //   localStorage.setItem("panduan", 0);
+              //   this.$toasted.error("您的余额不足").goAway(1000);
+              // } else {
+              //   _this.$router.push("/redenvelope/" + id);
+              // }
+              _this.$toasted
+                .error(res.messsage, { icon: "error" })
+                .goAway(1000);
               console.log(res);
             } else if (res.code == 400) {
               _this.$toasted
@@ -286,7 +295,7 @@ export default {
   height: 100%;
   background: #f5f5f5;
   padding: 0 0.3rem;
-  padding-top: 0.88rem;
+  padding-top: 1.44rem;
   text-align: center;
   padding-bottom: 1.4rem;
   overflow: auto;

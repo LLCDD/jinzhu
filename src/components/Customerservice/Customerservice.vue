@@ -71,7 +71,7 @@ export default {
       var _this = this;
       this.timer = setInterval(function() {
         _this.sendy();
-      }, 4000);
+      }, 10000);
     },
     // 每次的更改
     sendy() {

@@ -5,7 +5,7 @@
         <img @click="tap()" class="fanhui" src="../../../public/image/return.png">玩家福利
       </header>
       <p class="p">总计 ( 元 )</p>
-      <p class="p1">{{ msg }}</p>
+      <p class="p1">{{ this.$store.state.zong }}</p>
     </div>
     <p class="tishi">
       温馨提示 ：发红包和抢红包流水达到1000-5000 返2% ; 5000-10000返3% ; 200000+ 返5% ,
@@ -15,12 +15,12 @@
       <router-link to="envelope" replace tag="p">
         <span>发包记录</span>
         <br>
-        <strong>总计 ( {{ msg1 }} )</strong>
+        <strong>总计 ( {{ msg2 }} )</strong>
       </router-link>
       <router-link to="nvelope" replace tag="p">
         <span>抢包记录</span>
         <br>
-        <strong>总计 ( {{ msg2 }} )</strong>
+        <strong>总计 ( {{ msg1 }} )</strong>
       </router-link>
     </div>
     <router-view></router-view>
@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       msg: "9.99",
-      list: [1],
       bool: false,
       msg1: "234",
       msg2: "234"
@@ -43,9 +42,13 @@ export default {
     this.$store.commit("headerTab", true);
     this.$store.commit("header", "玩家福利");
     this.$store.commit("fanhui", true);
-    if (this.list.length > 0) {
-      this.bool = true;
-    }
+    this.http.post("/api/myWelfare_s").then(res => {
+      if (res.code == 200) {
+        console.log(res);
+        this.msg1 = res.data.money2;
+        this.msg2 = res.data.money1;
+      }
+    });
   },
   methods: {
     tap() {

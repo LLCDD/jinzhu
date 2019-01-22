@@ -22,6 +22,7 @@
               <span>{{ item.created_at }}</span>
             </p>
           </div>
+          <img v-if="item.phone == 15999998886" class="msl" src="../../assets/imgs/nextt.png" alt>
           <img v-if="item.is_spot == 1" class="xqtl" src="../../assets/imgs/xiaolei.png" alt>
           <div class="line">{{ item.money }}元</div>
         </div>
@@ -186,6 +187,14 @@ export default {
   font-weight: 500;
 }
 .xqtl {
+  height: 0.8rem;
+  width: 0.8rem;
+  border-radius: 50%;
+  /* background: red; */
+  margin-top: 0.1rem;
+  margin-right: -1rem;
+}
+.msl {
   height: 0.8rem;
   width: 0.8rem;
   border-radius: 50%;

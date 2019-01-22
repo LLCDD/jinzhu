@@ -2,27 +2,27 @@
   <div class="_warp">
     <div class="tba">
       <div class="two">
-        <span>34523434</span>
+        <span>{{ arr[1].phone }}</span>
         <p>
           <span>累计收益</span>
           
-          <span class="money">{{money}}</span>
+          <span class="money">{{ arr[1].yong_wallet }}</span>
         </p>
       </div>
       <div class="two1">
-        <span>34523434</span>
+        <span>{{ arr[0].phone }}</span>
         <p>
           <span>累计收益</span>
           
-          <span class="money">{{money}}</span>
+          <span class="money">{{arr[0].yong_wallet}}</span>
         </p>
       </div>
       <div class="two2">
-        <span>34523434</span>
+        <span>{{ arr[2].phone }}</span>
         <p>
           <span>累计收益</span>
           
-          <span class="money">{{money}}</span>
+          <span class="money">{{arr[2].yong_wallet}}</span>
         </p>
       </div>
     </div>
@@ -35,33 +35,51 @@
         <span class="tabl2">{{ item.phone }}</span>
         <span class="tabl3">
           累计佣金 :
-          <span style="color:#f1941d">{{ item.shou }}</span>
+          <span style="color:#f1941d">{{ item.yong_wallet }}</span>
         </span>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
       msg: "222",
       money: "1000.00",
-      list: [
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12000.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" },
-        { phone: "123××××××××324", shou: "12.00" }
-      ]
+      list: [],
+      arr: []
     };
+  },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
+  },
+  mounted() {
+    this.http
+      .post("/api/rankings", { type: "1" })
+      .then(res => {
+        if (res.code == 200) {
+          Toast.clear();
+          // console.log(res.data.data);
+          if (res.data.data.length > 3) {
+            for (var i = 0; i < 3; i++) {
+              this.arr.push(res.data.data[i]);
+            }
+          }
+          this.list = res.data.data;
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   }
 };
 </script>

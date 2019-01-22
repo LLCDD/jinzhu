@@ -37,6 +37,11 @@ export default {
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
+    this.http.post("/api/my_center").then(res => {
+      if (res.code == 200) {
+        this.money1 = res.data.wallet;
+      }
+    });
   },
   methods: {
     tap() {

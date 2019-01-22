@@ -41,6 +41,10 @@ export default {
     this.http.post("/api/tixian_page").then(res => {
       if (res.code == 200) {
         console.log(res);
+        if (res.data == {}) {
+          this.bao = "还没绑定支付宝";
+          this.ka = "还没绑定银行卡";
+        }
       }
     });
   },

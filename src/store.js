@@ -16,7 +16,9 @@ export default new Vuex.Store({
     ld: false,
     fanhui: false,
     tuijian: false,
-    fanhui3: false
+    fanhui3: false,
+    zong: "0",
+    fanhuiin: false
   },
   mutations: {
     setUser(state, payload) {
@@ -63,6 +65,13 @@ export default new Vuex.Store({
     },
     fanhui3(a, b) {
       a.fanhui3 = b
+    },
+    // 玩家福利总价
+    zong(a, b) {
+      a.zong = b
+    },
+    fanhuiin(a, b) {
+      a.fanhuiin = b
     }
   },
   actions: {

@@ -231,7 +231,7 @@ header {
 .null {
   width: 50%;
   margin-left: 25%;
-  margin-top: 50%;
+  margin-top: 70%;
 }
 .zhuanj {
   padding-right: 1.4rem;
