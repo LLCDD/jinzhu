@@ -67,6 +67,7 @@ export default {
             this.msg3 = "暂无填写信息";
           } else {
             this.msg3 = res.data.data.phone;
+            localStorage.setItem("phoney", res.data.data.phone);
           }
 
           // this.msg = res.data;

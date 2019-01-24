@@ -22,6 +22,10 @@
         <!-- <span class="sizeii">{{ this.$store.state.header }}</span> -->
         <!-- <span v-if="this.$store.state.tuijian" @click="tuijian" class="tuijian">推荐列表</span> -->
         {{ this.$store.state.header }}
+        <span
+          v-if="this.$store.state.propers"
+          class="propers"
+        >房间人数: {{ this.$store.state.pors }}</span>
       </header>
       <!-- </div> -->
       <!--搜索框 只在“微信”和“通讯录”页面下显示-->
@@ -177,5 +181,10 @@ $material-icons-font-path: "~material-icons/iconfont/";
   font-size: 0.3rem;
   position: absolute;
   right: 0.3rem;
+}
+.propers {
+  font-size: 0.3rem;
+  position: absolute;
+  right: 0.24rem;
 }
 </style>

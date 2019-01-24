@@ -21,7 +21,7 @@
     </div>
     <div>
       <span class="first">手机号</span>
-      <input type="text" placeholder="请输入手机号" v-model="phoen">
+      <input type="text" readonly placeholder="请输入手机号" v-model="phoen">
     </div>
 
     <button class="buttonq1" @click="xiuigai()">确定修改</button>
@@ -45,6 +45,7 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("header", "个人资料");
     this.$store.commit("fanhui", true);
+    this.phoen = localStorage.getItem("phoney");
   },
   methods: {
     xiuigai() {
@@ -74,7 +75,7 @@ export default {
 </script>
 <style scoped="b">
 .div1 {
-  padding-top: 0.88rem;
+  padding-top: 1.32rem;
 }
 .div1 > div {
   height: 0.9rem;

@@ -4,7 +4,7 @@
     <div class="header">
       <div class="warp">
         <div class="photo">
-          <img :src="src" alt>
+          <img src="../../assets/imgs/heaertttt.png" alt>
         </div>
         <div class="name">
           <p>{{ msg }}</p>
@@ -89,8 +89,7 @@ export default {
       show: false,
       nickname: "",
       money: "",
-      src:
-        "http://biyouxi.baodekeji.com/uploads/head_img/20181211/5c0f572527f8f.jpeg"
+      src: null
     };
   },
   beforeCreate() {
@@ -262,8 +261,9 @@ export default {
 }
 .name {
   display: inline-block;
-  position: relative;
-  bottom: 0.2rem;
+  position: absolute;
+  bottom: 0rem;
+  left: 2rem;
 }
 
 .name > p {

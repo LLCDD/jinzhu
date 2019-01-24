@@ -13,7 +13,7 @@
         </div>
         <div>
           <p class="p zhuanj">今日收益 ( 元 )</p>
-          <p class="p1 zhuanj1">{{ msg }}</p>
+          <p class="p1 zhuanj1">{{ msg1 }}</p>
         </div>
       </div>
     </div>
@@ -21,16 +21,30 @@
       <th>昵称</th>
       <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额</th>
       <th style="color:#f1941d;border-right:2px solid #f5f5f5;">级别</th>
-      <th>时间</th>
+      <th style="width:40%">时间</th>
       <tr v-for="(item,index) in list" :key="index">
-        <td style="color:#000">{{ item.name }}</td>
         <td
-          style="color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
-        >{{ item.path }}</td>
-        <td style="color:#f1941d;border-right:2px solid #f5f5f5;">{{ item.lever }}</td>
-        <td style="color:#999999">1018-123:123213</td>
+          style="line-height: 0.9rem;color:#000;overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;"
+        >{{ item.name }}</td>
+        <td
+          style="line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
+        >{{ item.money }}</td>
+        <td
+          style="line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
+        >{{ item.level }}</td>
+        <td style="width:40%;color:#999999">{{ item.created_at }}</td>
       </tr>
     </table>
+    <van-pagination
+      v-if="bool2"
+      v-model="page"
+      :page-count="zong"
+      mode="simple"
+      @change="page1($event)"
+      style="margin-bottom:1rem"
+    />
     <img class="null" v-if="!bool" src="../../assets/imgs/null.png" alt>
   </div>
 </template>
@@ -40,9 +54,14 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      msg: "9.99",
-      list: [1],
-      bool: false
+      msg: "",
+      msg1: "",
+      list1: [1],
+      bool: false,
+      page: 1,
+      zong: 1,
+      list: [],
+      bool2: false
     };
   },
   beforeCreate() {
@@ -57,15 +76,25 @@ export default {
     // if (this.list.length > 0) {
     //   this.bool = true;
     // }
-    this.http.post("/api/my_recommend").then(res => {
+    this.http.post("/api/rrand").then(res => {
       if (res.code == 200) {
         Toast.clear();
-        console.log(res);
+        // console.log(res.data.arr.length);
+        // this.list = res.data.arr;
         if (res.message == "您没有推荐任何人") {
           this.bool = false;
         } else {
           this.bool = true;
-          this.list = res.data.data;
+          this.msg = res.data.total;
+          this.msg1 = res.data.todays;
+          this.list1 = res.data.arr;
+          this.zong = Math.ceil(res.data.arr.length / 10);
+          if (res.data.arr.length >= 10) {
+            this.bool2 = true;
+          }
+          for (var i = 0; i < 10; i++) {
+            this.list.push(res.data.arr[i]);
+          }
         }
       }
     });
@@ -85,6 +114,14 @@ export default {
     // 推荐列表
     tuijian() {
       this.$router.push("/cardy");
+    },
+    // 分页
+    page1(id) {
+      this.list = [];
+      // console.log();
+      for (var i = id * 10 - 10; i < id * 10; i++) {
+        this.list.push(this.list1[i]);
+      }
     }
   }
 };
@@ -94,6 +131,9 @@ export default {
   /* padding-top: 0.88rem; */
   min-height: 100%;
   background: #f5f5f5;
+  width: 100%;
+}
+.myrecommendation >>> .van-pagination .van-pagination--simple {
   width: 100%;
 }
 .myrecommendation > .div3 {
@@ -198,35 +238,43 @@ header {
   border-radius: 0.5rem;
 }
 
-.tan > tr > td {
-  width: 33.3%;
-}
+/* .tan > tr > td {
+  width: 20%;
+} */
 .tabley {
   width: 100%;
+  display: block;
   text-align: center;
   background: #fff;
-  margin-top: 2.5rem;
+  margin-top: 2.85rem;
 }
 .tabley > th {
   border: 0;
   height: 0.9rem;
-  width: 25%;
+  width: 20%;
+  display: inline-block;
+  /* float: left; */
   color: #f1941d;
   font-size: 0.3rem;
   border-bottom: 2px solid #f5f5f5;
+  line-height: 0.9rem;
 }
 .tabley > tr {
   border: 0;
   height: 0.9rem;
-  width: 25%;
+  /* width: 25%; */
+  display: block;
+  width: 100%;
 }
 .tabley > tr > td {
   border: 0;
   height: 0.9rem;
-  width: 25%;
-  width: 33.3%;
+  width: 20%;
+  width: 20%;
   font-size: 0.3rem;
   border-bottom: 2px solid #f5f5f5;
+  display: block;
+  float: left;
 }
 .null {
   width: 50%;

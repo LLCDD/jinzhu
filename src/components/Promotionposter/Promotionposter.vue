@@ -10,15 +10,15 @@
     >
       <el-carousel-item class="cardn" style="background:red">
         <img src="../../assets/imgs/001.png" alt>
-        <div class="div"></div>
+        <div class="divyyy"></div>
       </el-carousel-item>
       <el-carousel-item class="cardp" style="background:pink">
         <img src="../../assets/imgs/002.png" alt>
-        <div class="div"></div>
+        <div class="divyyy"></div>
       </el-carousel-item>
       <el-carousel-item class="cardy" style="background:yellow">
         <img src="../../assets/imgs/003.png" alt>
-        <div class="div"></div>
+        <div class="divyyy"></div>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -77,38 +77,38 @@ export default {
   height: 100%;
   width: 100%;
 }
-.cardn > .div {
-  height: 2rem;
-  width: 2rem;
+.cardn > .divyyy {
+  height: 2rem !important;
+  width: 2rem !important;
   position: absolute;
   background: yellow;
   z-index: 9999;
   top: 6%;
   left: 56%;
 }
-.cardy > .div {
-  height: 2rem;
-  width: 2rem;
+.cardy > .divyyy {
+  height: 2rem !important;
+  width: 2rem !important;
   position: absolute;
   background: yellow;
   z-index: 9999;
   top: 6%;
   left: 56%;
 }
-.cardp > .div {
-  height: 2rem;
-  width: 2rem;
+.cardp > .divyyy {
+  height: 2rem !important;
+  width: 2rem !important;
   position: absolute;
   background: yellow;
   z-index: 9999;
   top: 6%;
   left: 56%;
 }
-.cardp > .div {
+.cardp > .divyyy {
   left: 35%;
   top: 55%;
 }
-.cardn > .div {
+.cardn > .divyyy {
   left: 33%;
   top: 70%;
 }
@@ -116,8 +116,6 @@ export default {
   .Promotionposter >>> .el-carousel__container {
     margin-top: 0.6rem;
     min-height: 9rem;
-    /* height: 80%; */
-    /* display: block; */
   }
 }
 </style>

@@ -44,9 +44,11 @@
         <p @click="rules()">查看游戏规则 > ></p>
         <button @click="clearance()">立即开始</button>
       </div>
-      <div class="event1 event2">
-        <p @click="rulesone()">查看游戏规则 > ></p>
-        <button @click="solitaire()">立即开始</button>
+      <div class="event1 event2" @click="guiz()">
+        <!-- <p @click="rulesone()">查看游戏规则 > ></p>
+        <button @click="solitaire()">立即开始</button>-->
+        <p>查看游戏规则 > ></p>
+        <button>立即开始</button>
       </div>
     </div>
   </div>
@@ -95,19 +97,22 @@ export default {
     rules() {
       this.$router.push("/rules");
     },
-    rulesone() {
-      this.$router.push("/rulesone");
-    },
+    // rulesone() {
+    //   this.$router.push("/rulesone");
+    // },
     // 红包扫雷
     clearance() {
       // console.log("红包扫雷");
       this.$router.push("/clearance");
     },
-    // 红包接龙
-    solitaire() {
-      console.log("红包接龙");
-      this.$router.push("/solitaire");
+    guiz() {
+      this.$toasted.error("暂未开放").goAway(1000);
     }
+    // 红包接龙
+    // solitaire() {
+    //   console.log("红包接龙");
+    //   this.$router.push("/solitaire");
+    // }
   }
 };
 </script>

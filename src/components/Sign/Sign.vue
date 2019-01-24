@@ -19,10 +19,6 @@
           <!--  -->
           <van-steps active-color="#f1941d" :active="data.sing_day-1">
             <van-step v-for="(item,index) in data.sign" :key="index">{{ item }}</van-step>
-            <!-- <van-step></van-step>
-            <van-step></van-step>
-            <van-step></van-step>
-            <van-step></van-step>-->
           </van-steps>
         </div>
       </div>
@@ -53,12 +49,13 @@ export default {
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
+
+    // 签到详情
     this.http
-      .post("/api/sign")
+      .post("/api/sign_list")
       .then(res => {
         if (res.code == 200) {
-          console.log(res.data);
-          this.$toasted.success(res.message).goAway(1000);
+          this.data = res.data;
         } else if (res.code == 400) {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
@@ -66,14 +63,14 @@ export default {
       .catch(res => {
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
-    // 签到详情
+    //
     this.http
-      .post("/api/sign_list")
+      .post("/api/sign")
       .then(res => {
         if (res.code == 200) {
-          // console.log(res);
-          this.data = res.data;
+          console.log(res.data);
           Toast.clear();
+          this.$toasted.success(res.message).goAway(1000);
         } else if (res.code == 400) {
           Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);

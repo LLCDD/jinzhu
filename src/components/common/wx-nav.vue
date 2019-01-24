@@ -40,6 +40,7 @@ export default {
   position: absolute;
   bottom: 0;
   z-index: 99;
+  border-top: 1px solid #ccc;
 }
 #nav > a {
   width: 24.8%;

@@ -5,7 +5,7 @@
         <span>请输入红包总金额</span>
       </p>
       <p>
-        <input type="text" placeholder="0.00" v-model="money">
+        <input type="text" style="text-align:right" placeholder="0.00" v-model="money">
         <span>元</span>
       </p>
     </div>
@@ -22,7 +22,7 @@
         <span>雷点数</span>
       </p>
       <p>
-        <input style="width:2rem" type="text" placeholder="填写雷点数" v-model="dian">
+        <input style="width:2rem;text-align:right" type="number" placeholder="填写雷点数" v-model="dian">
       </p>
     </div>
     <button class="saibu" @click="saibao">塞进红包</button>
@@ -45,6 +45,7 @@ export default {
     this.$store.commit("fanhui", true);
     this.$store.commit("fanhui3", false);
     this.ge = localStorage.getItem("geshu");
+    this.$store.commit("propers", false);
   },
   methods: {
     saibao() {

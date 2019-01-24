@@ -49,13 +49,14 @@ export default {
         .post("/api/updatepass", {
           phone: this.phone,
           phone_code: this.code1,
-          passworld: this.passworld,
+          password: this.passworld,
           repassword: this.passworld1
         })
         .then(res => {
           if (res.code == 200) {
             this.$toasted.success("修改成功").goAway(1000);
-            this.$router.replace({ name: "index" });
+            localStorage.clear();
+            this.$router.replace({ name: "login" });
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }

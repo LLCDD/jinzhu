@@ -18,7 +18,9 @@ export default new Vuex.Store({
     tuijian: false,
     fanhui3: false,
     zong: "0",
-    fanhuiin: false
+    fanhuiin: false,
+    propers: false,
+    pors: "0"
   },
   mutations: {
     setUser(state, payload) {
@@ -72,6 +74,13 @@ export default new Vuex.Store({
     },
     fanhuiin(a, b) {
       a.fanhuiin = b
+    },
+    propers(a, b) {
+      a.propers = b
+    },
+    // 房间总人数
+    pors(a, b) {
+      a.pors = b
     }
   },
   actions: {

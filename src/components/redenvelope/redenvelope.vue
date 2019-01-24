@@ -7,7 +7,7 @@
     </header>
     <div class="renw">
       <div class="first">
-        <img src="../../assets/imgs/setup.png" alt>
+        <img src="../../assets/imgs/heaertttt.png" alt>
       </div>
       <p>{{ list.user }}</p>
       <p class="mar">{{ list.money }}</p>
@@ -15,7 +15,7 @@
       <div class="jil">
         <div v-for="(item,index) in list.data" :key="index">
           <div>
-            <img class="xqt" src="../../assets/imgs/setup.png" alt>
+            <img class="xqt" src="../../assets/imgs/heaertttt.png" alt>
             <p class="name">
               {{ item.phone }}
               <br>
@@ -52,6 +52,7 @@ export default {
     this.$store.commit("headerTab", false);
     console.log(this.$route.params.id);
     this.$store.commit("fanhui3", true);
+    this.$store.commit("propers", false);
     this.http
       .post("/api/cured", { push_id: this.$route.params.id })
       .then(res => {

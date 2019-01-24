@@ -5,11 +5,13 @@
       <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额</th>
       <th>说明</th>
       <tr v-for="(item,index) in list" :key="index">
-        <td style="color:#999999">1018-123-123-123:123213</td>
+        <td style="color:#999999">{{ item.created_at }}</td>
         <td
           style="color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
-        >1000.00</td>
-        <td style="color:#000">阿斯蒂而阿尔芬</td>
+        >{{ item.money }}</td>
+        <td style="color:#000" v-if="item.type == 1">支付宝提现</td>
+        <td style="color:#000" v-if="item.type == 2">银行卡提现</td>
+        <!-- <td style="color:#000">{{ item.explain }}</td> -->
       </tr>
     </table>
     <img class="null" v-if="!bool" src="../../../assets/imgs/null.png" alt>
@@ -25,9 +27,25 @@ export default {
     };
   },
   mounted() {
-    if (this.list.length > 0) {
-      this.bool = true;
-    }
+    this.http
+      .post("/api/tixian_record")
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res.data[1]);
+          if (res.data.data.length <= 0) {
+            this.bool = false;
+          } else {
+            this.bool = true;
+            this.list = res.data.data;
+            console.log(this.list);
+          }
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   }
 };
 </script>

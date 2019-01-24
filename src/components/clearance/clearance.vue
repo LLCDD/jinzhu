@@ -39,6 +39,7 @@ export default {
     this.$store.commit("fanhui", false);
     this.$store.commit("fanhui3", false);
     this.$store.commit("fanhuiin", true);
+    this.$store.commit("propers", false);
     this.http
       .post("/api/room_list", { game_id: "1" })
       .then(res => {

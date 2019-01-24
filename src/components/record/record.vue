@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -37,11 +38,30 @@ export default {
       this.$router.push("/personal");
     }
   },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
+  },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("header", "资产记录");
     this.$store.commit("footerTab", false);
     this.$store.commit("fanhui", true);
+    this.http
+      .post("/api/my_center")
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res);
+          this.msg = res.data.wallet;
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   }
 };
 </script>

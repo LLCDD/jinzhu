@@ -40,7 +40,7 @@ export default {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
     this.$store.commit("ld", false);
-    this.$store.commit("header", "修改支付密码");
+    this.$store.commit("header", "设置支付密码");
     this.$store.commit("fanhui", true);
   },
   methods: {
@@ -49,7 +49,7 @@ export default {
         .post("/api/update_pay", {
           phone: this.phone,
           phone_code: this.code1,
-          passworld: this.passworld,
+          password: this.passworld,
           repassworld: this.passworld1
         })
         .then(res => {

@@ -11,7 +11,7 @@
       @click="xiqing(item.id,item.game_name)"
     >
       <div class="saihongbaoy" :class="{'hongbao1':item.uid == uid1 }">
-        <img src="../../assets/imgs/my.png" alt>
+        <img src="../../assets/imgs/heaertttt.png" alt>
         <p>{{ item.phone }}</p>
         <!-- {{ item.uid }} -->
         <div>
@@ -74,7 +74,7 @@ export default {
     return {
       msg: "恭喜发财 , 大吉大利",
       msg1: localStorage.getItem("guize"),
-      money: "34",
+      money: "",
       show: false,
       uid1: localStorage.getItem("uid"),
       // 红包
@@ -84,7 +84,13 @@ export default {
       timer: null,
       websock: null,
       num: [],
-      count: 0
+      count: 0,
+      // 随机人数
+      // 最小
+      min: 1,
+      // 最大
+      max: "",
+      timery: null
     };
   },
   created() {
@@ -101,14 +107,40 @@ export default {
     this.$store.commit("fanhuiin", false);
     this.scrollToBottom();
     localStorage.setItem("panduan", 0);
-    // console.log()
+    this.$store.commit("propers", true);
+    // console.log(this.$route.params.biaoshi);
     Toast.clear();
-    console.log(this.$route.params.biaoshi);
+    // console.log(this.$route.params.biaoshi);
     if (localStorage.getItem("num" + this.$route.params.biaoshi)) {
     } else {
       localStorage.setItem("num" + this.$route.params.biaoshi, 0);
     }
     localStorage.setItem("avatar", this.$route.params.biaoshi);
+
+    // 随机人数
+    this.http
+      .post("/api/room_personal", {
+        room_id: this.$route.params.biaoshi
+      })
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res);
+          this.min = res.data.data[0];
+          this.max = res.data.data[1];
+        }
+        this.$store.commit("pors", this.min);
+        clearInterval(this.timery);
+        this.timery = setInterval(() => {
+          var suij = Math.ceil(Math.random() * 10);
+          if (this.min > this.max) {
+            this.min = parseInt(this.min) - parseInt(suij);
+            this.$store.commit("pors", this.min);
+          } else {
+            this.min = parseInt(this.min) + parseInt(suij);
+            this.$store.commit("pors", this.min);
+          }
+        }, 5000);
+      });
   },
   methods: {
     fabao() {
@@ -134,8 +166,9 @@ export default {
     xiqing(id, name) {
       if (localStorage.getItem("panduan") == 0) {
         localStorage.setItem("panduan", 1);
-        console.log(id, name);
+        // console.log(id, name);
         var _this = this;
+        clearInterval(this.timer);
         _this.http
           .post("/api/rob_package", { game_name: name })
           .then(res => {
@@ -163,42 +196,28 @@ export default {
                   }, 500);
                 }
               } else {
+                clearInterval(this.timer);
                 this.$toasted.error("手慢无").goAway(1000);
                 this.$router.push("/redenvelope/" + id);
               }
-              // if (res.data.code == 2) {
-              //   localStorage.setItem("panduan", 0);
-              //   this.$toasted.error("您的余额不足").goAway(1000);
-              // } else {
-              //   _this.$router.push("/redenvelope/" + id);
-              // }
-              _this.$toasted
-                .error(res.messsage, { icon: "error" })
-                .goAway(1000);
+              // _this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
               console.log(res);
             } else if (res.code == 400) {
-              _this.$toasted
-                .error(res.messsage, { icon: "error" })
-                .goAway(1000);
+              clearInterval(this.timer);
+              // console.log(res);
+              // _this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+              this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
             }
           })
           .catch(res => {
+            clearInterval(this.timer);
             _this.$toasted.error(res.messsage, { icon: "error" }).goAway(1000);
           });
         clearInterval(this.timer);
       }
     },
     // 抢雷
-    // qinglei() {
-    //   clearInterval(this.timer);
-    //   this.show2 = true;
-    //   var _this = this;
-    //   this.timer = setInterval(() => {
-    //     _this.show2 = false;
-    //     this.$router.push("/redenvelope");
-    //     clearInterval(this.timer);
-    //   }, 400);
-    // },
+
     // 滚动条
     scrollToBottom: function() {
       this.$nextTick(() => {
@@ -235,8 +254,7 @@ export default {
         type: "joinRoom",
         // lastMsgId: localStorage.getItem("num" + this.$route.params.biaoshi),
         lastMsgId: 0,
-        roomId: this.$route.params.biaoshi,
-        token: localStorage.getItem("token")
+        roomId: this.$route.params.biaoshi
       };
       this.websocketsend(JSON.stringify(actions));
       //				console.log()
@@ -430,7 +448,7 @@ export default {
   background-size: cover;
   float: left;
   border-radius: 0.1rem;
-  padding-top: 0.1rem;
+  /* padding-top: 0.1rem; */
   color: #fff;
 }
 .hongbao1 > div > :first-child {

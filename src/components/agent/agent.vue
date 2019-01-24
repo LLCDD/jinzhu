@@ -18,30 +18,47 @@
     </div>
     <div class="vip">
       <span>支付密码</span>
-      <input type="text" v-model="passworld" placeholder="输入支付密码">
+      <input type="password" v-model="passworld" placeholder="输入支付密码">
     </div>
-    <button class="buty" @click="top()">确认转账</button>
+    <button class="buty" @click="top()">确认充值</button>
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
       money: "",
       vip: "",
       passworld: "",
-      money1: "222"
+      money1: ""
     };
+  },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
   },
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
-    this.http.post("/api/my_center").then(res => {
-      if (res.code == 200) {
-        this.money1 = res.data.wallet;
-      }
-    });
+    this.http
+      .post("/api/my_center")
+      .then(res => {
+        if (res.code == 200) {
+          Toast.clear();
+          this.money1 = res.data.wallet;
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   },
   methods: {
     tap() {
@@ -49,7 +66,6 @@ export default {
     },
     // 转账
     top() {
-      console.log("转账");
       this.http
         .post("/api/pay_order", {
           phone: this.vip,
@@ -58,7 +74,8 @@ export default {
         })
         .then(res => {
           if (res.code == 200) {
-            console.log(res);
+            this.$toasted.success(res.message).goAway(1000);
+            this.vip = this.money = this.passworld = "";
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }
