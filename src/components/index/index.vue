@@ -12,7 +12,7 @@
       indicator-position="none"
       :interval="3000"
       type="card"
-      height="3.78rem"
+      height="3.9rem"
       :loop="true"
     >
       <el-carousel-item v-for="(item,index) in list" :key="index" class="card">
@@ -151,6 +151,7 @@ export default {
   padding-left: 0.3rem;
   margin-left: 0.34rem;
   border-left: 2px solid #f1941d;
+  margin-top: 0.1rem;
 }
 .nr1 > p {
   line-height: 0.36rem;

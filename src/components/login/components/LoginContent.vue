@@ -4,7 +4,7 @@
     <input type="password" placeholder="请输入密码" v-model="password">-->
     <div class="landing">
       <span>手机号</span>
-      <input type="text" placeholder="请输入账号" v-model="phone">
+      <input type="number" placeholder="请输入账号" v-model="phone">
     </div>
     <div class="landing">
       <span>密码</span>

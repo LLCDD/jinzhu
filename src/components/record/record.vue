@@ -53,13 +53,16 @@ export default {
       .post("/api/my_center")
       .then(res => {
         if (res.code == 200) {
+          Toast.clear();
           console.log(res);
           this.msg = res.data.wallet;
         } else if (res.code == 400) {
+          Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
+        Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   }

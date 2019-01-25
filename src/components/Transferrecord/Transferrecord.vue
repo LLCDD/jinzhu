@@ -12,11 +12,14 @@
       <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额</th>
       <th>时间</th>
       <tr v-for="(item,index) in list" :key="index">
-        <td style="color:#000">23434</td>
+        <td style="color:#000">
+          {{ item.real_name
+          }}
+        </td>
         <td
           style="color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
-        >1000.00</td>
-        <td style="color:#999999">1018-123-123-123:123213</td>
+        >{{ item.money }}</td>
+        <td style="color:#999999">{{ item.created_at }}</td>
       </tr>
     </table>
     <img class="null" v-if="!bool" src="../../assets/imgs/null.png" alt>
@@ -24,6 +27,7 @@
 </template>
 
 <script>
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -32,14 +36,41 @@ export default {
       bool: false
     };
   },
+  beforeCreate() {
+    Toast.loading({
+      mask: true,
+      message: "加载中..."
+    });
+  },
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", true);
     this.$store.commit("fanhui", true);
     this.$store.commit("header", "转账记录");
-    if (this.list.length > 0) {
-      this.bool = true;
-    }
+    // if (this.list.length > 0) {
+    //   this.bool = true;
+    // }
+    this.http
+      .post("/api/recharge_record", { type: 2 })
+      .then(res => {
+        if (res.code == 200) {
+          Toast.clear();
+          this.msg = res.data.money;
+          if (res.data.data.length <= 0) {
+            this.bool = false;
+          } else {
+            this.bool = true;
+            this.list = res.data.data;
+          }
+        } else if (res.code == 400) {
+          Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        Toast.clear();
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   },
   methods: {
     tap() {

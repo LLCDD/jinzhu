@@ -10,7 +10,7 @@
     </div>
     <div class="divq">
       <p class="py">
-        <span>已连续签到</span>
+        <span>已签到</span>
         <br>
         <span class="spy">{{ data.sing_day }} 天</span>
       </p>
@@ -220,7 +220,7 @@ header > span {
 }
 .py {
   text-align: center;
-  width: 30%;
+  width: 18%;
   position: relative;
   /* background: pink; */
   color: #f1941d;
@@ -233,7 +233,7 @@ header > span {
   font-size: 0.3rem;
 }
 .py1 {
-  width: 64%;
+  width: 78%;
   position: absolute;
   height: 70%;
   top: 0.2rem;

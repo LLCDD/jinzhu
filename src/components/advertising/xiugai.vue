@@ -7,7 +7,7 @@
       </p>
       <p>
         <span>银行卡号</span>
-        <input type="text" placeholder v-model="bank_num">
+        <input type="number" placeholder v-model="bank_num">
       </p>
       <p>
         <span>持卡人姓名</span>
@@ -15,11 +15,11 @@
       </p>
       <p>
         <span>手机号</span>
-        <input type="text" placeholder="请输入手机号" v-model="phone">
+        <input type="number" placeholder="请输入手机号" v-model="phone">
       </p>
       <p>
         <span>验证码</span>
-        <input class="code" type="text" placeholder="请输入验证码" v-model="code">
+        <input class="code" type="number" placeholder="请输入验证码" v-model="code">
         <span v-if="bool" style="width:1.4rem;float:right;color:#f1941d" @click="code1">发送验证码</span>
         <span v-if="!bool" style="width:1.4rem;float:right;color:#f1941d">{{count}}s</span>
         <!-- <p  style="width:1.4rem;float:right;color:#f1941d" class="p">

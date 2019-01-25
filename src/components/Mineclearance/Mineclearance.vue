@@ -124,7 +124,7 @@ export default {
       })
       .then(res => {
         if (res.code == 200) {
-          console.log(res);
+          // console.log(res);
           this.min = res.data.data[0];
           this.max = res.data.data[1];
         }
@@ -246,7 +246,7 @@ export default {
       this.websock.onopen = this.websocketonopen;
       this.websock.onerror = this.websocketonerror;
       this.websock.onclose = this.websocketclose;
-      //				console.log("连接成功")
+      // console.log("连接成功");
     },
     websocketonopen() {
       //连接建立之后执行send方法发送数据
@@ -266,7 +266,7 @@ export default {
     websocketonmessage(e) {
       //数据接收
 
-      console.log(e);
+      console.log("54165");
       var arr = JSON.parse(e.data);
       console.log(arr);
       if (arr.data) {
@@ -358,7 +358,7 @@ export default {
 }
 .saihongbaoy {
   width: 60%;
-  height: 1.6rem;
+  height: 1.7rem;
   margin-top: 0.3rem;
   float: left;
 }

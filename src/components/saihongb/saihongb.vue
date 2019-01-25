@@ -5,7 +5,7 @@
         <span>请输入红包总金额</span>
       </p>
       <p>
-        <input type="text" style="text-align:right" placeholder="0.00" v-model="money">
+        <input type="number" style="text-align:right" placeholder="0.00" v-model="money">
         <span>元</span>
       </p>
     </div>

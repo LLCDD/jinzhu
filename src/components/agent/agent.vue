@@ -10,11 +10,11 @@
     </div>
     <div class="vip">
       <span>会员账号</span>
-      <input type="text" v-model="vip" placeholder="输入会员账号">
+      <input type="number" v-model="vip" placeholder="输入会员账号">
     </div>
     <div class="vip">
       <span>充值金额</span>
-      <input type="text" v-model="money" placeholder="输入充值金额">
+      <input type="number" v-model="money" placeholder="输入充值金额">
     </div>
     <div class="vip">
       <span>支付密码</span>

@@ -32,12 +32,14 @@ export default {
       .post("/api/recharge_record", { type: 1 })
       .then(res => {
         if (res.code == 200) {
-          this.list = res.data;
-          if (res.data == []) {
+          if (res.data.data.length <= 0) {
+            this.bool = false;
+          } else {
             this.bool = true;
-          } else if (res.code == 400) {
-            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+            this.list = res.data.data;
           }
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {

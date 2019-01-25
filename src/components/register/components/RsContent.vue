@@ -6,11 +6,11 @@
 
     <div class="put">
       <span>手机号</span>
-      <input type="text" placeholder="请输入手机号" v-model="phone">
+      <input type="number" placeholder="请输入手机号" v-model="phone">
     </div>
     <div class="put">
       <span>验证码</span>
-      <input class="code" type="text" placeholder="输入手机验证码" v-model="phone_code">
+      <input class="code" type="number" placeholder="输入手机验证码" v-model="phone_code">
       <p class="p">
         <span v-if="inentify" @click="send">发送验证码</span>
         <span v-if="timer">{{count}}s</span>

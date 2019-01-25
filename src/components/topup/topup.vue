@@ -3,7 +3,7 @@
     <div class="chongzhi">
       <span>充值金额</span>
       <div>
-        <input type="text" placeholder="0.00" v-model="huof">
+        <input type="number" placeholder="0.00" v-model="huof">
         <span>元</span>
       </div>
     </div>

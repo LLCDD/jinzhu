@@ -3,7 +3,7 @@
     <div class="tixiany">
       <span>提现金额</span>
       <span>
-        <input v-model="tmoney" class="input" type="text" placeholder="0.00">元
+        <input v-model="tmoney" class="input" type="number" placeholder="0.00">元
       </span>
     </div>
     <p class="yuey">我的余额 ：￥{{money}}</p>

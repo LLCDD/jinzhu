@@ -29,15 +29,17 @@ export default {
     //   this.bool = true;
     // }
     this.http
-      .post("/api/recharge_record", { type: 2 })
+      .post("/api/recharge_record", { type: 3 })
       .then(res => {
         if (res.code == 200) {
-          this.list = res.data;
-          if (res.data == []) {
+          if (res.data.data.length <= 0) {
             this.bool = false;
-          } else if (res.code == 400) {
-            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          } else {
+            this.bool = true;
+            this.list = res.data.data;
           }
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {

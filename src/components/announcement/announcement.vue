@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       msg: "45345",
-      list: [1, 3, 2, 4]
+      list: []
     };
   },
   beforeCreate() {
