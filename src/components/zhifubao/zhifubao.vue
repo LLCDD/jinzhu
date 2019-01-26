@@ -27,12 +27,12 @@ export default {
       id: ""
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
@@ -43,7 +43,7 @@ export default {
       .post("/api/list_bao")
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           console.log(res);
           if (res.message == "未添支付宝账号") {
             this.bool = false;
@@ -54,12 +54,12 @@ export default {
             this.zhna = res.data.data[0].bao_num;
           }
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
     // if (this.list.length > 0) {

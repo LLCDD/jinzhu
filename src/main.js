@@ -9,6 +9,7 @@ import http from './http'
 import MintUI from 'mint-ui'
 import ElementUI from 'element-ui';
 import Vant from 'vant'
+import VueQriously from 'vue-qriously'
 import FastClick from 'fastclick' //使用 fastclick 解决移动端 300ms 点击延迟
 import filters from './filters' //将全部过滤器放在 filters/index.js 中便于管理
 //技巧 同时 use 多个插件 被依赖的插件应放在偏后方
@@ -27,6 +28,7 @@ import 'vant/lib/index.css';
 Vue.use(VueAwesomeSwiper)
 Vue.use(MintUI)
 Vue.use(Vant)
+Vue.use(VueQriously)
 Vue.prototype.http = http
 // 注册全局过滤器
 filters(Vue)

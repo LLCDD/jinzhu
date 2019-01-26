@@ -188,26 +188,32 @@ export default {
 .put {
   width: 90%;
   margin-left: 5%;
-  height: 0.8rem;
   /* background: #fff; */
   /* padding: 0.28rem; */
-  line-height: 0.8rem;
   /* padding: 0 0.28rem; */
   /* background: red; */
   border: 1px solid #fff;
   border-radius: 5px;
   margin-bottom: 0.2rem;
+  height: 0.8rem;
 }
 .put > input {
   border: 0;
   background: none;
   color: #fff;
+  line-height: 0.8rem;
+  width: 38%;
+
+  float: left;
 }
 .put > span {
   display: inline-block;
   width: 1.8rem;
   color: #fff;
   padding-left: 0.2rem;
+  height: 0.8rem;
+  float: left;
+  line-height: 0.8rem;
 }
 .code {
   width: 36%;

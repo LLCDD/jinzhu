@@ -35,12 +35,12 @@ export default {
       money1: ""
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
@@ -48,15 +48,15 @@ export default {
       .post("/api/my_center")
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           this.money1 = res.data.wallet;
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   },

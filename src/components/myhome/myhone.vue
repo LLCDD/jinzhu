@@ -26,6 +26,7 @@ export default {
     this.$store.commit("header", "功能");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", false);
+    this.$store.commit("qing", false);
   },
   methods: {
     //   客服

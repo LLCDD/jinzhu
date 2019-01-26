@@ -10,7 +10,7 @@
     </p>
     <p>
       <span>当前版本</span>
-      <span style="color:#999">V0.99</span>
+      <span style="color:#999">V1.0</span>
     </p>
   </div>
 </template>

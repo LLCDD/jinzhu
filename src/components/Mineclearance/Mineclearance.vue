@@ -17,7 +17,7 @@
         <div>
           <p>{{ msg }}</p>
           <br>
-          <p>{{ msg1}}</p>
+          <p>{{ item.money }}-{{ item.spot }}</p>
         </div>
       </div>
     </div>
@@ -171,44 +171,52 @@ export default {
         clearInterval(this.timer);
         _this.http
           .post("/api/rob_package", { game_name: name })
-          .then(res => {
-            if (res.code == 200) {
-              this.$toasted.success(res.message).goAway(1000);
-              if (res.data.code == 2) {
-                localStorage.setItem("panduan", 0);
-                this.$toasted.error("您的余额不足").goAway(1000);
-              } else if (res.data.code == 1) {
-                if (res.data.is_spot == 0) {
-                  this.show1 = true;
-                  this.show2 = false;
-                  this.timer = setInterval(() => {
-                    _this.show1 = false;
-                    _this.$router.push("/redenvelope/" + id);
-                    clearInterval(this.timer);
-                  }, 500);
+          .then(
+            res => {
+              if (res.code == 200) {
+                this.$toasted.success(res.message).goAway(1000);
+                if (res.data.code == 2) {
+                  localStorage.setItem("panduan", 0);
+                  this.$toasted.error("您的余额不足").goAway(1000);
+                } else if (res.data.code == 1) {
+                  if (res.data.is_spot == 0) {
+                    this.show1 = true;
+                    this.show2 = false;
+                    this.timer = setInterval(() => {
+                      _this.show1 = false;
+                      _this.$router.push("/redenvelope/" + id);
+                      clearInterval(this.timer);
+                    }, 500);
+                  } else {
+                    this.show1 = false;
+                    this.show2 = true;
+                    this.timer = setInterval(() => {
+                      _this.show2 = false;
+                      _this.$router.push("/redenvelope/" + id);
+                      clearInterval(this.timer);
+                    }, 500);
+                  }
                 } else {
-                  this.show1 = false;
-                  this.show2 = true;
-                  this.timer = setInterval(() => {
-                    _this.show2 = false;
-                    _this.$router.push("/redenvelope/" + id);
-                    clearInterval(this.timer);
-                  }, 500);
+                  clearInterval(this.timer);
+                  this.$toasted.error("手慢无").goAway(1000);
+                  this.$router.push("/redenvelope/" + id);
                 }
-              } else {
+                // _this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+                console.log(res);
+              } else if (res.code == 400) {
                 clearInterval(this.timer);
-                this.$toasted.error("手慢无").goAway(1000);
-                this.$router.push("/redenvelope/" + id);
+                // console.log(res);
+                // _this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+                this.$toasted
+                  .error(res.message, { icon: "error" })
+                  .goAway(1000);
               }
-              // _this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-              console.log(res);
-            } else if (res.code == 400) {
-              clearInterval(this.timer);
-              // console.log(res);
-              // _this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-              this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+            },
+            err => {
+              localStorage.setItem("panduan", 0);
+              this.$toasted.error(err.message, { icon: "error" }).goAway(1000);
             }
-          })
+          )
           .catch(res => {
             clearInterval(this.timer);
             _this.$toasted.error(res.messsage, { icon: "error" }).goAway(1000);
@@ -278,6 +286,7 @@ export default {
         document.getElementById("music").play();
         this.num.push(arr);
       }
+      console.log(this.num);
     },
     websocketsend(Data) {
       //数据发送
@@ -358,7 +367,7 @@ export default {
 }
 .saihongbaoy {
   width: 60%;
-  height: 1.7rem;
+  height: 1.9rem;
   margin-top: 0.3rem;
   float: left;
 }
@@ -377,12 +386,12 @@ export default {
 }
 .saihongbaoy > div {
   width: 80%;
-  height: 80%;
+  height: 75%;
   background: url("../../assets/imgs/7.png") no-repeat;
   background-size: cover;
   float: right;
   border-radius: 0.1rem;
-  padding-top: 0.1rem;
+  padding-top: 0.2rem;
   color: #fff;
 }
 

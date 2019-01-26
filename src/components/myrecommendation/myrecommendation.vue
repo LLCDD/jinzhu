@@ -64,12 +64,13 @@ export default {
       bool2: false
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中...",
+  //     duration: 30000
+  //   });
+  // },
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
@@ -78,23 +79,27 @@ export default {
     // }
     this.http.post("/api/rrand").then(res => {
       if (res.code == 200) {
-        Toast.clear();
-        // console.log(res.data.arr.length);
+        // Toast.clear();
+        console.log(res.data.total);
+        this.msg = res.data.total;
+        this.msg1 = res.data.todays;
         // this.list = res.data.arr;
-        if (res.message == "您没有推荐任何人") {
+        if (res.data.arr.length <= 0) {
           this.bool = false;
         } else {
-          this.bool = true;
-          this.msg = res.data.total;
-          this.msg1 = res.data.todays;
-          this.list1 = res.data.arr;
-          this.zong = Math.ceil(res.data.arr.length / 10);
           if (res.data.arr.length >= 10) {
+            var arr = [];
             this.bool2 = true;
+            for (var i = 0; i < 10; i++) {
+              arr.push(res.data.arr[i]);
+              this.list = arr;
+            }
+          } else {
+            this.list = res.data.arr;
           }
-          for (var i = 0; i < 10; i++) {
-            this.list.push(res.data.arr[i]);
-          }
+          this.bool = true;
+          this.list1 = res.data.arr;
+          this.zong = Math.floor(res.data.arr.length / 10);
         }
       }
     });
@@ -120,6 +125,7 @@ export default {
       this.list = [];
       // console.log();
       for (var i = id * 10 - 10; i < id * 10; i++) {
+        console.log(i);
         this.list.push(this.list1[i]);
       }
     }
@@ -129,7 +135,7 @@ export default {
 <style scoped>
 .myrecommendation {
   /* padding-top: 0.88rem; */
-  min-height: 100%;
+  /* height: 100%; */
   background: #f5f5f5;
   width: 100%;
 }

@@ -29,12 +29,12 @@ export default {
       id: ""
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
@@ -45,7 +45,7 @@ export default {
       .post("/api/list_bank")
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           if (res.message == "未添加银行卡") {
             this.bool = false;
           } else {
@@ -54,12 +54,12 @@ export default {
             this.id = res.data.data[0].id;
           }
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
     console.log(this.list);

@@ -52,34 +52,36 @@ export default {
       arr: []
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
-    this.http
-      .post("/api/rankings", { type: "1" })
-      .then(res => {
-        if (res.code == 200) {
-          Toast.clear();
-          // console.log(res.data.data);
-          if (res.data.data.length > 3) {
-            for (var i = 0; i < 3; i++) {
-              this.arr.push(res.data.data[i]);
+    this.$nextTick(() => {
+      this.http
+        .post("/api/rankings", { type: "1" })
+        .then(res => {
+          if (res.code == 200) {
+            // Toast.clear();
+            // console.log(res.data.data);
+            if (res.data.data.length > 3) {
+              for (var i = 0; i < 3; i++) {
+                this.arr.push(res.data.data[i]);
+              }
             }
+            this.list = res.data.data;
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }
-          this.list = res.data.data;
-        } else if (res.code == 400) {
-          Toast.clear();
+        })
+        .catch(res => {
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-        }
-      })
-      .catch(res => {
-        Toast.clear();
-        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-      });
+        });
+    });
   }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="personal">
-    <img @click="qrcode" class="qrcode" src="../../assets/imgs/qrcode.png" alt>
+    <!-- <img @click="qrcode" class="qrcode" src="../../assets/imgs/qrcode.png" alt> -->
     <div class="header">
       <div class="warp">
         <div class="photo">
@@ -43,6 +43,7 @@
       <div class="dw">
         <router-link tag="p" to="/myrecommendation">我的推荐</router-link>
         <img class="dw1" src="../../assets/imgs/select.png" alt>
+        <p style="position: absolute;right:0.6rem;top:0;color:#999">{{ tui1}}</p>
         <img class="dw2" src="../../assets/imgs/oragin.png" alt>
       </div>
       <div class="dw">
@@ -89,15 +90,17 @@ export default {
       show: false,
       nickname: "",
       money: "",
-      src: null
+      src: "",
+      tui1: "34534"
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中...",
+  //     duration: 30000
+  //   });
+  // },
   mounted() {
     this.$store.commit("tuijian", false);
     this.$store.commit("headerTab", false);
@@ -111,14 +114,15 @@ export default {
           this.msg = res.data.name;
           this.nickname = res.data.id;
           this.money = res.data.wallet;
-          Toast.clear();
+          this.tui1 = res.data.recommend;
+          // Toast.clear();
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
     this.http

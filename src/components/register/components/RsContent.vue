@@ -29,9 +29,9 @@
       <input type="text" placeholder="请输入邀请码" v-model="recommend">
     </div>
     <button @click="register">确定注册</button>
-    <p class="xz">
+    <!-- <p class="xz">
       <span @click="xz()">立即下载App</span>
-    </p>
+    </p>-->
   </div>
 </template>
 
@@ -170,7 +170,7 @@ export default {
   height: 0.8rem;
   /* background: #fff; */
   /* padding: 0.28rem; */
-  line-height: 0.8rem;
+
   /* padding: 0 0.28rem; */
   /* background: red; */
   border: 1px solid #fff;
@@ -181,15 +181,21 @@ export default {
   border: 0;
   background: none;
   color: #fff;
+  float: left;
+  /* line-height: 0.9rem; */
+  line-height: 0.8rem;
+  width: 40%;
 }
 .put > span {
   display: inline-block;
   width: 1.8rem;
   color: #fff;
   padding-left: 0.2rem;
+  float: left;
+  line-height: 0.8rem;
 }
 .code {
-  width: 36%;
+  width: 35% !important;
 }
 .p {
   float: right;

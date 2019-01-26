@@ -7,7 +7,7 @@
         </div>
         <br>
         <div :class="item.class">
-          <img src="../../assets/imgs/xiaolei.png" alt>
+          <img src="../../assets/imgs/heaertttt.png" alt>
           <div>{{ item.u_content }}</div>
         </div>
       </div>
@@ -26,7 +26,7 @@ export default {
     return {
       msg: "345",
       text1: "",
-      list: "",
+      list: this.$store.state.qingr,
       timer: null
     };
   },
@@ -36,6 +36,7 @@ export default {
     this.$store.commit("headerTab", true);
     this.scrollToBottom();
     this.sendy();
+    this.$store.commit("qing", true);
   },
   methods: {
     send() {
@@ -49,6 +50,7 @@ export default {
               .then(res => {
                 if (res.code == 200) {
                   this.list = res.data;
+                  this.$store.commit("qingr", res.data);
                   console.log(res.data);
                 } else if (res.code == 400) {
                   this.$toasted
@@ -80,6 +82,7 @@ export default {
         .then(res => {
           if (res.code == 200) {
             this.list = res.data;
+            this.$store.commit("qingr", res.data);
             console.log(res.data);
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);

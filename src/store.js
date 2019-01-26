@@ -20,7 +20,9 @@ export default new Vuex.Store({
     zong: "0",
     fanhuiin: false,
     propers: false,
-    pors: "0"
+    pors: "0",
+    qing: false,
+    qingr: []
   },
   mutations: {
     setUser(state, payload) {
@@ -81,6 +83,14 @@ export default new Vuex.Store({
     // 房间总人数
     pors(a, b) {
       a.pors = b
+    },
+    // 一键清空
+    qing(a, b) {
+      a.qing = b
+    },
+    // 聊天内容
+    qingr(a, b) {
+      a.qingr = b
     }
   },
   actions: {

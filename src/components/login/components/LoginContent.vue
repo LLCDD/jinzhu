@@ -80,10 +80,14 @@ export default {
   width: 1.6rem;
   font-size: 0.28rem;
   padding-left: 0.3rem;
+  float: left;
 }
 .content1 > .landing > input {
   background: none;
   color: #fff;
+  float: left;
+  line-height: 0.9rem;
+  width: 50%;
 }
 .login {
   width: 100%;

@@ -10,19 +10,23 @@
         <img src="../../assets/imgs/heaertttt.png" alt>
       </div>
       <p>{{ list.user }}</p>
-      <p class="mar">{{ list.money }}</p>
+      <!-- <p>{{ list.money }}</p> -->
+      <p>{{ list.money }}-{{ list.spot }}</p>
+
+      <p style="color:red;font-size:0.4rem">{{ list.problem }} 元</p>
       <div class="zong">{{ ge }}个红包共{{ list.money }}元</div>
       <div class="jil">
         <div v-for="(item,index) in list.data" :key="index">
           <div>
-            <img class="xqt" src="../../assets/imgs/heaertttt.png" alt>
+            <img v-if="item.status == 1" class="xqt" src="../../assets/imgs/nextt.png" alt>
+            <img v-if="item.status == 0" class="xqt" src="../../assets/imgs/heaertttt.png" alt>
             <p class="name">
               {{ item.phone }}
               <br>
               <span>{{ item.created_at }}</span>
             </p>
           </div>
-          <img v-if="item.phone == 15999998886" class="msl" src="../../assets/imgs/nextt.png" alt>
+          <img v-if="item.status == 1" class="msl" src="../../assets/imgs/nextt.png" alt>
           <img v-if="item.is_spot == 1" class="xqtl" src="../../assets/imgs/xiaolei.png" alt>
           <div class="line">{{ item.money }}元</div>
         </div>
@@ -41,13 +45,13 @@ export default {
       list: []
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中...",
-      duration: 30000
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中...",
+  //     duration: 30000
+  //   });
+  // },
   mounted() {
     this.$store.commit("headerTab", false);
     console.log(this.$route.params.id);
@@ -57,16 +61,16 @@ export default {
       .post("/api/cured", { push_id: this.$route.params.id })
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           console.log(res.data.user);
           this.list = res.data;
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   },

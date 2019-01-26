@@ -36,12 +36,12 @@ export default {
       bool: false
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", true);
@@ -54,7 +54,7 @@ export default {
       .post("/api/recharge_record", { type: 2 })
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           this.msg = res.data.money;
           if (res.data.data.length <= 0) {
             this.bool = false;
@@ -63,12 +63,12 @@ export default {
             this.list = res.data.data;
           }
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   },

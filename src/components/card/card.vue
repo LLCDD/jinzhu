@@ -19,12 +19,12 @@ export default {
       bool: false
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
@@ -56,7 +56,7 @@ export default {
       .post("/api/first_recommend")
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           console.log(res);
           if (res.message == "您没有推荐过任何人") {
             this.bool = true;
@@ -65,12 +65,12 @@ export default {
             this.list = res.data.data;
           }
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   }

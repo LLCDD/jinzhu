@@ -21,27 +21,27 @@ export default {
       list: [1, 2, 3]
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.http
       .post("/api/myWelfare", { type: "1" })
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           this.$store.commit("zong", res.data.money);
           this.list = res.data.data;
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
       });
   }

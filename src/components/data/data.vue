@@ -30,12 +30,12 @@ export default {
       msg3: ""
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
@@ -46,7 +46,7 @@ export default {
       .post("/api/get_personal")
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           console.log(res);
           if (res.data.data.name == null) {
             this.msg = "暂无昵称";
@@ -72,12 +72,12 @@ export default {
 
           // this.msg = res.data;
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   },

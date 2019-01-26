@@ -25,12 +25,12 @@ export default {
       list: []
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("headerTab", true);
     this.$store.commit("footerTab", false);
@@ -44,17 +44,17 @@ export default {
       .post("/api/room_list", { game_id: "1" })
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           console.log(res);
           console.log(res.data.data);
           this.list = res.data.data;
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   },

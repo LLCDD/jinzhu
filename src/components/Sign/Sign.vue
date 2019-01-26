@@ -40,12 +40,12 @@ export default {
       data: ""
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
@@ -64,22 +64,24 @@ export default {
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
     //
-    this.http
-      .post("/api/sign")
-      .then(res => {
-        if (res.code == 200) {
-          console.log(res.data);
-          Toast.clear();
-          this.$toasted.success(res.message).goAway(1000);
-        } else if (res.code == 400) {
-          Toast.clear();
+    this.$nextTick(() => {
+      this.http
+        .post("/api/sign")
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res.data);
+            // Toast.clear();
+            this.$toasted.success(res.message).goAway(1000);
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-        }
-      })
-      .catch(res => {
-        Toast.clear();
-        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-      });
+        });
+    });
   },
   methods: {
     tap() {

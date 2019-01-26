@@ -56,18 +56,18 @@ export default {
       arr: []
     };
   },
-  beforeCreate() {
-    Toast.loading({
-      mask: true,
-      message: "加载中..."
-    });
-  },
+  // beforeCreate() {
+  //   Toast.loading({
+  //     mask: true,
+  //     message: "加载中..."
+  //   });
+  // },
   mounted() {
     this.http
       .post("/api/rankings", { type: "2" })
       .then(res => {
         if (res.code == 200) {
-          Toast.clear();
+          // Toast.clear();
           // console.log(res.data.data.length);
           if (res.data.data.length > 3) {
             for (var i = 0; i < 3; i++) {
@@ -80,12 +80,12 @@ export default {
           //   this.list.push(res.data.data[i]);
           // }
         } else if (res.code == 400) {
-          Toast.clear();
+          // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
       })
       .catch(res => {
-        Toast.clear();
+        // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
   }

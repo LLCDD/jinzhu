@@ -26,6 +26,7 @@
           v-if="this.$store.state.propers"
           class="propers"
         >房间人数: {{ this.$store.state.pors }}</span>
+        <span v-if="this.$store.state.qing" class="propers" @click="qingkong()">一键清空</span>
       </header>
       <!-- </div> -->
       <!--搜索框 只在“微信”和“通讯录”页面下显示-->
@@ -83,6 +84,22 @@ export default {
     },
     ldyopp() {
       this.$router.push("/index");
+    },
+    // 清空
+    qingkong() {
+      this.http
+        .post("/api/emptys")
+        .then(res => {
+          if (res.code == 200) {
+            this.$store.commit("qingr", []);
+            console.log(res);
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     }
   },
   watch: {
@@ -130,6 +147,7 @@ $material-icons-font-path: "~material-icons/iconfont/";
 .app-content {
   // min-height: 100%;
   // background: url("./assets/imgs/background.png") no-repeat top;
+  overflow-y: auto;
 }
 #header {
   // margin-top: 0.44rem;

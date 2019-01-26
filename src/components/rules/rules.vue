@@ -1,6 +1,6 @@
 <template>
   <div class="uu">
-    <div></div>
+    <div v-html="msg"></div>
   </div>
 </template>
 <script>
@@ -16,6 +16,19 @@ export default {
     this.$store.commit("header", "游戏规则");
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", true);
+    this.http
+      .post("/api/rulesGame", { game_id: 1 })
+      .then(res => {
+        if (res.code == 200) {
+          console.log(res);
+          this.msg = res.data.data.game_rule;
+        } else if (res.code == 400) {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        }
+      })
+      .catch(res => {
+        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+      });
   },
   methods: {}
 };

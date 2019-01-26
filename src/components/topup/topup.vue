@@ -16,17 +16,17 @@
       <p @click="yuan4()" :class="{ 'border' : huof == 1000 }">1000元</p>
       <p @click="yuan5()" :class="{ 'border' : huof == 2000 }">2000元</p>
     </div>
-    <div @click="bool()" class="ali" :class="{ 'classy' : state ==1 }">
+    <div @click="bool()" class="ali" :class="{ 'classy' : state == 1 }">
       <img src="../../assets/imgs/zhifub.png" alt>
       <span>支付宝充值</span>
       <span style="color:#999999"></span>
     </div>
-    <div @click="bool1()" class="card2" :class="{ 'classy' : state == 2 }">
+    <div @click="bool1()" class="card2" :class="{ 'classy' : state == 3 }">
       <img src="../../assets/imgs/yingh.png" alt>
       <span>快捷充值</span>
       <span style="color:#999999"></span>
     </div>
-    <div @click="bool2()" class="card2" :class="{ 'classy' : state ==3 }">
+    <div @click="bool2()" class="card2" :class="{ 'classy' : state == 2 }">
       <img src="../../assets/imgs/weix.png" alt>
       <span>微信充值</span>
       <span style="color:#999999"></span>
@@ -49,7 +49,7 @@ export default {
     return {
       msg: "提现页面",
       money: "1000.00",
-      state: 1,
+      state: 0,
       huof: ""
     };
   },
@@ -61,17 +61,25 @@ export default {
     this.$store.commit("fanhui", true);
   },
   methods: {
+    // 支付宝
     bool() {
       this.state = 1;
+      this.gongong(this.state);
     },
+    // 银行卡
     bool1() {
-      this.state = 2;
-    },
-    bool2() {
       this.state = 3;
+      this.gongong(this.state);
     },
+    // 微信
+    bool2() {
+      this.state = 2;
+      this.gongong(this.state);
+    },
+    // 人工
     bool3() {
       this.state = 4;
+      this.gongong(this.state);
     },
     // 充值金额
     yuan() {
@@ -94,10 +102,44 @@ export default {
     },
     // chognzhi
     chogn() {
-      if (this.state == 4) {
-        console.log("立即充值");
-        this.$router.replace({ name: "rengong" });
-      }
+      //
+      this.http
+        .post("/api/stopAppSwitches", { type: this.state })
+        .then(res => {
+          if (res.code == 200) {
+            if (res.data.status == 0) {
+              this.$toasted.error("此项暂未开放").goAway(1000);
+            } else {
+              if (this.state == 4) {
+                this.$router.replace({ name: "rengong" });
+              }
+              this.$toasted.success(res.message).goAway(1000);
+            }
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+    },
+    gongong(id) {
+      console.log(id);
+      this.http
+        .post("/api/stopAppSwitches", { type: id })
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+            if (res.data.status == 0) {
+              this.$toasted.error("此项暂未开放").goAway(1000);
+            }
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     }
   }
 };
