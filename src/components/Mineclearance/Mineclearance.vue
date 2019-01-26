@@ -391,14 +391,15 @@ export default {
   background-size: cover;
   float: right;
   border-radius: 0.1rem;
-  padding-top: 0.2rem;
   color: #fff;
 }
 
 .saihongbaoy > div > :first-child {
   font-size: 0.24rem;
   float: left;
+  padding-top: 0.2rem;
   margin-left: 25%;
+  /* padding-top: 0.2rem; */
 }
 .saihongbaoy > div > :last-child {
   font-size: 0.2rem;
@@ -433,7 +434,7 @@ export default {
 .hongbao1 {
   width: 60%;
   /* background: red; */
-  height: 1.6rem;
+  height: 1.9rem;
   float: right;
   margin-top: 0.3rem;
 }
@@ -452,7 +453,7 @@ export default {
 }
 .hongbao1 > div {
   width: 80%;
-  height: 80%;
+  height: 75%;
   background: url("../../assets/imgs/7.png") no-repeat;
   background-size: cover;
   float: left;

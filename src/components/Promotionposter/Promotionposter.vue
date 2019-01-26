@@ -9,7 +9,7 @@
       arrow="never"
     >
       <el-carousel-item class="cardn" style="background:red">
-        <img src="../../assets/imgs/001.png" alt>
+        <img src="../../assets/imgs/001.png" @click="app()" alt>
         <div class="divyyy">
           <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
           <div style="background:#fff;border-radius: 0.2rem">
@@ -18,7 +18,7 @@
         </div>
       </el-carousel-item>
       <el-carousel-item class="cardp" style="background:pink">
-        <img src="../../assets/imgs/002.png" alt>
+        <img src="../../assets/imgs/002.png" @click="app()" alt>
         <div class="divyyy">
           <div style="background:#fff;border-radius: 0.2rem">
             <qriously :value="initQCode" :size="100"/>
@@ -27,7 +27,7 @@
         </div>
       </el-carousel-item>
       <el-carousel-item class="cardy" style="background:yellow">
-        <img src="../../assets/imgs/003.png" alt>
+        <img src="../../assets/imgs/003.png" @click="app()" alt>
         <div class="divyyy">
           <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
           <div style="background:#fff;border-radius: 0.2rem">
@@ -68,6 +68,11 @@ export default {
       .catch(res => {
         this.$toated.erro(res.message, { icon: "erro" }).goAway(1000);
       });
+  },
+  methods: {
+    app() {
+      console.log("sdf");
+    }
   }
 };
 </script>

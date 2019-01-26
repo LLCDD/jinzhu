@@ -26,7 +26,7 @@
               <span>{{ item.created_at }}</span>
             </p>
           </div>
-          <img v-if="item.status == 1" class="msl" src="../../assets/imgs/nextt.png" alt>
+          <!-- <img v-if="item.status == 1" class="msl" src="../../assets/imgs/nextt.png" alt> -->
           <img v-if="item.is_spot == 1" class="xqtl" src="../../assets/imgs/xiaolei.png" alt>
           <div class="line">{{ item.money }}元</div>
         </div>

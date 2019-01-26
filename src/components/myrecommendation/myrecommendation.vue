@@ -249,7 +249,7 @@ header {
 } */
 .tabley {
   width: 100%;
-  display: block;
+  /* display: block; */
   text-align: center;
   background: #fff;
   margin-top: 2.85rem;
@@ -258,7 +258,7 @@ header {
   border: 0;
   height: 0.9rem;
   width: 20%;
-  display: inline-block;
+  /* display: inline-block; */
   /* float: left; */
   color: #f1941d;
   font-size: 0.3rem;
@@ -269,7 +269,7 @@ header {
   border: 0;
   height: 0.9rem;
   /* width: 25%; */
-  display: block;
+  /* display: block; */
   width: 100%;
 }
 .tabley > tr > td {
@@ -279,8 +279,8 @@ header {
   width: 20%;
   font-size: 0.3rem;
   border-bottom: 2px solid #f5f5f5;
-  display: block;
-  float: left;
+  /* display: block; */
+  /* float: left; */
 }
 .null {
   width: 50%;

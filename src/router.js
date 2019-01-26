@@ -200,27 +200,27 @@ let router = new Router({
       meta: {
         requiresAuth: false
       },
-      children: [
-        { path: '', redirect: 'envelope' },
-        {
-          path: 'envelope',
-          name: 'envelope',
-          component: () =>
-            import(/* webpackChunkName: "register" */ './components/welfare/childer/envelope.vue'),
-          meta: {
-            requiresAuth: false
-          }
-        },
-        {
-          path: 'nvelope',
-          name: 'nvelope',
-          component: () =>
-            import(/* webpackChunkName: "register" */ './components/welfare/childer/nvelope.vue'),
-          meta: {
-            requiresAuth: false
-          }
-        },
-      ]
+      // children: [
+      //   { path: '', redirect: 'envelope' },
+      //   {
+      //     path: 'envelope',
+      //     name: 'envelope',
+      //     component: () =>
+      //       import(/* webpackChunkName: "register" */ './components/welfare/childer/envelope.vue'),
+      //     meta: {
+      //       requiresAuth: false
+      //     }
+      //   },
+      //   {
+      //     path: 'nvelope',
+      //     name: 'nvelope',
+      //     component: () =>
+      //       import(/* webpackChunkName: "register" */ './components/welfare/childer/nvelope.vue'),
+      //     meta: {
+      //       requiresAuth: false
+      //     }
+      //   },
+      // ]
     },
     // xiugaiali
     {
@@ -501,7 +501,7 @@ let router = new Router({
             requiresAuth: false
           }
         },
-
+        // envelope
         {
           path: 'tixian',
           name: 'tixian',

@@ -5,25 +5,41 @@
         <img @click="tap()" class="fanhui" src="../../../public/image/return.png">玩家福利
       </header>
       <p class="p">总计 ( 元 )</p>
-      <p class="p1">{{ this.$store.state.zong }}</p>
+      <p class="p1">{{ zong }}</p>
     </div>
     <p class="tishi">
       温馨提示 ：发红包和抢红包流水达到1000-5000 返2% ; 5000-10000返3% ; 200000+ 返5% ,
       当天12点结算达到要求直接返到余额里
     </p>
     <div class="zirout">
-      <router-link to="envelope" replace tag="p">
+      <!-- <router-link to="envelope" replace tag="p"> -->
+      <p @click="fa()" :class="{'active':state == 1}">
         <span>发包记录</span>
         <br>
-        <strong>总计 ( {{ msg2 }} )</strong>
-      </router-link>
-      <router-link to="nvelope" replace tag="p">
+        <strong>总计 ( {{ faz }} )</strong>
+      </p>
+      <!-- </router-link> -->
+      <!-- <router-link to="nvelope" replace tag="p"> -->
+      <p @click="qiang()" :class="{'active':state == 2}">
         <span>抢包记录</span>
         <br>
-        <strong>总计 ( {{ msg1 }} )</strong>
-      </router-link>
+        <strong>总计 ( {{ qz }} )</strong>
+      </p>
+      <!-- </router-link> -->
     </div>
-    <router-view></router-view>
+    <div class="nu">
+      <div v-for="(item,index) in list " :key="index">
+        <p>
+          <span style="font-size:0.3rem">抢红包</span>
+          <br>
+          <span style="font-size:0.2rem;color:#999">{{ item.pull_uid }}</span>
+        </p>
+        <p>
+          <span style="line-height:1rem;padding:0;font-size:0.3rem;color:#cf3c36">{{ item.money }} 元</span>
+        </p>
+      </div>
+    </div>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -33,8 +49,15 @@ export default {
     return {
       msg: "9.99",
       bool: false,
-      msg1: "234",
-      msg2: "234"
+      msg1: "",
+      msg2: "",
+      state: 1,
+      zong: 0,
+      list: [],
+      // 今日发包
+      faz: 0,
+      // 今日钱包
+      qz: 0
     };
   },
   mounted() {
@@ -47,6 +70,13 @@ export default {
         console.log(res);
         this.msg1 = res.data.money2;
         this.msg2 = res.data.money1;
+        this.zong = res.data.money1;
+      }
+    });
+    this.gongong();
+    this.http.post("/api/myWelfare", { type: "2" }).then(res => {
+      if (res.code == 200) {
+        this.qz = res.data.money;
       }
     });
   },
@@ -61,6 +91,59 @@ export default {
     // 转账记录
     zhuan() {
       this;
+    },
+    gongong() {
+      this.http
+        .post("/api/myWelfare", { type: "1" })
+        .then(res => {
+          if (res.code == 200) {
+            // Toast.clear();
+            // this.$store.commit("zong", res.data.money);
+            this.faz = res.data.money;
+            this.list = res.data.data;
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+        });
+    },
+    gongong1(type) {
+      console.log(type);
+      this.http
+        .post("/api/myWelfare", { type: type })
+        .then(res => {
+          if (res.code == 200) {
+            // Toast.clear();
+            if (type == 1) {
+              this.faz = res.data.money;
+            } else {
+              this.qz = res.data.money;
+            }
+            this.$store.commit("zong", res.data.money);
+            this.list = res.data.data;
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+        });
+    },
+    fa() {
+      this.state = 1;
+      this.zong = this.msg2;
+      this.gongong1(this.state);
+    },
+    qiang() {
+      this.state = 2;
+      this.zong = this.msg1;
+      this.gongong1(this.state);
     }
   }
 };
@@ -150,6 +233,29 @@ header {
   color: #f1941d;
 }
 .router-link-active > strong {
+  color: #f1941d;
+  border-bottom: 2px solid #f1941d;
+}
+/* .nu {
+  min-height: 100%;
+} */
+.nu > div {
+  display: flex;
+  height: 1rem;
+  background: #ffffff;
+  justify-content: space-between;
+  padding-left: 0.3rem;
+  border-bottom: 1px solid #f5f5f5;
+  padding-right: 0.3rem;
+}
+.nu > div > p > span {
+  display: inline-block;
+  padding-top: 0.16rem;
+}
+.active > span {
+  color: #f1941d;
+}
+.active > strong {
   color: #f1941d;
   border-bottom: 2px solid #f1941d;
 }

@@ -25,18 +25,18 @@
       <img class="xie" src="../../assets/imgs/xi.png" alt>
 
       <van-swipe class="nr1" :touchable="false" :autoplay="3000" vertical :show-indicators="false ">
-        <van-swipe-item>
-          <p class="mar">第一个世界啊撒旦解放</p>
-          <p class="mar">啊撒旦解放那段艰难氨基酸的</p>
+        <van-swipe-item v-for="(item,index) in list1" :key="index">
+          <p class="mar" v-html="item.news1">{{ }}</p>
+          <p class="mar" v-html="item.news2">{{}}</p>
         </van-swipe-item>
-        <van-swipe-item>
+        <!-- <van-swipe-item>
           <p class="mar">埃里克森的那份阿斯蒂芬</p>
           <p class="mar">爱上帝就发世间的烦恼士大夫撒地方</p>
         </van-swipe-item>
         <van-swipe-item>
           <p class="mar">爱上的看法呢阿斯蒂芬那时的</p>
           <p class="mar">数字和自富含发到付爱的打法的阿斯蒂</p>
-        </van-swipe-item>
+        </van-swipe-item>-->
       </van-swipe>
     </div>
     <div class="event">
@@ -62,7 +62,8 @@ export default {
       msg: "首页",
       list: "",
       url: "http://192.168.0.111/upload",
-      conetent: ""
+      conetent: "",
+      list1: []
     };
   },
   mounted() {
@@ -72,25 +73,41 @@ export default {
     this.$store.commit("ld", true);
     this.$store.commit("fanhui", false);
     this.$store.commit("fanhuiin", false);
-    this.http
-      .post("/api/banner")
-      .then(res => {
-        if (res.code == 200) {
-          console.log(res);
-          localStorage.setItem("url", res.data.url);
-          localStorage.setItem("imgy", JSON.stringify(res.data.data));
-          this.list = res.data.data;
-          this.url = res.data.url;
-          this.conetent = res.data.notice;
-        } else if (res.code == 400) {
-          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-        }
-      })
-      .catch(res => {
-        this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-      });
+
     // this.list = JSON.parse(localStorage.getItem("imgy"));
     // this.url = JSON.parse(localStorage.getItem("url"));
+    this.$nextTick(() => {
+      this.http
+        .post("/api/good_news")
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+            this.list1 = res.data.data;
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+      this.http
+        .post("/api/banner")
+        .then(res => {
+          if (res.code == 200) {
+            // console.log(res);
+            localStorage.setItem("url", res.data.url);
+            localStorage.setItem("imgy", JSON.stringify(res.data.data));
+            this.list = res.data.data;
+            this.url = res.data.url;
+            this.conetent = res.data.notice;
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+    });
   },
   methods: {
     // 游戏规则
