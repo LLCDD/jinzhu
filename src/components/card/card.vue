@@ -1,13 +1,16 @@
 <template>
   <div class="divk">
-    <p v-for="(item,index) in list" :key="index" v-if="!bool">
-      <span>
-        <img src="../../assets/imgs/person1.png" alt>
-        <span>{{ item.phone }}</span>
-      </span>
-      <span>直推{{item.zhitui}}人 间推{{item.jiantui}}人</span>
-    </p>
-    <p class="p" v-if="bool">暂时没有更多数据了</p>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <p v-for="(item,index) in list" :key="index" v-if="!bool">
+        <span>
+          <img src="../../assets/imgs/heaertttt.png" alt>
+          <span>{{ item.phone }}</span>
+        </span>
+        <span>直推{{item.zhitui}}人 间推{{item.jiantui}}人</span>
+      </p>
+
+      <p class="p" v-if="bool">暂时没有更多数据了</p>
+    </van-pull-refresh>
   </div>
 </template>
 <script>
@@ -16,7 +19,8 @@ export default {
   data() {
     return {
       list: [],
-      bool: false
+      bool: false,
+      isLoading: false
     };
   },
   // beforeCreate() {
@@ -32,26 +36,7 @@ export default {
     this.$store.commit("header", "一级推荐");
     this.$store.commit("fanhui", true);
     this.$store.commit("tuijian", true);
-    // this.http
-    //   .post("/api/my_recommend")
-    //   .then(res => {
-    //     if (res.code == 200) {
-    //       Toast.clear();
-    //       this.list = res.data;
-    //       if (res.data != {}) {
-    //         this.bool = true;
-    //       } else {
-    //         this.bool = false;
-    //       }
-    //     } else if (res.code == 400) {
-    //       Toast.clear();
-    //       this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-    //     }
-    //   })
-    //   .catch(res => {
-    //     Toast.clear();
-    //     this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-    //   });
+
     this.http
       .post("/api/first_recommend")
       .then(res => {
@@ -73,6 +58,32 @@ export default {
         // Toast.clear();
         this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
       });
+  },
+  methods: {
+    onRefresh() {
+      this.http
+        .post("/api/first_recommend")
+        .then(res => {
+          if (res.code == 200) {
+            // Toast.clear();
+            this.isLoading = false;
+            console.log(res);
+            if (res.message == "您没有推荐过任何人") {
+              this.bool = true;
+            } else {
+              this.bool = false;
+              this.list = res.data.data;
+            }
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+    }
   }
 };
 </script>
@@ -82,7 +93,7 @@ export default {
   min-height: 100%;
   background: #f5f5f5;
 }
-.divk > p {
+.divk > div > div > p {
   height: 1rem;
   width: 100%;
   background: #fff;

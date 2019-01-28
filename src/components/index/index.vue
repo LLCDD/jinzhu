@@ -26,8 +26,8 @@
 
       <van-swipe class="nr1" :touchable="false" :autoplay="3000" vertical :show-indicators="false ">
         <van-swipe-item v-for="(item,index) in list1" :key="index">
-          <p class="mar" v-html="item.news1">{{ }}</p>
-          <p class="mar" v-html="item.news2">{{}}</p>
+          <p class="mar">{{ item.news1 }}</p>
+          <p class="mar">{{ item.news2 }}</p>
         </van-swipe-item>
         <!-- <van-swipe-item>
           <p class="mar">埃里克森的那份阿斯蒂芬</p>
@@ -50,12 +50,18 @@
         <p>查看游戏规则 > ></p>
         <button>立即开始</button>
       </div>
+      <div class="event1 event3" @click="guiz()">
+        <!-- <p @click="rulesone()">查看游戏规则 > ></p>
+        <button @click="solitaire()">立即开始</button>-->
+        <p>查看游戏规则 > ></p>
+        <button style="background:#df3a3d">立即开始</button>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { NoticeBar } from "vant";
-
+import { Dialog } from "vant";
 export default {
   data() {
     return {
@@ -73,7 +79,10 @@ export default {
     this.$store.commit("ld", true);
     this.$store.commit("fanhui", false);
     this.$store.commit("fanhuiin", false);
-
+    if (sessionStorage.getItem("count")) {
+    } else {
+      sessionStorage.setItem("count", 0);
+    }
     // this.list = JSON.parse(localStorage.getItem("imgy"));
     // this.url = JSON.parse(localStorage.getItem("url"));
     this.$nextTick(() => {
@@ -100,6 +109,13 @@ export default {
             this.list = res.data.data;
             this.url = res.data.url;
             this.conetent = res.data.notice;
+            if (sessionStorage.getItem("count") == 0) {
+              sessionStorage.setItem("count", 1);
+              Dialog.alert({
+                title: "公告",
+                message: this.conetent
+              });
+            }
           } else if (res.code == 400) {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }
@@ -139,6 +155,17 @@ export default {
   background: #f5f5f5;
   padding-top: 1.32rem;
 }
+.van-dialog {
+  width: 66% !important;
+  border-radius: 0.2rem;
+}
+.van-dialog__header {
+  color: #000;
+}
+.van-dialog__message--has-title {
+  color: #000;
+  padding-top: 0.1rem;
+}
 .nr {
   width: 100%;
   height: 1.2rem;
@@ -153,22 +180,27 @@ export default {
   font-style: italic;
   font-weight: 700;
   display: inline-block;
-  width: 11%;
+  width: 10%;
   line-height: 0.4rem;
   /* margin-right: 0.34rem; */
 }
 .mar {
   margin-top: 0.1rem;
+  font-size: 0.22rem;
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .nr1 {
   /* display: inline-block; */
   height: 100%;
   float: right;
-  width: 82%;
+  width: 85%;
   padding-left: 0.3rem;
-  margin-left: 0.34rem;
+  /* margin-left: 0.34rem; */
   border-left: 2px solid #f1941d;
-  margin-top: 0.1rem;
+  /* margin-top: 0.1rem; */
 }
 .nr1 > p {
   line-height: 0.36rem;
@@ -213,7 +245,7 @@ export default {
   padding-top: 1.1rem;
   color: #fff;
   padding-left: 0.3rem;
-  font-size: 0.34rem;
+  font-size: 0.24rem;
 }
 .event1 > button {
   position: absolute;
@@ -268,6 +300,10 @@ export default {
 }
 .event2 {
   background: url("../../assets/imgs/long.png") no-repeat left;
+  background-size: 100% 100%;
+}
+.event3 {
+  background: url("../../assets/imgs/saip.png") no-repeat left;
   background-size: 100% 100%;
   margin-bottom: 2rem;
 }

@@ -175,13 +175,13 @@ header {
   /* background: red; */
   text-align: center;
   line-height: 0.88rem;
-  font-size: 0.34rem;
+  font-size: 0.3rem;
   color: #fff;
 
   /* background: red; */
 }
 header > span {
-  font-size: 0.3rem;
+  font-size: 0.26rem;
   position: absolute;
   right: 0.3rem;
   z-index: 99;
@@ -196,7 +196,7 @@ header > span {
 .p1 {
   padding-top: 0.3rem;
   padding-left: 0.3rem;
-  font-size: 0.38rem;
+  font-size: 0.3rem;
   color: #fff;
   font-weight: 700;
   text-align: center;
@@ -205,8 +205,8 @@ header > span {
 .fanhui {
   position: absolute;
   left: 0.3rem;
-  width: 0.25rem;
-  height: 0.4rem;
+  width: 0.2rem;
+  height: 0.3rem;
   top: 24%;
   z-index: 99;
 }

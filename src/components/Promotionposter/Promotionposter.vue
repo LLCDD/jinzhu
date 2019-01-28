@@ -7,31 +7,38 @@
       type="card"
       :loop="true"
       arrow="never"
+      @change="onchange($event)"
     >
       <el-carousel-item class="cardn" style="background:red">
-        <img src="../../assets/imgs/001.png" @click="app()" alt>
-        <div class="divyyy">
-          <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
-          <div style="background:#fff;border-radius: 0.2rem">
-            <qriously :value="initQCode" :size="100"/>
+        <div class="cardn">
+          <img ref="jietu0" src="../../assets/imgs/001.png" @click="app()" alt>
+          <div class="divyyy">
+            <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
+            <div style="background:#fff;border-radius: 0.2rem">
+              <qriously :value="initQCode" :size="100"/>
+            </div>
           </div>
         </div>
       </el-carousel-item>
       <el-carousel-item class="cardp" style="background:pink">
-        <img src="../../assets/imgs/002.png" @click="app()" alt>
-        <div class="divyyy">
-          <div style="background:#fff;border-radius: 0.2rem">
-            <qriously :value="initQCode" :size="100"/>
+        <div class="cardp">
+          <img ref="jietu1" src="../../assets/imgs/002.png" @click="app()" alt>
+          <div class="divyyy">
+            <div style="background:#fff;border-radius: 0.2rem">
+              <qriously :value="initQCode" :size="100"/>
+            </div>
+            <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
           </div>
-          <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
         </div>
       </el-carousel-item>
       <el-carousel-item class="cardy" style="background:yellow">
-        <img src="../../assets/imgs/003.png" @click="app()" alt>
-        <div class="divyyy">
-          <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
-          <div style="background:#fff;border-radius: 0.2rem">
-            <qriously :value="initQCode" :size="100"/>
+        <div class="cardy">
+          <img ref="jietu2" src="../../assets/imgs/003.png" @click="app()" alt>
+          <div class="divyyy">
+            <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
+            <div style="background:#fff;border-radius: 0.2rem">
+              <qriously :value="initQCode" :size="100"/>
+            </div>
           </div>
         </div>
       </el-carousel-item>
@@ -39,13 +46,16 @@
   </div>
 </template>
 <script>
+import html2canvas from "html2canvas";
 export default {
   data() {
     return {
       msg: "3454",
       list: [],
       url: localStorage.getItem("url"),
-      initQCode: "www.baidu.com"
+      initQCode: "www.baidu.com",
+      index: 0,
+      ref: ["jietu0", "jietu1", "jietu2"]
     };
   },
   mounted() {
@@ -71,7 +81,38 @@ export default {
   },
   methods: {
     app() {
-      console.log("sdf");
+      var index = this.index;
+      var ref = this.ref[index];
+      // console.log(this.$refs["" + ref]);
+      var jiet = this.$refs["" + ref];
+      // var _this = this;
+      // html2canvas(jiet, { height: "10rem" }).then(canvas => {
+      //   let dataURL = canvas.toDataURL("image/png");
+      //   console.log(dataURL);
+      // });
+      console.log();
+      var $$this = this;
+      //alert($$this.src);
+      plus.nativeUI.showWaiting("正在下载，请稍后");
+      var url = jiet.src;
+      var options = {
+        method: "GET",
+        filename: "_doc/"
+      };
+      var dtask = plus.downloader.createDownload(url, options, function(
+        download,
+        status
+      ) {
+        console.log(download.filename);
+        plus.nativeUI.closeWaiting();
+        plus.gallery.save(download.filename, function() {
+          $$this.$toasted.success("保存成功").goAway(1500);
+        });
+      });
+      dtask.start();
+    },
+    onchange(e) {
+      this.index = e;
     }
   }
 };
@@ -102,6 +143,15 @@ export default {
 /* .card {
   position: relative;
 } */
+.cardy {
+  height: 100%;
+}
+.cardn {
+  height: 100%;
+}
+.cardp {
+  height: 100%;
+}
 .cardy > img {
   height: 100%;
   width: 100%;
@@ -115,7 +165,7 @@ export default {
   width: 100%;
 }
 .cardn > .divyyy {
-  height: 2rem !important;
+  height: 3rem !important;
   width: 2rem !important;
   position: absolute;
   /* background: yellow; */
@@ -128,7 +178,7 @@ export default {
   height: 100%;
 }
 .cardy > .divyyy {
-  height: 2rem !important;
+  height: 3rem !important;
   width: 2rem !important;
   position: absolute;
   /* background: yellow; */
@@ -137,7 +187,7 @@ export default {
   left: 56%;
 }
 .cardp > .divyyy {
-  height: 2rem !important;
+  height: 3rem !important;
   width: 2rem !important;
   position: absolute;
   /* background: yellow; */

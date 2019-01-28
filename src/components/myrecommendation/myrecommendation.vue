@@ -30,7 +30,7 @@ white-space: nowrap;"
         >{{ item.name }}</td>
         <td
           style="line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
-        >{{ item.money }}</td>
+        >{{ item.money }}({{ item.type == 3 ? '抢' : '发' }})</td>
         <td
           style="line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
         >{{ item.level }}</td>
@@ -161,7 +161,7 @@ header {
   /* background: red; */
   text-align: center;
   line-height: 0.88rem;
-  font-size: 0.34rem;
+  font-size: 0.3rem;
   color: #fff;
   /* background: red; */
 }
@@ -214,8 +214,8 @@ header {
 .fanhui {
   position: absolute;
   left: 0.3rem;
-  width: 0.25rem;
-  height: 0.4rem;
+  width: 0.2rem;
+  height: 0.3rem;
   top: 24%;
   z-index: 99;
 }
@@ -257,7 +257,7 @@ header {
 .tabley > th {
   border: 0;
   height: 0.9rem;
-  width: 20%;
+  width: 24%;
   /* display: inline-block; */
   /* float: left; */
   color: #f1941d;
@@ -289,5 +289,8 @@ header {
 }
 .zhuanj {
   padding-right: 1.4rem;
+}
+.tuijian {
+  font-size: 0.24rem;
 }
 </style>

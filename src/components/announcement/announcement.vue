@@ -76,7 +76,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 0.34rem;
+  font-size: 0.3rem;
   font-weight: 500;
 }
 .uu > div > div > .p1 {
@@ -86,6 +86,7 @@ export default {
   white-space: nowrap;
   color: #666666;
   padding-top: 0.1rem;
+  font-size: 0.24rem;
 }
 .uu > div > div > .p2 {
   bottom: 0.26rem;

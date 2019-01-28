@@ -45,4 +45,7 @@ export default {
 #nav > a {
   width: 24.8%;
 }
+#nav > a > span {
+  font-size: 0.2rem;
+}
 </style>

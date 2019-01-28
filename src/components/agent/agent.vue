@@ -114,14 +114,14 @@ header {
   /* background: red; */
   text-align: center;
   line-height: 0.88rem;
-  font-size: 0.34rem;
+  font-size: 0.3rem;
   color: #fff;
   /* background: red; */
 }
 .zhuan {
   position: absolute;
   right: 0.3rem;
-  font-size: 0.3rem;
+  font-size: 0.24rem;
 }
 .p {
   padding-top: 1.58rem;
@@ -158,8 +158,8 @@ header {
 .fanhui {
   position: absolute;
   left: 0.3rem;
-  width: 0.25rem;
-  height: 0.4rem;
+  width: 0.2rem;
+  height: 0.3rem;
   bottom: -0.2rem;
   z-index: 99;
 }

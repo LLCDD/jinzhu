@@ -162,6 +162,7 @@ export default {
     // 退出
     tui() {
       localStorage.clear();
+      sessionStorage.clear();
       this.$router.replace({ name: "login" });
     }
   }

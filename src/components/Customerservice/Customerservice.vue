@@ -40,6 +40,7 @@ export default {
   },
   methods: {
     send() {
+      clearInterval(this.timer);
       this.http
         .post("/api/chatroom", { u_content: this.text1 })
         .then(res => {
@@ -155,10 +156,10 @@ export default {
   float: left;
 }
 .Customerservice > .cneter {
-  min-height: 100%;
+  /* min-height: 100%; */
   text-align: center;
   padding: 0 0.3rem;
-  overflow: hidden;
+  overflow-y: auto;
 }
 .liaotian {
   float: right;

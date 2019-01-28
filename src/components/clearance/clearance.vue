@@ -95,7 +95,7 @@ export default {
   background-size: cover;
 }
 .qu > p {
-  font-size: 0.5rem;
+  font-size: 0.4rem;
   color: #fff;
   padding-top: 0.3rem;
 }

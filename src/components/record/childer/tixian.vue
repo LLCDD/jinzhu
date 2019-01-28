@@ -8,7 +8,7 @@
         <td style="color:#999999">{{ item.created_at }}</td>
         <td
           style="color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
-        >{{ item.money }}</td>
+        >-{{ item.money }}</td>
         <td style="color:#000">{{ item.explain }}</td>
       </tr>
     </table>

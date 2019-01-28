@@ -17,7 +17,7 @@
       <span>提现到银联卡</span>
       <span style="color:#999999">{{ ka }}</span>
     </div>
-    <p class="p2">提现说明 ：20元起提现 , 手续费为1%</p>
+    <p class="p2">提现说明 ：100元起提现 , 手续费为1%</p>
     <button class="button2" @click="tixian()">立即提现</button>
   </div>
 </template>

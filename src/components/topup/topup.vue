@@ -41,16 +41,30 @@
       <span>{{huof}}元</span>
     </p>
     <button class="button2" @click="chogn()">立即充值</button>
+    <div id="webpay"></div>
   </div>
 </template>
 <script>
+let aliChannel;
+let wxChannel;
+window.plus &&
+  plus.payment.getChannels(function(channels) {
+    for (var i = 0; i < channels.length; i++) {
+      if (channels[i].id == "wxpay") {
+        wxChannel = channels[i];
+      } else {
+        aliChannel = channels[i];
+      }
+    }
+  });
 export default {
   data() {
     return {
       msg: "提现页面",
       money: "1000.00",
       state: 0,
-      huof: ""
+      huof: "",
+      msg1: ""
     };
   },
   mounted() {
@@ -103,25 +117,27 @@ export default {
     // chognzhi
     chogn() {
       //
-      this.http
-        .post("/api/stopAppSwitches", { type: this.state })
-        .then(res => {
-          if (res.code == 200) {
-            if (res.data.status == 0) {
-              this.$toasted.error("此项暂未开放").goAway(1000);
-            } else {
-              if (this.state == 4) {
-                this.$router.replace({ name: "rengong" });
-              }
-              this.$toasted.success(res.message).goAway(1000);
+      if (this.state == 4) {
+        this.$router.push("/rengong");
+      } else {
+        this.http
+          .post("/api/ordermodel", { type: this.state, money: this.huof })
+          .then(res => {
+            if (res.code == 200) {
+              // console.log(1231);
+              this.msg1 = res.data.html;
+              let payConfig = res.data.html;
+              const div = document.getElementById("webpay");
+              div.innerHTML = payConfig;
+              document.getElementById("paysubmit").submit();
+            } else if (res.code == 400) {
+              this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
             }
-          } else if (res.code == 400) {
+          })
+          .catch(res => {
             this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-          }
-        })
-        .catch(res => {
-          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
-        });
+          });
+      }
     },
     gongong(id) {
       console.log(id);
@@ -256,5 +272,9 @@ export default {
   display: block;
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
+}
+#paysubmit {
+  background: red;
+  width: 100px;
 }
 </style>

@@ -35,7 +35,9 @@
           <span style="font-size:0.2rem;color:#999">{{ item.pull_uid }}</span>
         </p>
         <p>
-          <span style="line-height:1rem;padding:0;font-size:0.3rem;color:#cf3c36">{{ item.money }} 元</span>
+          <span
+            style="line-height:1rem;padding:0;font-size:0.3rem;color:#cf3c36"
+          >{{ pan }}{{ item.money }} 元</span>
         </p>
       </div>
     </div>
@@ -57,7 +59,8 @@ export default {
       // 今日发包
       faz: 0,
       // 今日钱包
-      qz: 0
+      qz: 0,
+      pan: "+"
     };
   },
   mounted() {
@@ -68,9 +71,9 @@ export default {
     this.http.post("/api/myWelfare_s").then(res => {
       if (res.code == 200) {
         console.log(res);
-        this.msg1 = res.data.money2;
-        this.msg2 = res.data.money1;
-        this.zong = res.data.money1;
+        // this.msg1 = res.data.money2;
+        // this.msg2 = res.data.money1;
+        this.zong = res.data.money;
       }
     });
     this.gongong();
@@ -123,7 +126,7 @@ export default {
             } else {
               this.qz = res.data.money;
             }
-            this.$store.commit("zong", res.data.money);
+            // this.$store.commit("zong", res.data.money);
             this.list = res.data.data;
           } else if (res.code == 400) {
             // Toast.clear();
@@ -136,13 +139,15 @@ export default {
         });
     },
     fa() {
+      this.pan = "+";
       this.state = 1;
-      this.zong = this.msg2;
+      // this.zong = this.msg2;
       this.gongong1(this.state);
     },
     qiang() {
       this.state = 2;
-      this.zong = this.msg1;
+      this.pan = "-";
+      // this.zong = this.msg1;
       this.gongong1(this.state);
     }
   }

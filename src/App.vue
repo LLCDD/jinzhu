@@ -162,7 +162,7 @@ $material-icons-font-path: "~material-icons/iconfont/";
   left: 0;
   text-align: center;
   line-height: 0.88rem;
-  font-size: 0.38rem;
+  font-size: 0.3rem;
   color: #fff;
   z-index: 9999;
 }
@@ -180,15 +180,15 @@ $material-icons-font-path: "~material-icons/iconfont/";
 //   // width:
 // }
 .ld {
-  height: 0.34rem;
-  width: 0.34rem;
+  height: 0.3rem;
+  width: 0.3rem;
   position: absolute;
   left: 0.3rem;
   bottom: 0.26rem;
 }
 .baozhu {
-  width: 0.25rem;
-  height: 0.4rem;
+  width: 0.2rem;
+  height: 0.3rem;
   // margin: 0.26rem 0 0 0.3rem;
   position: absolute;
   bottom: 0.26rem;
@@ -201,7 +201,7 @@ $material-icons-font-path: "~material-icons/iconfont/";
   right: 0.3rem;
 }
 .propers {
-  font-size: 0.3rem;
+  font-size: 0.24rem;
   position: absolute;
   right: 0.24rem;
 }
