@@ -1,16 +1,18 @@
 <template>
   <div class="divm">
-    <div class="waep">
-      <div v-for="(item,index) in list" :key="index">
-        <p class="p">
-          <span class="daili">代理{{ index +1 }}</span>
-          <!-- <br> -->
-          <span class="daili1">扫描二维码联系</span>
-        </p>
-        <img class="img" :src="item.my_qrcode" alt>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="waep">
+        <div v-for="(item,index) in list" :key="index">
+          <p class="p">
+            <span class="daili">代理{{ index +1 }}</span>
+            <!-- <br> -->
+            <span class="daili1">扫描二维码联系</span>
+          </p>
+          <img class="img" :src="item.my_qrcode" alt>
+        </div>
       </div>
-    </div>
-    <div v-if="bool" class="dailishang">暂无代理商</div>
+      <div v-if="bool" class="dailishang">暂无代理商</div>
+    </van-pull-refresh>
   </div>
 </template>
 <script>
@@ -20,7 +22,8 @@ export default {
     return {
       msg: "345",
       list: [],
-      bool: false
+      bool: false,
+      isLoading: false
     };
   },
   // beforeCreate() {
@@ -56,6 +59,32 @@ export default {
         // Toast.clear();
         this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
       });
+  },
+  methods: {
+    onRefresh() {
+      this.http
+        .post("/api/agent_qrcode")
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+            // Toast.clear();
+            this.isLoading = false;
+            if (res.message == "暂无代理商") {
+              this.bool = true;
+            } else {
+              this.bool = false;
+              this.list = res.data.data;
+            }
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "erro" }).goAway(1000);
+        });
+    }
   }
 };
 </script>

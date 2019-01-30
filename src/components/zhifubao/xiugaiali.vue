@@ -19,6 +19,10 @@
         <span v-if="bool" style="width:1.4rem;float:right;color:#f1941d" @click="code1">发送验证码</span>
         <span v-if="!bool" style="width:1.4rem;float:right;color:#f1941d">{{count}}s</span>
       </p>
+      <p>
+        <span>支付密码</span>
+        <input type="password" placeholder="请输入支付密码" v-model="pass">
+      </p>
     </div>
     <button class="buttonty" @click="gai()">确认修改</button>
   </div>
@@ -32,7 +36,8 @@ export default {
       bool: true,
       code: "",
       phone: "",
-      num: ""
+      num: "",
+      pass: ""
     };
   },
   mounted() {
@@ -56,7 +61,8 @@ export default {
           real_name: this.name,
           bao_num: this.num,
           phone: this.phone,
-          phone_code: this.code
+          phone_code: this.code,
+          pay_password: this.pass
         })
         .then(res => {
           if (res.code == 200) {
@@ -126,6 +132,8 @@ span {
 input {
   color: #999;
   height: 80%;
+  line-height: 0.4rem;
+  padding: 0.2rem 0;
 }
 .buttonty {
   width: 84%;

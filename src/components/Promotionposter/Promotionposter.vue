@@ -3,15 +3,16 @@
     <el-carousel
       :autoplay="true"
       indicator-position="none"
-      :interval="1000"
+      :interval="3000"
       type="card"
       :loop="true"
       arrow="never"
       @change="onchange($event)"
     >
-      <el-carousel-item class="cardn" style="background:red">
+      <!-- <el-carousel-item class="cardn" style="background:red">
         <div class="cardn">
-          <img ref="jietu0" src="../../assets/imgs/001.png" @click="app()" alt>
+          <img ref="jietu0" :src="src" @click="app()" alt>
+          <img ref="jietu0" :src="src" @click="app()" alt>
           <div class="divyyy">
             <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
             <div style="background:#fff;border-radius: 0.2rem">
@@ -19,21 +20,24 @@
             </div>
           </div>
         </div>
-      </el-carousel-item>
-      <el-carousel-item class="cardp" style="background:pink">
+      </el-carousel-item>-->
+      <el-carousel-item class="cardp" v-for="(item,index) in list" :key="index">
         <div class="cardp">
-          <img ref="jietu1" src="../../assets/imgs/002.png" @click="app()" alt>
-          <div class="divyyy">
+          <!-- <img ref="jietu1" src="../../assets/imgs/002.png" @click="app()" alt> -->
+          <img :src=" url +'/' + item" @click="app(url +'/' + item)" alt>
+          {{ url +'/' + item }}
+          <!-- <div class="divyyy">
             <div style="background:#fff;border-radius: 0.2rem">
               <qriously :value="initQCode" :size="100"/>
             </div>
             <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
-          </div>
+          </div>-->
         </div>
       </el-carousel-item>
-      <el-carousel-item class="cardy" style="background:yellow">
+      <!-- <el-carousel-item class="cardy" style="background:yellow">
         <div class="cardy">
-          <img ref="jietu2" src="../../assets/imgs/003.png" @click="app()" alt>
+          <img ref="jietu2" src="../../assets/imgs/003.png" @click="app()" alt> 
+          <img ref="jietu2" :src="src" @click="app()" alt>
           <div class="divyyy">
             <p style="width:100%; text-align: center;color:#fff;margin:0.1rem 0">扫码注册抢红包</p>
             <div style="background:#fff;border-radius: 0.2rem">
@@ -41,7 +45,7 @@
             </div>
           </div>
         </div>
-      </el-carousel-item>
+      </el-carousel-item>-->
     </el-carousel>
   </div>
 </template>
@@ -52,10 +56,10 @@ export default {
     return {
       msg: "3454",
       list: [],
-      url: localStorage.getItem("url"),
+      url: "",
       initQCode: "www.baidu.com",
       index: 0,
-      ref: ["jietu0", "jietu1", "jietu2"]
+      src: ""
     };
   },
   mounted() {
@@ -69,8 +73,8 @@ export default {
       .then(res => {
         if (res.code == 200) {
           console.log(res);
+          this.url = res.data.url;
           this.list = res.data.haibao;
-          this.initQCode = res.data.qr_code;
         } else if (res.code == 400) {
           this.$toated.erro(res.message, { icon: "erro" }).goAway(1000);
         }
@@ -80,21 +84,22 @@ export default {
       });
   },
   methods: {
-    app() {
-      var index = this.index;
-      var ref = this.ref[index];
-      // console.log(this.$refs["" + ref]);
-      var jiet = this.$refs["" + ref];
-      // var _this = this;
-      // html2canvas(jiet, { height: "10rem" }).then(canvas => {
-      //   let dataURL = canvas.toDataURL("image/png");
-      //   console.log(dataURL);
-      // });
-      console.log();
+    app(src) {
+      // var index = this.index;
+      // var ref = this.ref[index];
+      // // console.log(this.$refs["" + ref]);
+      // var jiet = this.$refs["" + ref];
+      // // var _this = this;
+      // // html2canvas(jiet, { height: "10rem" }).then(canvas => {
+      // //   let dataURL = canvas.toDataURL("image/png");
+      // //   console.log(dataURL);
+      // // });
+      // console.log();
+      console.log(src);
       var $$this = this;
       //alert($$this.src);
       plus.nativeUI.showWaiting("正在下载，请稍后");
-      var url = jiet.src;
+      var url = src;
       var options = {
         method: "GET",
         filename: "_doc/"

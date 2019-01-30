@@ -27,6 +27,10 @@
           <span v-if="timer">{{count}}s</span>
         </p>-->
       </p>
+      <p>
+        <span>支付密码</span>
+        <input type="password" placeholder="请输入支付密码" v-model="pass">
+      </p>
     </div>
     <button class="buttonty" @click="gai()">确认修改</button>
   </div>
@@ -44,7 +48,8 @@ export default {
       bool: true,
       count: 60,
       code: "",
-      bankname: ""
+      bankname: "",
+      pass: ""
     };
   },
   // beforeCreate() {
@@ -88,7 +93,8 @@ export default {
           bank_num: this.bank_num,
           user_name: this.bankname,
           phone: this.phone,
-          phone_code: this.code
+          phone_code: this.code,
+          pay_password: this.pass
         })
         .then(res => {
           if (res.code == 200) {
@@ -155,7 +161,9 @@ span {
 }
 input {
   color: #999;
-  height: 80%;
+  /* height: 80%; */
+  line-height: 0.4rem;
+  padding: 0.2rem 0;
 }
 .buttonty {
   width: 84%;

@@ -22,7 +22,18 @@ export default new Vuex.Store({
     propers: false,
     pors: "0",
     qing: false,
-    qingr: []
+    qingr: [],
+    // 推荐的一级一级的返回按钮
+    tuijianf: false,
+    // 一级一级返回 的数据保存
+    bao: [],
+    // 一级一级的总数据保存
+    shuju: [],
+    // 保存num1 不变和num2 不变
+    county: 0,
+    county1: 0,
+    // 底部
+    footerTabl: false
   },
   mutations: {
     setUser(state, payload) {
@@ -91,6 +102,26 @@ export default new Vuex.Store({
     // 聊天内容
     qingr(a, b) {
       a.qingr = b
+    },
+    // 数据包存
+    bao(a, b) {
+      a.bao = b
+    },
+    // 推荐的返回按钮
+    tuijianf(a, b) {
+      a.tuijianf = b
+    },
+    shuju(a, b) {
+      a.shuju = b
+    },
+    county(a, b) {
+      a.county = b
+    },
+    county1(a, b) {
+      a.county1 = b
+    },
+    footerTabl(a, b) {
+      a.footerTabl = b
     }
   },
   actions: {

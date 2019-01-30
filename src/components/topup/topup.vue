@@ -1,47 +1,55 @@
 <template>
   <div class="divup">
-    <div class="chongzhi">
-      <span>充值金额</span>
-      <div>
-        <input type="number" placeholder="0.00" v-model="huof">
-        <span>元</span>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="chongzhi">
+        <span>充值金额</span>
+        <div>
+          <input
+            style="  line-height: 0.4rem;
+  padding: 0.2rem 0;"
+            type="number"
+            placeholder="0.00"
+            v-model="huof"
+          >
+          <span>元</span>
+        </div>
       </div>
-    </div>
-    <span class="chongzhisd">温馨提示 : 最低充值金额20元</span>
-    <div class="money">
-      <p @click="yuan()" :class="{ 'border' : huof == 50 }">50元</p>
-      <p @click="yuan1()" :class="{ 'border' : huof == 100 }">100元</p>
-      <p @click="yuan2()" :class="{ 'border' : huof == 200 }">200元</p>
-      <p @click="yuan3()" :class="{ 'border' : huof == 500 }">500元</p>
-      <p @click="yuan4()" :class="{ 'border' : huof == 1000 }">1000元</p>
-      <p @click="yuan5()" :class="{ 'border' : huof == 2000 }">2000元</p>
-    </div>
-    <div @click="bool()" class="ali" :class="{ 'classy' : state == 1 }">
-      <img src="../../assets/imgs/zhifub.png" alt>
-      <span>支付宝充值</span>
-      <span style="color:#999999"></span>
-    </div>
-    <div @click="bool1()" class="card2" :class="{ 'classy' : state == 3 }">
-      <img src="../../assets/imgs/yingh.png" alt>
-      <span>快捷充值</span>
-      <span style="color:#999999"></span>
-    </div>
-    <div @click="bool2()" class="card2" :class="{ 'classy' : state == 2 }">
-      <img src="../../assets/imgs/weix.png" alt>
-      <span>微信充值</span>
-      <span style="color:#999999"></span>
-    </div>
-    <div @click="bool3()" class="card2" :class="{ 'classy' : state ==4 }">
-      <img src="../../assets/imgs/person1.png" alt>
-      <span>人工充值</span>
-      <span style="color:#999999"></span>
-    </div>
-    <p class="pg">
-      实付金额 ：
-      <span>{{huof}}元</span>
-    </p>
-    <button class="button2" @click="chogn()">立即充值</button>
-    <div id="webpay"></div>
+      <span class="chongzhisd">温馨提示 : 最低充值金额20元</span>
+      <div class="money">
+        <p @click="yuan()" :class="{ 'border' : huof == 50 }">50元</p>
+        <p @click="yuan1()" :class="{ 'border' : huof == 100 }">100元</p>
+        <p @click="yuan2()" :class="{ 'border' : huof == 200 }">200元</p>
+        <p @click="yuan3()" :class="{ 'border' : huof == 500 }">500元</p>
+        <p @click="yuan4()" :class="{ 'border' : huof == 1000 }">1000元</p>
+        <p @click="yuan5()" :class="{ 'border' : huof == 2000 }">2000元</p>
+      </div>
+      <div @click="bool()" class="ali" :class="{ 'classy' : state == 1 }">
+        <img src="../../assets/imgs/zhifub.png" alt>
+        <span>支付宝充值</span>
+        <span style="color:#999999"></span>
+      </div>
+      <div @click="bool1()" class="card2" :class="{ 'classy' : state == 3 }">
+        <img src="../../assets/imgs/yingh.png" alt>
+        <span>快捷充值</span>
+        <span style="color:#999999"></span>
+      </div>
+      <div @click="bool2()" class="card2" :class="{ 'classy' : state == 2 }">
+        <img src="../../assets/imgs/weix.png" alt>
+        <span>微信充值</span>
+        <span style="color:#999999"></span>
+      </div>
+      <div @click="bool3()" class="card2" :class="{ 'classy' : state ==4 }">
+        <img src="../../assets/imgs/person1.png" alt>
+        <span>人工充值</span>
+        <span style="color:#999999"></span>
+      </div>
+      <p class="pg">
+        实付金额 ：
+        <span>{{huof}}元</span>
+      </p>
+      <button class="button2" @click="chogn()">立即充值</button>
+      <div id="webpay"></div>
+    </van-pull-refresh>
   </div>
 </template>
 <script>
@@ -64,7 +72,8 @@ export default {
       money: "1000.00",
       state: 0,
       huof: "",
-      msg1: ""
+      msg1: "",
+      isLoading: false
     };
   },
   mounted() {
@@ -156,6 +165,11 @@ export default {
         .catch(res => {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         });
+    },
+    onRefresh() {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 500);
     }
   }
 };

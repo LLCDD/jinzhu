@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       msg: "4343",
-      list: [1],
+      list: [],
       bool: false
     };
   },

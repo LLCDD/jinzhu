@@ -1,44 +1,46 @@
 <template>
   <div class="_warp">
-    <div class="tba">
-      <div class="two">
-        <span>{{ arr[1].phone }}</span>
-        <p>
-          <span>累计收益</span>
-          
-          <span class="money">{{ arr[1].yong_wallet }}</span>
-        </p>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="tba">
+        <div class="two">
+          <span>{{ arr[1].phone }}</span>
+          <p>
+            <span>累计收益</span>
+            
+            <span class="money">{{ arr[1].yong_wallet }}</span>
+          </p>
+        </div>
+        <div class="two1">
+          <span>{{ arr[0].phone }}</span>
+          <p>
+            <span>累计收益</span>
+            
+            <span class="money">{{arr[0].yong_wallet}}</span>
+          </p>
+        </div>
+        <div class="two2">
+          <span>{{ arr[2].phone }}</span>
+          <p>
+            <span>累计收益</span>
+            
+            <span class="money">{{arr[2].yong_wallet}}</span>
+          </p>
+        </div>
       </div>
-      <div class="two1">
-        <span>{{ arr[0].phone }}</span>
-        <p>
-          <span>累计收益</span>
-          
-          <span class="money">{{arr[0].yong_wallet}}</span>
-        </p>
+      <div class="table1">
+        <div class="table" v-for="(item,index) in list" :key="index">
+          <span class="tabl1" style="color:#f1941d">
+            <!-- <span v-if="index <= 5">0</span> -->
+            {{index+1}}
+          </span>
+          <span class="tabl2">{{ item.phone }}</span>
+          <span class="tabl3">
+            累计佣金 :
+            <span style="color:#f1941d">{{ item.yong_wallet }}</span>
+          </span>
+        </div>
       </div>
-      <div class="two2">
-        <span>{{ arr[2].phone }}</span>
-        <p>
-          <span>累计收益</span>
-          
-          <span class="money">{{arr[2].yong_wallet}}</span>
-        </p>
-      </div>
-    </div>
-    <div class="table1">
-      <div class="table" v-for="(item,index) in list" :key="index">
-        <span class="tabl1" style="color:#f1941d">
-          <!-- <span v-if="index <= 5">0</span> -->
-          {{index+1}}
-        </span>
-        <span class="tabl2">{{ item.phone }}</span>
-        <span class="tabl3">
-          累计佣金 :
-          <span style="color:#f1941d">{{ item.yong_wallet }}</span>
-        </span>
-      </div>
-    </div>
+    </van-pull-refresh>
   </div>
 </template>
 <script>
@@ -49,7 +51,8 @@ export default {
       msg: "222",
       money: "1000.00",
       list: [],
-      arr: []
+      arr: [],
+      isLoading: false
     };
   },
   // beforeCreate() {
@@ -66,11 +69,34 @@ export default {
           if (res.code == 200) {
             // Toast.clear();
             // console.log(res.data.data);
-            if (res.data.data.length > 3) {
+            // if (res.data.data.length > 3) {
+            //   for (var i = 0; i < 3; i++) {
+            //     this.arr.push(res.data.data[i]);
+            //   }
+            // }
+            if (res.data.data.length >= 3) {
               for (var i = 0; i < 3; i++) {
                 this.arr.push(res.data.data[i]);
               }
+            } else {
+              for (var i = 0; i < res.data.data.length; i++) {
+                this.arr.push(res.data.data[i]);
+                if (res.data.data.length < 3) {
+                  console.log(res.data.data.length);
+                  for (var i = 0; i <= 3 - res.data.data.length; i++) {
+                    this.arr.push({ phone: "暂无数据", shou: "0.00" });
+                  }
+                }
+              }
             }
+            if (res.data.data.length == 0) {
+              this.arr = [
+                { phone: "暂无数据", shou: "0.00" },
+                { phone: "暂无数据", shou: "0.00" },
+                { phone: "暂无数据", shou: "0.00" }
+              ];
+            }
+            this.list = res.data.data;
             this.list = res.data.data;
           } else if (res.code == 400) {
             // Toast.clear();
@@ -82,12 +108,42 @@ export default {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         });
     });
+  },
+  methods: {
+    onRefresh() {
+      this.http
+        .post("/api/rankings", { type: "1" })
+        .then(res => {
+          if (res.code == 200) {
+            this.isLoading = false;
+            // Toast.clear();
+            // console.log(res.data.data);
+            if (res.data.data.length > 3) {
+              for (var i = 0; i < 3; i++) {
+                this.arr.push(res.data.data[i]);
+              }
+            }
+
+            this.list = res.data.data;
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+    }
   }
 };
 </script>
 <style scope="345">
 ._warp {
   min-height: 100%;
+  /* overflow: scroll;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch; */
   /* padding-top: 1.32rem; */
 }
 .tba {

@@ -1,83 +1,86 @@
 <template>
   <div class="personal">
     <!-- <img @click="qrcode" class="qrcode" src="../../assets/imgs/qrcode.png" alt> -->
-    <div class="header">
-      <div class="warp">
-        <div class="photo">
-          <img src="../../assets/imgs/heaertttt.png" alt>
-        </div>
-        <div class="name">
-          <p>{{ msg }}</p>
-          <p>ID:{{ nickname }}</p>
-        </div>
-        <div class="geren" @click="gern">
-          个人资料&nbsp;&nbsp;&nbsp;
-          <img src="../../assets/imgs/return.png" alt>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="header">
+        <div class="warp">
+          <div class="photo">
+            <img src="../../assets/imgs/heaertttt.png" alt>
+          </div>
+          <div class="name">
+            <p>{{ msg }}</p>
+            <p>ID:{{ nickname }}</p>
+          </div>
+          <div class="geren" @click="gern">
+            个人资料&nbsp;&nbsp;&nbsp;
+            <img src="../../assets/imgs/return.png" alt>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="_warp1">
-      <div>
-        <p>我的钱包 ( 元 )</p>
+      <div class="_warp1">
         <div>
-          <span class="money">{{ money }}</span>
-          <span class="caoz" @click="zijin()">
-            资金记录
-            <img src="../../assets/imgs/oragin.png" alt>
-          </span>
-        </div>
-        <div class="ftdiv">
-          <button @click="tixian()">提现</button>
-          <button class="chongzhi" @click="chongzhi()">充值</button>
-        </div>
-      </div>
-    </div>
-    <div class="data">
-      <div class="dw">
-        <router-link tag="p" to="/Sign">签到</router-link>
-        <img class="dw1" src="../../assets/imgs/task.png" alt>
-        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
-      </div>
-    </div>
-    <div class="data1">
-      <div class="dw">
-        <router-link tag="p" to="/myrecommendation">我的推荐</router-link>
-        <img class="dw1" src="../../assets/imgs/select.png" alt>
-        <p style="position: absolute;right:0.6rem;top:0;color:#999">{{ tui1}}</p>
-        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
-      </div>
-      <div class="dw">
-        <router-link tag="p" to="/advertising">我的银行卡</router-link>
-        <img class="dw1" src="../../assets/imgs/headlines.png" alt>
-        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
-      </div>
-      <div class="dw">
-        <router-link tag="p" to="/zhifubao">我的支付宝</router-link>
-        <img class="dw1" src="../../assets/imgs/ali.png" alt>
-        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
-      </div>
-    </div>
-    <div class="data2">
-      <div class="dw">
-        <router-link tag="p" to="/Promotionposter">推广海报</router-link>
-        <img class="dw1" src="../../assets/imgs/picture.png" alt>
-        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
-      </div>
-      <div class="dw dy">
-        <router-link tag="p" to="/Set">设置</router-link>
-        <img class="dw1" src="../../assets/imgs/setup.png" alt>
-        <img class="dw2" src="../../assets/imgs/oragin.png" alt>
-      </div>
-    </div>
-    <van-popup v-model="show" class="hi">
-      <div class="hi">
-        <p>二维码</p>
-        <div>
-          <img :src="src" alt>
+          <p>我的钱包 ( 元 )</p>
+          <div>
+            <span class="money">{{ money }}</span>
+            <span class="caoz" @click="zijin()">
+              资金记录
+              <img src="../../assets/imgs/oragin.png" alt>
+            </span>
+          </div>
+          <div class="ftdiv">
+            <button @click="tixian()">提现</button>
+            <button class="chongzhi" @click="chongzhi()">充值</button>
+          </div>
         </div>
       </div>
-    </van-popup>
-    <button class="button" @click="tui()">安全退出</button>
+      <div class="data">
+        <div class="dw">
+          <router-link tag="p" to="/Sign">签到</router-link>
+          <img class="dw1" src="../../assets/imgs/task.png" alt>
+          <img class="dw2" src="../../assets/imgs/oragin.png" alt>
+        </div>
+      </div>
+      <div class="data1">
+        <div class="dw">
+          <router-link tag="p" to="/myrecommendation">我的推荐</router-link>
+          <img class="dw1" src="../../assets/imgs/select.png" alt>
+          <p style="position: absolute;right:0.6rem;top:0;color:#999">{{ tui1}}</p>
+          <img class="dw2" src="../../assets/imgs/oragin.png" alt>
+        </div>
+        <div class="dw">
+          <router-link tag="p" to="/advertising">我的银行卡</router-link>
+          <img class="dw1" src="../../assets/imgs/headlines.png" alt>
+          <img class="dw2" src="../../assets/imgs/oragin.png" alt>
+        </div>
+        <div class="dw">
+          <router-link tag="p" to="/zhifubao">我的支付宝</router-link>
+          <img class="dw1" src="../../assets/imgs/ali.png" alt>
+          <img class="dw2" src="../../assets/imgs/oragin.png" alt>
+        </div>
+      </div>
+      <div class="data2">
+        <div class="dw">
+          <router-link tag="p" to="/Promotionposter">推广海报</router-link>
+          <img class="dw1" src="../../assets/imgs/picture.png" alt>
+          <img class="dw2" src="../../assets/imgs/oragin.png" alt>
+        </div>
+        <div class="dw dy">
+          <router-link tag="p" to="/Set">设置</router-link>
+          <img class="dw1" src="../../assets/imgs/setup.png" alt>
+          <img class="dw2" src="../../assets/imgs/oragin.png" alt>
+        </div>
+      </div>
+      <van-popup v-model="show" class="hi">
+        <div class="hi">
+          <p>二维码</p>
+          <div>
+            <img :src="src" alt>
+          </div>
+        </div>
+      </van-popup>
+
+      <button class="button" @click="tui()">安全退出</button>
+    </van-pull-refresh>
   </div>
 </template>
 <script>
@@ -91,7 +94,8 @@ export default {
       nickname: "",
       money: "",
       src: "",
-      tui1: "34534"
+      tui1: "34534",
+      isLoading: false
     };
   },
   // beforeCreate() {
@@ -164,6 +168,28 @@ export default {
       localStorage.clear();
       sessionStorage.clear();
       this.$router.replace({ name: "login" });
+    },
+    onRefresh() {
+      this.http
+        .post("/api/my_center")
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res);
+            this.msg = res.data.name;
+            this.nickname = res.data.id;
+            this.money = res.data.wallet;
+            this.tui1 = res.data.recommend;
+            this.isLoading = false;
+            // Toast.clear();
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     }
   }
 };

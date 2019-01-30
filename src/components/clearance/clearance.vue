@@ -1,19 +1,21 @@
 <template>
   <div class="clearance">
-    <div
-      class="qu"
-      v-for="(item,index) in list"
-      :key="index"
-      @click="stores(item.id,item.packet_num,item.red_packet)"
-    >
-      <p>{{ item.type }}</p>
-      <span>{{ item.red_packet }} 赔率{{ item.odds }}赔</span>
-    </div>
-    <!-- <audio id="music">
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div
+        class="qu"
+        v-for="(item,index) in list"
+        :key="index"
+        @click="stores(item.id,item.packet_num,item.red_packet)"
+      >
+        <p>{{ item.type }}</p>
+        <span>{{ item.red_packet }} 赔率{{ item.odds }}赔</span>
+      </div>
+      <!-- <audio id="music">
       <source src="../../assets/music/music.mp3">
-    </audio>-->
-    <!-- <button @click="dianji()">点击</button>
-    <button @click="dianji1()">点击1</button>-->
+      </audio>-->
+      <!-- <button @click="dianji()">点击</button>
+      <button @click="dianji1()">点击1</button>-->
+    </van-pull-refresh>
   </div>
 </template>
 <script>
@@ -22,7 +24,8 @@ export default {
   data() {
     return {
       msg: "45345",
-      list: []
+      list: [],
+      isLoading: false
     };
   },
   // beforeCreate() {
@@ -73,6 +76,26 @@ export default {
     dianji1() {
       var music = document.getElementById("music");
       music.currentTime = 0;
+    },
+    onRefresh() {
+      this.http
+        .post("/api/room_list", { game_id: "1" })
+        .then(res => {
+          if (res.code == 200) {
+            // Toast.clear();
+            // console.log(res);
+            // console.log(res.data.data);
+            this.isLoading = false;
+            this.list = res.data.data;
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     }
   }
 };
@@ -84,7 +107,7 @@ export default {
   padding: 0 0.3rem;
   padding-top: 1.32rem;
 }
-.clearance > div {
+.clearance > div > div > div {
   width: 100%;
   height: 1.8rem;
   margin-top: 0.3rem;

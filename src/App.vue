@@ -19,6 +19,9 @@
         <span v-if="this.$store.state.fanhuiin">
           <img @click="ldyopp()" class="baozhu" src="../public/image/return.png" alt>
         </span>
+        <span v-if="this.$store.state.tuijianf">
+          <img @click="fantuijian()" class="baozhu" src="../public/image/return.png" alt>
+        </span>
         <!-- <span class="sizeii">{{ this.$store.state.header }}</span> -->
         <!-- <span v-if="this.$store.state.tuijian" @click="tuijian" class="tuijian">推荐列表</span> -->
         {{ this.$store.state.header }}
@@ -31,7 +34,7 @@
       <!-- </div> -->
       <!--搜索框 只在“微信”和“通讯录”页面下显示-->
       <!--四个门面页 “微信” “通讯录” “发现” “我”-->
-      <section class="app-content">
+      <section class="app-content" :class="{'app-content1': $store.state.footerTabl}">
         <!-- <transition
           enter-active-class="animated fadeInLeft"
           leave-active-class="animated fadeOutRight"
@@ -100,6 +103,31 @@ export default {
         .catch(res => {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         });
+    },
+    // 返回推荐
+    fantuijian() {
+      var arr = this.$store.state.bao;
+      // console.log(arr);
+      arr.pop();
+      var uid = arr[arr.length - 1];
+      // console.log(uid);
+      if (uid != undefined) {
+        this.http
+          .post("/api/first_recommend", { uid: uid })
+          .then(res => {
+            if (res.code == 200) {
+              this.$store.commit("header", res.data.lever);
+              this.$store.commit("shuju", res.data.data);
+            } else {
+              this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+            }
+          })
+          .catch(res => {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          });
+      } else {
+        this.$router.go(-1);
+      }
     }
   },
   watch: {
@@ -148,6 +176,9 @@ $material-icons-font-path: "~material-icons/iconfont/";
   // min-height: 100%;
   // background: url("./assets/imgs/background.png") no-repeat top;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  // -webkit-touch-callout: none;
+  // -webkit-user-select: none;
 }
 #header {
   // margin-top: 0.44rem;
@@ -204,5 +235,8 @@ $material-icons-font-path: "~material-icons/iconfont/";
   font-size: 0.24rem;
   position: absolute;
   right: 0.24rem;
+}
+.app-content1 {
+  -webkit-overflow-scrolling: auto;
 }
 </style>

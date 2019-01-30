@@ -201,9 +201,9 @@ export default {
   border: 0;
   background: none;
   color: #fff;
-  line-height: 0.8rem;
   width: 38%;
-
+  line-height: 0.4rem;
+  padding: 0.2rem 0;
   float: left;
 }
 .put > span {

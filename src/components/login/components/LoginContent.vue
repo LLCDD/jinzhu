@@ -86,8 +86,11 @@ export default {
   background: none;
   color: #fff;
   float: left;
-  line-height: 0.9rem;
   width: 50%;
+  line-height: 0.4rem;
+  padding: 0.25rem 0;
+  /* height: 0.4rem; */
+  /* margin-top: 0.24rem; */
 }
 .login {
   width: 100%;

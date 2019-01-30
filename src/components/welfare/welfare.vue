@@ -2,26 +2,34 @@
   <div class="divb">
     <div class="div3">
       <header>
-        <img @click="tap()" class="fanhui" src="../../../public/image/return.png">玩家福利
+        <img @click="tap()" class="fanhui" src="../../../public/image/return.png">发包记录
       </header>
-      <p class="p">总计 ( 元 )</p>
-      <p class="p1">{{ zong }}</p>
+      <div style="display:flex;justify-content: space-between;padding-right:0.4rem">
+        <div>
+          <p class="p">已反总计 ( 元 )</p>
+          <p class="p1">{{ zong }}</p>
+        </div>
+        <div>
+          <p class="p">当日总计 ( 元 )</p>
+          <p class="p1">{{ zong2 }}</p>
+        </div>
+      </div>
     </div>
     <p class="tishi">
-      温馨提示 ：发红包和抢红包流水达到1000-5000 返2% ; 5000-10000返3% ; 200000+ 返5% ,
+      温馨提示 ：发红包和抢红包流水达到 1000-4999 反2% 5000-9999 反3% 10000-19999 反4% 20000+ 反5% 按1000的倍数统计 ,
       当天12点结算达到要求直接返到余额里
     </p>
     <div class="zirout">
       <!-- <router-link to="envelope" replace tag="p"> -->
       <p @click="fa()" :class="{'active':state == 1}">
-        <span>发包记录</span>
+        <span>发红包</span>
         <br>
         <strong>总计 ( {{ faz }} )</strong>
       </p>
       <!-- </router-link> -->
       <!-- <router-link to="nvelope" replace tag="p"> -->
       <p @click="qiang()" :class="{'active':state == 2}">
-        <span>抢包记录</span>
+        <span>抢红包</span>
         <br>
         <strong>总计 ( {{ qz }} )</strong>
       </p>
@@ -30,14 +38,12 @@
     <div class="nu">
       <div v-for="(item,index) in list " :key="index">
         <p>
-          <span style="font-size:0.3rem">抢红包</span>
-          <br>
-          <span style="font-size:0.2rem;color:#999">{{ item.pull_uid }}</span>
+          <span style="font-size:0.3rem">{{ pan }}</span>
+          <!-- <br> -->
+          <!-- <span style="font-size:0.2rem;color:#999">{{ item.pull_uid }}</span> -->
         </p>
         <p>
-          <span
-            style="line-height:1rem;padding:0;font-size:0.3rem;color:#cf3c36"
-          >{{ pan }}{{ item.money }} 元</span>
+          <span style="line-height:1rem;padding:0;font-size:0.3rem;color:#cf3c36">{{ item.money }} 元</span>
         </p>
       </div>
     </div>
@@ -60,20 +66,22 @@ export default {
       faz: 0,
       // 今日钱包
       qz: 0,
-      pan: "+"
+      pan: "发红包",
+      zong2: ""
     };
   },
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", true);
-    this.$store.commit("header", "玩家福利");
+    this.$store.commit("header", "发包记录");
     this.$store.commit("fanhui", true);
     this.http.post("/api/myWelfare_s").then(res => {
       if (res.code == 200) {
         console.log(res);
         // this.msg1 = res.data.money2;
         // this.msg2 = res.data.money1;
-        this.zong = res.data.money;
+        this.zong = res.data.daySum;
+        this.zong2 = res.data.oldSum;
       }
     });
     this.gongong();
@@ -139,14 +147,14 @@ export default {
         });
     },
     fa() {
-      this.pan = "+";
+      this.pan = "发红包";
       this.state = 1;
       // this.zong = this.msg2;
       this.gongong1(this.state);
     },
     qiang() {
       this.state = 2;
-      this.pan = "-";
+      this.pan = "抢红包";
       // this.zong = this.msg1;
       this.gongong1(this.state);
     }
@@ -158,6 +166,9 @@ export default {
   padding-top: 0.88rem;
   min-height: 100%;
   background: #f5f5f5;
+  /* overflow: scroll;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch; */
 }
 .div3 {
   /* overflow: hidden; */
@@ -255,7 +266,7 @@ header {
 }
 .nu > div > p > span {
   display: inline-block;
-  padding-top: 0.16rem;
+  padding-top: 0.36rem;
 }
 .active > span {
   color: #f1941d;

@@ -1,5 +1,10 @@
 <template>
   <div class="Customerservice">
+    <header class="header">
+      <img @click="fanhuiy" src="../../../public/image/return.png" alt>
+      <div>客服中心</div>
+      <span @click="qingkong()">一键清空</span>
+    </header>
     <div id="data-list-content" class="cneter">
       <div class="liaotian" v-for="(item,index) in list.data1" :key="index">
         <div>
@@ -26,17 +31,22 @@ export default {
     return {
       msg: "345",
       text1: "",
-      list: this.$store.state.qingr,
+      list: [],
       timer: null
     };
   },
   mounted() {
     this.$store.commit("header", "客服中心");
     this.$store.commit("fanhui", true);
-    this.$store.commit("headerTab", true);
+    this.$store.commit("headerTab", false);
+    this.$store.commit("footerTab", false);
+    this.$store.commit("footerTabl", true);
     this.scrollToBottom();
     this.sendy();
     this.$store.commit("qing", true);
+    plus.webview.currentWebview().setStyle({
+      softinputMode: "adjustResize" // 弹出软键盘时自动改变webview的高度
+    });
   },
   methods: {
     send() {
@@ -96,14 +106,36 @@ export default {
     // 滚动条的事件
     scrollToBottom() {
       this.$nextTick(() => {
-        var div = document.getElementsByClassName("Customerservice")[0];
+        var div = document.getElementsByClassName("cneter")[0];
         // console.log();
         div.scrollTop = div.scrollHeight;
       });
+    },
+    qingkong() {
+      this.http
+        .post("/api/emptys")
+        .then(res => {
+          if (res.code == 200) {
+            // this.$store.commit("qingr", []);
+            this.list = "";
+            // console.log(res);
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+    },
+    fanhuiy() {
+      this.$router.go(-1);
     }
   },
   updated() {
     this.scrollToBottom();
+    plus.webview.currentWebview().setStyle({
+      softinputMode: "adjustResize" // 弹出软键盘时自动改变webview的高度
+    });
   },
   destroyed() {
     clearInterval(this.timer);
@@ -112,15 +144,49 @@ export default {
 </script>
 <style scoped>
 .Customerservice {
-  padding-top: 1.32rem;
-  /* min-height: 100%; */
-  height: 100%;
+  /* padding-top: 1.32rem;
+
+ 
   background: #f5f5f5;
   padding-bottom: 1.3rem;
-  overflow: auto;
+  overflow: scroll; */
+  height: 100%;
+  /* overflow: hidden; */
+}
+.header {
+  height: 1.32rem;
+  width: 100%;
+  /* position: fixed; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url("../../assets/imgs/background.png") no-repeat left;
+  background-size: 100% 100%;
+  z-index: 999;
+}
+.header > div {
+  height: 0.88rem;
+  padding-top: 0.44rem;
+  line-height: 0.88rem;
+  text-align: center;
+  font-size: 0.3rem;
+  color: #fff;
+}
+.header > img {
+  height: 0.3rem;
+  position: absolute;
+  bottom: 0.3rem;
+  left: 0.3rem;
+}
+.header > span {
+  font-size: 0.24rem;
+  color: #fff;
+  position: absolute;
+  right: 0.3rem;
+  bottom: 0.3rem;
 }
 .Customerservice > footer {
-  position: fixed;
+  position: absolute;
   z-index: 99;
   bottom: 0;
   left: 0;
@@ -146,7 +212,7 @@ export default {
   margin-right: 0.2rem;
 }
 .Customerservice > footer > button {
-  width: 20%;
+  width: 16%;
   height: 0.8rem;
   margin-top: 0.1rem;
   border-radius: 0.1rem;
@@ -157,9 +223,19 @@ export default {
 }
 .Customerservice > .cneter {
   /* min-height: 100%; */
+  height: 100%;
   text-align: center;
   padding: 0 0.3rem;
-  overflow-y: auto;
+  /* overflow-y: auto; */
+  overflow: scroll;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 1.5rem;
+  /* overflow: hidden; */
+  /* height: 100%; */
+}
+.Customerservice > .cneter > :last-child {
+  margin-bottom: 1.5rem;
 }
 .liaotian {
   float: right;
@@ -168,7 +244,7 @@ export default {
 .spany {
   display: inline-block;
   background: #ccc;
-  min-width: 1.3rem;
+  min-width: 3rem;
   height: 0.3rem;
   text-align: center;
   color: #fff;

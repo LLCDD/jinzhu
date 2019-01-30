@@ -32,6 +32,9 @@ export default {
   min-height: 100%;
   background: #ffffff;
   padding-top: 1.32rem;
+  /* overflow: scroll;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch; */
 }
 /* .ranking {
   padding-top: 0.88rem; 

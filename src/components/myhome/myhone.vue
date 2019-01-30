@@ -1,15 +1,20 @@
 <template>
   <div class="divl">
-    <div class="faxain">
-      <p v-if="bool">有新消息。。</p>
-      <button @click="kefu()">立即进入</button>
-    </div>
-    <div class="faxain faxain1">
-      <button @click="daili()">立即进入</button>
-    </div>
-    <div class="faxain2">
-      <button class="red" @click="genduo()">立即进入</button>
-    </div>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="faxain">
+        <p v-if="bool">有新消息。。</p>
+        <button @click="kefu()">立即进入</button>
+      </div>
+      <div class="faxain faxain1">
+        <button @click="daili()">立即进入</button>
+      </div>
+      <div class="faxain2">
+        <button class="red" @click="genduo()">立即进入</button>
+      </div>
+      <div class="faxain2 faxain3" @click="zank()">
+        <button class="red">立即进入</button>
+      </div>
+    </van-pull-refresh>
   </div>
 </template>
 <script>
@@ -17,7 +22,8 @@ export default {
   data() {
     return {
       msg: "3",
-      bool: true
+      bool: true,
+      isLoading: false
     };
   },
   mounted() {
@@ -27,6 +33,7 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", false);
     this.$store.commit("qing", false);
+    this.$store.commit("footerTabl", true);
   },
   methods: {
     //   客服
@@ -53,6 +60,14 @@ export default {
     genduo() {
       console.log("更多期待");
       this.$router.push("/welfare");
+    },
+    onRefresh() {
+      setInterval(() => {
+        this.isLoading = false;
+      }, 600);
+    },
+    zank() {
+      this.$toasted.error("暂未开放").goAway(1000);
     }
   }
 };
@@ -64,7 +79,7 @@ export default {
   padding: 0 0.3rem;
   padding-top: 1.32rem;
 }
-.divl > div {
+.divl > div > div > div {
   height: 3rem;
   width: 100%;
   margin-top: 0.3rem;
@@ -83,7 +98,6 @@ export default {
   background: url("../../assets/imgs/fuli.png") no-repeat left;
   background-size: 100% 100%;
   position: relative;
-  margin-bottom: 1rem;
 }
 .faxain > button {
   height: 0.64rem;
@@ -126,5 +140,10 @@ export default {
   color: #fff;
   /* border: 1px solid #fee3d7; */
   /* box-shadow: 1px 1px 10px #fee3d7; */
+}
+.faxain3 {
+  background: url("../../assets/imgs/555.png") no-repeat left;
+  background-size: 100% 100%;
+  margin-bottom: 1.4rem;
 }
 </style>

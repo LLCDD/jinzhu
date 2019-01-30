@@ -183,7 +183,8 @@ export default {
   color: #fff;
   float: left;
   /* line-height: 0.9rem; */
-  line-height: 0.8rem;
+  line-height: 0.4rem;
+  padding: 0.2rem 0;
   width: 40%;
 }
 .put > span {

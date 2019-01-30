@@ -89,7 +89,7 @@ export default {
   }
 };
 </script>
-<style scope="ay">
+<style scope="">
 .div {
   padding-top: 1.32rem;
   min-height: 100%;

@@ -8,43 +8,49 @@
 
       <div class="hey">
         <div>
-          <p class="p">我的总收益 ( 元 )</p>
+          <p class="p">收益总收益 ( 元 )</p>
           <p class="p1">{{ msg }}</p>
+          <p style="padding-top:0.14rem" class="p">团队总人数 ( 人 )</p>
+          <p class="p1">{{ prem }}</p>
         </div>
         <div>
           <p class="p zhuanj">今日收益 ( 元 )</p>
           <p class="p1 zhuanj1">{{ msg1 }}</p>
+          <p style="padding-top:0.14rem" class="p zhuanj">直推人数 ( 人 )</p>
+          <p class="p1 zhuanj1">{{ prem1 }}</p>
         </div>
       </div>
     </div>
+
     <table class="tabley" v-if="bool">
       <th>昵称</th>
-      <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额</th>
+      <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额 (元)</th>
       <th style="color:#f1941d;border-right:2px solid #f5f5f5;">级别</th>
       <th style="width:40%">时间</th>
       <tr v-for="(item,index) in list" :key="index">
         <td
-          style="line-height: 0.9rem;color:#000;overflow: hidden;
+          style="line-height: 0.9rem;color:#000;overflow: hidden;font-size:0.22rem;
 text-overflow:ellipsis;
 white-space: nowrap;"
         >{{ item.name }}</td>
         <td
-          style="line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
+          style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
         >{{ item.money }}({{ item.type == 3 ? '抢' : '发' }})</td>
         <td
-          style="line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
+          style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
         >{{ item.level }}</td>
-        <td style="width:40%;color:#999999">{{ item.created_at }}</td>
+        <td style="width:40%;color:#999999;font-size:0.22rem">{{ item.created_at }}</td>
       </tr>
     </table>
-    <van-pagination
+
+    <!-- <van-pagination
       v-if="bool2"
       v-model="page"
       :page-count="zong"
       mode="simple"
       @change="page1($event)"
       style="margin-bottom:1rem"
-    />
+    />-->
     <img class="null" v-if="!bool" src="../../assets/imgs/null.png" alt>
   </div>
 </template>
@@ -61,7 +67,11 @@ export default {
       page: 1,
       zong: 1,
       list: [],
-      bool2: false
+      bool2: false,
+      // 总人数
+      prem: "",
+      // 直推人数
+      prem1: ""
     };
   },
   // beforeCreate() {
@@ -74,6 +84,7 @@ export default {
   mounted() {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
+    this.$store.commit("tuijianf", false);
     // if (this.list.length > 0) {
     //   this.bool = true;
     // }
@@ -83,14 +94,16 @@ export default {
         console.log(res.data.total);
         this.msg = res.data.total;
         this.msg1 = res.data.todays;
+        this.prem = res.data.team_num;
+        this.prem1 = res.data.direct;
         // this.list = res.data.arr;
         if (res.data.arr.length <= 0) {
           this.bool = false;
         } else {
-          if (res.data.arr.length >= 10) {
+          if (res.data.arr.length >= 15) {
             var arr = [];
             this.bool2 = true;
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 15; i++) {
               arr.push(res.data.arr[i]);
               this.list = arr;
             }
@@ -119,16 +132,16 @@ export default {
     // 推荐列表
     tuijian() {
       this.$router.push("/cardy");
-    },
-    // 分页
-    page1(id) {
-      this.list = [];
-      // console.log();
-      for (var i = id * 10 - 10; i < id * 10; i++) {
-        console.log(i);
-        this.list.push(this.list1[i]);
-      }
     }
+    // 分页
+    // page1(id) {
+    //   this.list = [];
+    //   // console.log();
+    //   for (var i = id * 10 - 10; i < id * 10; i++) {
+    //     console.log(i);
+    //     this.list.push(this.list1[i]);
+    //   }
+    // }
   }
 };
 </script>
@@ -147,7 +160,7 @@ export default {
   background: url("../../assets/imgs/heady.png") no-repeat left;
   background-size: cover;
   position: relative;
-  height: 2.88rem;
+  height: 3.1rem;
   margin-bottom: 0.3rem;
   position: fixed;
   width: 100%;
@@ -183,7 +196,7 @@ header {
   /* float: left; */
 }
 .p1 {
-  padding-top: 0.3rem;
+  /* padding-top: 0.3rem; */
   padding-left: 0.3rem;
   font-size: 0.38rem;
   color: #fff;
@@ -252,7 +265,9 @@ header {
   /* display: block; */
   text-align: center;
   background: #fff;
-  margin-top: 2.85rem;
+  margin-top: 3.1rem;
+  /* overflow: scroll;
+  -webkit-overflow-scrolling: touch; */
 }
 .tabley > th {
   border: 0;

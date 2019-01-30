@@ -73,6 +73,8 @@ span {
 }
 input {
   color: #999;
+  line-height: 0.4rem;
+  padding: 0.2rem 0;
 }
 .buttonty {
   width: 84%;

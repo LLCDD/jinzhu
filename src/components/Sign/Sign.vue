@@ -8,27 +8,29 @@
       <p class="p">累积领取金额 ( 元 )</p>
       <p class="p1">{{ data.money }}</p>
     </div>
-    <div class="divq">
-      <p class="py">
-        <span>已签到</span>
-        <br>
-        <span class="spy">{{ data.sing_day }} 天</span>
-      </p>
-      <div class="py1">
-        <div class="dao">
-          <!--  -->
-          <van-steps active-color="#f1941d" :active="data.sing_day-1">
-            <van-step v-for="(item,index) in data.sign" :key="index">{{ item }}</van-step>
-          </van-steps>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div class="divq">
+        <p class="py">
+          <span>已签到</span>
+          <br>
+          <span class="spy">{{ data.sing_day }} 天</span>
+        </p>
+        <div class="py1">
+          <div class="dao">
+            <!--  -->
+            <van-steps active-color="#f1941d" :active="data.sing_day-1">
+              <van-step v-for="(item,index) in data.sign" :key="index">{{ item }}</van-step>
+            </van-steps>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="timer">
-      <p v-for="(item,index) in data.data" :key="index">
-        <span>{{ item.money }}</span>
-        <span style="color:#999">{{ item.created_at }}</span>
-      </p>
-    </div>
+      <div class="timer">
+        <p v-for="(item,index) in data.data" :key="index">
+          <span>{{ item.money }}</span>
+          <span style="color:#999">{{ item.created_at }}</span>
+        </p>
+      </div>
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -37,7 +39,8 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
-      data: ""
+      data: "",
+      isLoading: false
     };
   },
   // beforeCreate() {
@@ -93,6 +96,37 @@ export default {
     instructions() {
       // console.log("说明");
       this.$router.push("/guize");
+    },
+    onRefresh() {
+      this.http
+        .post("/api/sign")
+        .then(res => {
+          if (res.code == 200) {
+            console.log(res.data);
+            // Toast.clear();
+            // this.$toasted.success(res.message).goAway(1000);
+          } else if (res.code == 400) {
+            // Toast.clear();
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          // Toast.clear();
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
+      this.http
+        .post("/api/sign_list")
+        .then(res => {
+          if (res.code == 200) {
+            this.isLoading = false;
+            this.data = res.data;
+          } else if (res.code == 400) {
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+          }
+        })
+        .catch(res => {
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     }
   }
 };

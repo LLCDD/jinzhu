@@ -5,6 +5,7 @@
       红包详情
       <span @click="jilv()">红包记录</span>
     </header>
+
     <div class="renw">
       <div class="first">
         <img src="../../assets/imgs/heaertttt.png" alt>
@@ -23,7 +24,7 @@
             <p class="name">
               {{ item.phone }}
               <br>
-              <span>{{ item.created_at }}</span>
+              <span>{{ item.created_at.substring(0,16) }}</span>
             </p>
           </div>
           <!-- <img v-if="item.status == 1" class="msl" src="../../assets/imgs/nextt.png" alt> -->
@@ -35,6 +36,7 @@
   </div>
 </template>
 <script>
+import { PullRefresh } from "vant";
 import { Toast } from "vant";
 export default {
   data() {

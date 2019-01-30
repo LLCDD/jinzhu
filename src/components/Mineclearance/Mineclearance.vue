@@ -4,20 +4,22 @@
     <!-- <div class="warpo">
       <span class="spanv">14.18</span>
     </div>-->
-    <div
-      v-for="(item,index) in num"
-      :key="index"
-      class="hongbao"
-      @click="xiqing(item.id,item.game_name)"
-    >
-      <div class="saihongbaoy" :class="{'hongbao1':item.uid == uid1 }">
-        <img src="../../assets/imgs/heaertttt.png" alt>
-        <p>{{ item.phone }}</p>
-        <!-- {{ item.uid }} -->
-        <div>
-          <p>{{ msg }}</p>
-          <br>
-          <p>{{ item.money }}-{{ item.spot }}</p>
+    <div class="Mineclearanceyy">
+      <div
+        v-for="(item,index) in num"
+        :key="index"
+        class="hongbao"
+        @click="xiqing(item.id,item.game_name)"
+      >
+        <div class="saihongbaoy" :class="{'hongbao1':item.uid == uid1 }">
+          <img src="../../assets/imgs/heaertttt.png" alt>
+          <p>{{ item.phone }}</p>
+          <!-- {{ item.uid }} -->
+          <div>
+            <p>{{ msg }}</p>
+            <br>
+            <p>{{ item.money }}-{{ item.spot }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -63,7 +65,7 @@
       </div>
     </van-popup>
     <audio id="music">
-      <source src="../../assets/music/music2.mp3">
+      <source src="../../assets/music/iphone.mp3">
     </audio>
   </div>
 </template>
@@ -108,8 +110,11 @@ export default {
     this.scrollToBottom();
     localStorage.setItem("panduan", 0);
     this.$store.commit("propers", true);
-    // console.log(this.$route.params.biaoshi);
-    Toast.clear();
+    this.$store.commit("qing", false);
+    localStorage.setItem("avatar", this.$route.params.biaoshi);
+    clearInterval(this.timery);
+    console.log();
+    // var scrollTop = document.Toast.clear(); // console.log(this.$route.params.biaoshi);
     // console.log(this.$route.params.biaoshi);
     if (localStorage.getItem("num" + this.$route.params.biaoshi)) {
     } else {
@@ -127,19 +132,20 @@ export default {
           // console.log(res);
           this.min = res.data.data[0];
           this.max = res.data.data[1];
+          clearInterval(this.timery);
+          this.$store.commit("pors", res.data.data[0]);
+          this.timery = setInterval(() => {
+            //
+            var suij = Math.ceil(Math.random() * 10);
+            if (this.min > this.max) {
+              this.min = parseInt(this.min) - parseInt(suij);
+              this.$store.commit("pors", this.min);
+            } else {
+              this.min = parseInt(this.min) + parseInt(suij);
+              this.$store.commit("pors", this.min);
+            }
+          }, 8000);
         }
-        this.$store.commit("pors", this.min);
-        clearInterval(this.timery);
-        this.timery = setInterval(() => {
-          var suij = Math.ceil(Math.random() * 10);
-          if (this.min > this.max) {
-            this.min = parseInt(this.min) - parseInt(suij);
-            this.$store.commit("pors", this.min);
-          } else {
-            this.min = parseInt(this.min) + parseInt(suij);
-            this.$store.commit("pors", this.min);
-          }
-        }, 5000);
       });
   },
   methods: {
@@ -227,22 +233,30 @@ export default {
     // 抢雷
 
     // 滚动条
-    scrollToBottom: function() {
+    // scrollToBottom: function() {
+    //   var _this = this;
+    //   var div = document.getElementsByClassName("Mineclearance")[0];
+    //   // this.timer1 = setInterval(function() {
+    //   if (_this.count <= div.scrollHeight) {
+    //     div.scrollTop = _this.count += 64;
+    //     // div.scrollTop = div.scrollHeight;
+    //     // console.log(div.scrollTop, div.scrollHeight);
+    //     // document.getElementById("music").currentTime = 0;
+    //     // document.getElementById("music").play();
+    //   } else {
+    //     // document.getElementById("music").currentTime = 0;
+    //     this.count = div.scrollHeight;
+    //   }
+    //   // }, 50);
+    //   // console.log();
+    //   // div.scrollTop = ;
+    // },
+    scrollToBottom() {
       this.$nextTick(() => {
-        var _this = this;
-        var div = document.getElementsByClassName("Mineclearance")[0];
-        this.timer1 = setInterval(function() {
-          if (_this.count <= div.scrollHeight) {
-            div.scrollTop = _this.count += 64;
-            // document.getElementById("music").currentTime = 0;
-            document.getElementById("music").play();
-          } else {
-            // document.getElementById("music").currentTime = 0;
-            this.count = div.scrollHeight;
-          }
-        }, 50);
+        var div = document.getElementsByClassName("Mineclearanceyy")[0];
         // console.log();
-        // div.scrollTop = ;
+        console.log(div.scrollTop, div.scrollHeight);
+        div.scrollTop = div.scrollHeight;
       });
     },
     // ------------webscoket
@@ -260,8 +274,8 @@ export default {
       //连接建立之后执行send方法发送数据
       let actions = {
         type: "joinRoom",
-        // lastMsgId: localStorage.getItem("num" + this.$route.params.biaoshi),
-        lastMsgId: 0,
+        lastMsgId: localStorage.getItem("num" + this.$route.params.biaoshi),
+        // lastMsgId: 0,
         roomId: this.$route.params.biaoshi
       };
       this.websocketsend(JSON.stringify(actions));
@@ -300,19 +314,34 @@ export default {
     }
   },
   updated() {
-    // this.scrollToBottom();
+    this.scrollToBottom();
     // console.log(this.num[this.num.length - 1]);
-    if (this.num.length > 0) {
-      localStorage.setItem(
-        "num" + this.$route.params.biaoshi,
-        this.num[this.num.length - 1].id
-      );
+    if (this.$route.params.biaoshi == 1) {
+      if (this.$store.state.county == 0) {
+        this.$store.commit("county", 1);
+        if (this.num.length > 0) {
+          localStorage.setItem(
+            "num" + this.$route.params.biaoshi,
+            this.num[0].id
+          );
+        }
+      }
+    } else {
+      if (this.$store.state.county1 == 0) {
+        this.$store.commit("county1", 1);
+        if (this.num.length > 0) {
+          localStorage.setItem(
+            "num" + this.$route.params.biaoshi,
+            this.num[0].id
+          );
+        }
+      }
     }
     // this.websocketonmessage();
   },
   destroyed() {
     // console.log(this.num);
-    this.websock.close(); //离开路由之后断开websocket连接
+    // this.websock.close(); //离开路由之后断开websocket连接
   }
 };
 </script>
@@ -321,13 +350,19 @@ export default {
   /* min-height: 100%; */
   height: 100%;
   background: #f5f5f5;
-  padding: 0 0.3rem;
+
   padding-top: 1.44rem;
   text-align: center;
   padding-bottom: 1.4rem;
-  overflow: auto;
+  /* overflow: scroll; */
 }
-
+.Mineclearanceyy {
+  height: 100%;
+  padding: 0 0.3rem;
+  overflow: scroll;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
 .hiy {
   width: 5rem;
   height: 2.4rem;
@@ -399,7 +434,7 @@ export default {
   float: left;
   padding-top: 0.2rem;
   margin-left: 25%;
-  /* padding-top: 0.2rem; */
+  padding-bottom: 0.1rem;
 }
 .saihongbaoy > div > :last-child {
   font-size: 0.2rem;
