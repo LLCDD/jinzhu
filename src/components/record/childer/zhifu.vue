@@ -25,15 +25,15 @@ export default {
     };
   },
   mounted() {
-    if (this.list.length > 0) {
-      this.bool = true;
-    }
     this.http
       .post("/api/m_charge")
       .then(res => {
         if (res.code == 200) {
           console.log(res);
           this.list = res.data.data;
+          if (this.list.length > 0) {
+            this.bool = true;
+          }
         } else if (res.code == 400) {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }

@@ -15,7 +15,7 @@
       <p>{{ list.money }}-{{ list.spot }}</p>
 
       <p style="color:red;font-size:0.4rem">{{ list.problem }} 元</p>
-      <div class="zong">{{ ge }}个红包共{{ list.money }}元</div>
+      <div class="zong">{{ ge }}个红包共{{ list.money }}元 已抢{{ges}}/{{ge}}</div>
       <div class="jil">
         <div v-for="(item,index) in list.data" :key="index">
           <div>
@@ -44,7 +44,9 @@ export default {
       money: "100.00",
       ge: localStorage.getItem("geshu"),
       name: "12321-12323-23",
-      list: []
+      list: [],
+      // 已抢红包
+      ges: 0
     };
   },
   // beforeCreate() {
@@ -66,6 +68,7 @@ export default {
           // Toast.clear();
           console.log(res.data.user);
           this.list = res.data;
+          this.ges = res.data.data.length;
         } else if (res.code == 400) {
           // Toast.clear();
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);

@@ -33,7 +33,7 @@ export default {
     this.$store.commit("ld", false);
     this.$store.commit("fanhui", false);
     this.$store.commit("qing", false);
-    this.$store.commit("footerTabl", true);
+    this.$store.commit("footerTabl", false);
   },
   methods: {
     //   客服

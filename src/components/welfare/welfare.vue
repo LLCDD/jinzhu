@@ -6,11 +6,11 @@
       </header>
       <div style="display:flex;justify-content: space-between;padding-right:0.4rem">
         <div>
-          <p class="p">已反总计 ( 元 )</p>
+          <p class="p">当日总计 ( 元 )</p>
           <p class="p1">{{ zong }}</p>
         </div>
         <div>
-          <p class="p">当日总计 ( 元 )</p>
+          <p class="p">已反总计 ( 元 )</p>
           <p class="p1">{{ zong2 }}</p>
         </div>
       </div>

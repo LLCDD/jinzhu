@@ -50,7 +50,7 @@ export default {
           phone: this.phone,
           phone_code: this.code1,
           password: this.passworld,
-          repassworld: this.passworld1
+          repassword: this.passworld1
         })
         .then(res => {
           if (res.code == 200) {
@@ -127,6 +127,7 @@ input {
   margin-top: 0.8rem;
   background: #f1941d;
   border-radius: 0.5rem;
+  /* background: url('../../assets/imgs/001.png') no-repeat */
 }
 .code {
   display: inline-block;

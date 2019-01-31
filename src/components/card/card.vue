@@ -70,7 +70,7 @@ export default {
         if (res.code == 200) {
           // console.log(res);
           this.arr.push(localStorage.getItem("uid"));
-          if (res.data.data.length <= 0) {
+          if (res.data.data == {}) {
             this.bool = true;
           } else {
             this.bool = false;
@@ -95,7 +95,7 @@ export default {
             // Toast.clear();
             console.log(res);
             this.isLoading = false;
-            if (res.data.data.length <= 0) {
+            if (res.data.data == {}) {
               this.bool = true;
             } else {
               this.bool = false;

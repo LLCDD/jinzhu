@@ -160,7 +160,7 @@ export default {
           //   recommend: this.recommend
         });
         console.log(res);
-        this.$toasted.success("注册成功").goAway(1500);
+        this.$toasted.success("修改成功").goAway(1500);
         this.$router.replace({ name: "login" });
       } catch (error) {
         this.$toasted.error(error.message, { icon: "error" }).goAway(2000);

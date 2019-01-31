@@ -5,7 +5,7 @@ import config from './config'
 import router from './router'
 import Vue from 'vue'
 console.log(config)
-
+import { Toast } from 'vant';
 // 创建axios实例
 const http = axios.create({
   baseURL: config.api_base,
@@ -58,7 +58,12 @@ http.interceptors.response.use(
     return data
   },
   error => {
-    return Promise.reject(error)
+    Toast({
+      message: '操作频繁请稍后',
+      position: ' ',
+      duration: 1000
+    });
+    return Promise.reject('')
   }
 )
 

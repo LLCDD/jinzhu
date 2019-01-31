@@ -132,6 +132,7 @@ export default {
     }
   },
   updated() {
+    // this.sendy();
     this.scrollToBottom();
     plus.webview.currentWebview().setStyle({
       softinputMode: "adjustResize" // 弹出软键盘时自动改变webview的高度
