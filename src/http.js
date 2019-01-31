@@ -60,7 +60,7 @@ http.interceptors.response.use(
   error => {
     Toast({
       message: '操作频繁请稍后',
-      position: ' ',
+      position: 'bottom',
       duration: 1000
     });
     return Promise.reject('')

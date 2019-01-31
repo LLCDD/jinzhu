@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       phone: "",
-      password: ""
+      password: "",
+      count: 0
     };
   },
   methods: {
@@ -33,26 +34,31 @@ export default {
         this.$toasted.error("请输入完善信息", { icon: "error" }).goAway(2000);
         return;
       }
-      try {
-        // await等待一个异步返回的结果 如果没有await 会报user is undefined 获取不到
-        let res = await this.http.post("/api/login", {
-          phone: this.phone,
-          password: this.password
-        });
-        if (res.code == 200) {
-          console.log(res);
-          // this.$store.commit("loginbanner", res.data.banners);
-          // this.$store.dispatch("login", res.data.user);
-          localStorage.setItem("token", res.data.token);
-          this.$toasted.success("登录成功").goAway(1500);
-          localStorage.setItem("uid", res.data.uid);
-          // this.$router.replace({ name: "index" });
-          this.$router.push("/index");
-        } else {
-          this.$toasted.error(res.message, { icon: "error" }).goAway(2000);
+      if (this.count == 0) {
+        this.count = 1;
+        try {
+          // await等待一个异步返回的结果 如果没有await 会报user is undefined 获取不到
+          let res = await this.http.post("/api/login", {
+            phone: this.phone,
+            password: this.password
+          });
+          if (res.code == 200) {
+            console.log(res);
+            // this.$store.commit("loginbanner", res.data.banners);
+            // this.$store.dispatch("login", res.data.user);
+            localStorage.setItem("token", res.data.token);
+            this.$toasted.success("登录成功").goAway(1500);
+            localStorage.setItem("uid", res.data.uid);
+            // this.$router.replace({ name: "index" });
+            this.$router.push("/index");
+          } else {
+            this.count = 0;
+            this.$toasted.error(res.message, { icon: "error" }).goAway(2000);
+          }
+        } catch (error) {
+          this.count = 0;
+          this.$toasted.error(error.message, { icon: "error" }).goAway(2000);
         }
-      } catch (error) {
-        this.$toasted.error(error.message, { icon: "error" }).goAway(2000);
       }
     }
   }
