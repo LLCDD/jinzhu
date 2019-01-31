@@ -211,6 +211,7 @@ export default {
   z-index: 99;
   width: 100%;
   top: 0;
+  left: 0;
   /* scroll */
 }
 header {
@@ -314,6 +315,8 @@ header {
   text-align: center;
   background: #fff;
   margin-top: 3.1rem;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   /* height: 100%; */
 }
 .tabley > th {
