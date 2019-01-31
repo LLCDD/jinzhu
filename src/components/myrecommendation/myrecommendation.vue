@@ -21,28 +21,28 @@
         </div>
       </div>
     </div>
-
-    <table class="tabley" v-if="bool">
-      <th>昵称</th>
-      <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额 (元)</th>
-      <th style="color:#f1941d;border-right:2px solid #f5f5f5;">级别</th>
-      <th style="width:40%">时间</th>
-      <tr v-for="(item,index) in list" :key="index">
-        <td
-          style="line-height: 0.9rem;color:#000;overflow: hidden;font-size:0.22rem;
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <table class="tabley">
+        <th>昵称</th>
+        <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额 (元)</th>
+        <th style="color:#f1941d;border-right:2px solid #f5f5f5;">级别</th>
+        <th style="width:40%">时间</th>
+        <tr v-for="(item,index) in list" :key="index">
+          <td
+            style="line-height: 0.9rem;color:#000;overflow: hidden;font-size:0.22rem;
 text-overflow:ellipsis;
 white-space: nowrap;"
-        >{{ item.name }}</td>
-        <td
-          style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
-        >{{ item.money }}({{ item.type == 3 ? '抢' : '发' }})</td>
-        <td
-          style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
-        >{{ item.level }}</td>
-        <td style="width:40%;color:#999999;font-size:0.22rem">{{ item.created_at }}</td>
-      </tr>
-    </table>
-
+          >{{ item.name }}</td>
+          <td
+            style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
+          >{{ item.money }}({{ item.type == 3 ? '发' : '抢' }})</td>
+          <td
+            style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
+          >{{ item.level }}</td>
+          <td style="width:40%;color:#999999;font-size:0.22rem">{{ item.created_at }}</td>
+        </tr>
+      </table>
+    </van-pull-refresh>
     <!-- <van-pagination
       v-if="bool2"
       v-model="page"
@@ -71,7 +71,8 @@ export default {
       // 总人数
       prem: "",
       // 直推人数
-      prem1: ""
+      prem1: "",
+      isLoading: false
     };
   },
   // beforeCreate() {
@@ -85,6 +86,7 @@ export default {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
     this.$store.commit("tuijianf", false);
+    this.$store.commit("footerTabl", false);
     // if (this.list.length > 0) {
     //   this.bool = true;
     // }
@@ -132,6 +134,37 @@ export default {
     // 推荐列表
     tuijian() {
       this.$router.push("/cardy");
+    },
+    onRefresh() {
+      this.http.post("/api/rrand").then(res => {
+        if (res.code == 200) {
+          // Toast.clear();
+          console.log(res.data.total);
+          this.msg = res.data.total;
+          this.msg1 = res.data.todays;
+          this.prem = res.data.team_num;
+          this.prem1 = res.data.direct;
+          this.isLoading = false;
+          // this.list = res.data.arr;
+          if (res.data.arr.length <= 0) {
+            this.bool = false;
+          } else {
+            if (res.data.arr.length >= 15) {
+              var arr = [];
+              this.bool2 = true;
+              for (var i = 0; i < 15; i++) {
+                arr.push(res.data.arr[i]);
+                this.list = arr;
+              }
+            } else {
+              this.list = res.data.arr;
+            }
+            this.bool = true;
+            this.list1 = res.data.arr;
+            this.zong = Math.floor(res.data.arr.length / 10);
+          }
+        }
+      });
     }
     // 分页
     // page1(id) {
@@ -151,6 +184,8 @@ export default {
   /* height: 100%; */
   background: #f5f5f5;
   width: 100%;
+  position: absolute;
+  top: 0;
 }
 .myrecommendation >>> .van-pagination .van-pagination--simple {
   width: 100%;
@@ -169,7 +204,8 @@ export default {
 header {
   height: 1.32rem;
   width: 100%;
-  position: fixed;
+  /* position: fixed; */
+  position: absolute;
   top: 0.44rem;
   /* background: red; */
   text-align: center;
@@ -266,8 +302,7 @@ header {
   text-align: center;
   background: #fff;
   margin-top: 3.1rem;
-  /* overflow: scroll;
-  -webkit-overflow-scrolling: touch; */
+  height: 100%;
 }
 .tabley > th {
   border: 0;
@@ -300,7 +335,7 @@ header {
 .null {
   width: 50%;
   margin-left: 25%;
-  margin-top: 70%;
+  margin-top: 46%;
 }
 .zhuanj {
   padding-right: 1.4rem;

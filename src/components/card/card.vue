@@ -70,7 +70,7 @@ export default {
         if (res.code == 200) {
           // console.log(res);
           this.arr.push(localStorage.getItem("uid"));
-          if (res.data.data == {}) {
+          if (res.message == "您没有推荐过任何人") {
             this.bool = true;
           } else {
             this.bool = false;

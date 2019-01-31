@@ -58,12 +58,7 @@ http.interceptors.response.use(
     return data
   },
   error => {
-    Toast({
-      message: '操作频繁请稍后',
-      position: 'bottom',
-      duration: 1000
-    });
-    return Promise.reject('')
+    return Promise.reject(error)
   }
 )
 

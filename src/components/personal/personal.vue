@@ -167,6 +167,7 @@ export default {
     tui() {
       localStorage.clear();
       sessionStorage.clear();
+      this.$store.commit("shuju", []);
       this.$router.replace({ name: "login" });
     },
     onRefresh() {

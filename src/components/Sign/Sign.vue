@@ -91,6 +91,8 @@ export default {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         });
     });
+    // 在调用
+    this.onRefresh();
   },
   methods: {
     tap() {

@@ -25,7 +25,7 @@
         <div class="cardp">
           <!-- <img ref="jietu1" src="../../assets/imgs/002.png" @click="app()" alt> -->
           <img :src=" url +'/' + item" @click="app(url +'/' + item)" alt>
-          {{ url +'/' + item }}
+          <!-- {{ url +'/' + item }} -->
           <!-- <div class="divyyy">
             <div style="background:#fff;border-radius: 0.2rem">
               <qriously :value="initQCode" :size="100"/>
