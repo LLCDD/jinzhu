@@ -21,28 +21,28 @@
         </div>
       </div>
     </div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <table class="tabley">
-        <th>昵称</th>
-        <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额 (元)</th>
-        <th style="color:#f1941d;border-right:2px solid #f5f5f5;">级别</th>
-        <th style="width:40%">时间</th>
-        <tr v-for="(item,index) in list" :key="index">
-          <td
-            style="line-height: 0.9rem;color:#000;overflow: hidden;font-size:0.22rem;
+    <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
+    <table class="tabley">
+      <th>昵称</th>
+      <th style="border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5">金额 (元)</th>
+      <th style="color:#f1941d;border-right:2px solid #f5f5f5;">级别</th>
+      <th style="width:40%">时间</th>
+      <tr v-for="(item,index) in list" :key="index">
+        <td
+          style="line-height: 0.9rem;color:#000;overflow: hidden;font-size:0.22rem;
 text-overflow:ellipsis;
 white-space: nowrap;"
-          >{{ item.name }}</td>
-          <td
-            style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
-          >{{ item.money }}({{ item.type == 3 ? '发' : '抢' }})</td>
-          <td
-            style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
-          >{{ item.level }}</td>
-          <td style="width:40%;color:#999999;font-size:0.22rem">{{ item.created_at }}</td>
-        </tr>
-      </table>
-    </van-pull-refresh>
+        >{{ item.name }}</td>
+        <td
+          style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-left:2px solid #f5f5f5;border-right:2px solid #f5f5f5"
+        >{{ item.money }}({{ item.type == 3 ? '发' : '抢' }})</td>
+        <td
+          style="font-size:0.3rem;line-height: 0.9rem;color:#f1941d;border-right:2px solid #f5f5f5;"
+        >{{ item.level }}</td>
+        <td style="width:40%;color:#999999;font-size:0.22rem">{{ item.created_at }}</td>
+      </tr>
+    </table>
+    <!-- </van-pull-refresh> -->
     <!-- <van-pagination
       v-if="bool2"
       v-model="page"
@@ -212,7 +212,6 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  /* scroll */
 }
 header {
   height: 1.32rem;
