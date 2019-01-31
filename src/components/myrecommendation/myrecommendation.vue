@@ -86,7 +86,7 @@ export default {
     this.$store.commit("footerTab", false);
     this.$store.commit("headerTab", false);
     this.$store.commit("tuijianf", false);
-    this.$store.commit("footerTabl", false);
+    this.$store.commit("footerTabl", true);
     // if (this.list.length > 0) {
     //   this.bool = true;
     // }
@@ -136,35 +136,45 @@ export default {
       this.$router.push("/cardy");
     },
     onRefresh() {
-      this.http.post("/api/rrand").then(res => {
-        if (res.code == 200) {
-          // Toast.clear();
-          console.log(res.data.total);
-          this.msg = res.data.total;
-          this.msg1 = res.data.todays;
-          this.prem = res.data.team_num;
-          this.prem1 = res.data.direct;
-          this.isLoading = false;
-          // this.list = res.data.arr;
-          if (res.data.arr.length <= 0) {
-            this.bool = false;
-          } else {
-            if (res.data.arr.length >= 15) {
-              var arr = [];
-              this.bool2 = true;
-              for (var i = 0; i < 15; i++) {
-                arr.push(res.data.arr[i]);
-                this.list = arr;
-              }
+      this.http
+        .post("/api/rrand")
+        .then(res => {
+          if (res.code == 200) {
+            // Toast.clear();
+            this.isLoading = false;
+            console.log(res.data.total);
+            this.msg = res.data.total;
+            this.msg1 = res.data.todays;
+            this.prem = res.data.team_num;
+            this.prem1 = res.data.direct;
+
+            // this.list = res.data.arr;
+            if (res.data.arr.length <= 0) {
+              this.bool = false;
             } else {
-              this.list = res.data.arr;
+              if (res.data.arr.length >= 15) {
+                var arr = [];
+                this.bool2 = true;
+                for (var i = 0; i < 15; i++) {
+                  arr.push(res.data.arr[i]);
+                  this.list = arr;
+                }
+              } else {
+                this.list = res.data.arr;
+              }
+              this.bool = true;
+              this.list1 = res.data.arr;
+              this.zong = Math.floor(res.data.arr.length / 10);
             }
-            this.bool = true;
-            this.list1 = res.data.arr;
-            this.zong = Math.floor(res.data.arr.length / 10);
+          } else {
+            this.isLoading = false;
+            this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
           }
-        }
-      });
+        })
+        .catch(res => {
+          this.isLoading = false;
+          this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
+        });
     }
     // 分页
     // page1(id) {
@@ -181,7 +191,7 @@ export default {
 <style scoped>
 .myrecommendation {
   /* padding-top: 0.88rem; */
-  /* height: 100%; */
+  height: 100%;
   background: #f5f5f5;
   width: 100%;
   position: absolute;
@@ -194,12 +204,14 @@ export default {
   /* overflow: hidden; */
   background: url("../../assets/imgs/heady.png") no-repeat left;
   background-size: cover;
-  position: relative;
+  /* position: relative; */
   height: 3.1rem;
   margin-bottom: 0.3rem;
   position: fixed;
+  z-index: 99;
   width: 100%;
   top: 0;
+  /* scroll */
 }
 header {
   height: 1.32rem;
@@ -302,7 +314,7 @@ header {
   text-align: center;
   background: #fff;
   margin-top: 3.1rem;
-  height: 100%;
+  /* height: 100%; */
 }
 .tabley > th {
   border: 0;
