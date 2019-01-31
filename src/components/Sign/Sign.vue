@@ -40,7 +40,8 @@ export default {
   data() {
     return {
       data: "",
-      isLoading: false
+      isLoading: false,
+      sign: ""
     };
   },
   // beforeCreate() {
@@ -59,6 +60,9 @@ export default {
       .then(res => {
         if (res.code == 200) {
           this.data = res.data;
+          // var sign = res.data.sign;
+          // var sign = res.data.sign.reverse();
+          // console.log(sign);
         } else if (res.code == 400) {
           this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
         }
@@ -74,6 +78,8 @@ export default {
           if (res.code == 200) {
             console.log(res.data);
             // Toast.clear();
+            // this.sign = res.data;
+            // console.log(this.sign);
             this.$toasted.success(res.message).goAway(1000);
           } else if (res.code == 400) {
             // Toast.clear();

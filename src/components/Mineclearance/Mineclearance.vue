@@ -204,7 +204,7 @@ export default {
                   }
                 } else {
                   clearInterval(this.timer);
-                  this.$toasted.error("手慢无").goAway(1000);
+                  this.$toasted.error(res.message).goAway(1000);
                   this.$router.push("/redenvelope/" + id);
                 }
                 // _this.$toasted.error(res.message, { icon: "error" }).goAway(1000);
